@@ -1,4 +1,12 @@
 services:
+
+  nodeapp:
+    build: .
+    container_name: nodeapp
+    ports:
+      - "5001:5001"
+    restart: always
+
   postgres:
     image: postgres:15
     container_name: n8n_postgres
