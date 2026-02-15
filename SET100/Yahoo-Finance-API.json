@@ -1,0 +1,204 @@
+{
+  "name": "Yahoo-Finance-API",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78d1e9e8-8b9e-4e5a-8b1a-8c1c2d3e4f5g",
+              "name": "tickers",
+              "value": "={{ ['PTT.BK', 'CPALL.BK', 'BDMS.BK', 'GULF.BK', 'DELTA.BK'] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1fd36d61-ab35-4afa-96ea-81c3c4bdfedb",
+      "name": "Stock List",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "tickers",
+        "options": {}
+      },
+      "id": "cba22e3e-a880-48d4-bc28-73b241b5c159",
+      "name": "Split Tickers",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        208,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/{{$json.tickers.slice()}}?range=30d&interval=1d",
+        "options": {}
+      },
+      "id": "8622995d-c8e0-442f-8d80-6ee745b3febf",
+      "name": "Yahoo Finance API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        432,
+        -288
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -288
+      ],
+      "id": "a40de86c-da8f-4862-b3aa-08580df900d1",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "const charts = [];  \n$input.all().forEach(item => {\n  \n  const result=item.json.chart.result[0];\n  const ts = result.timestamp;\n  const q = result.indicators.quote[0];\n\n  const candles = ts.map((t, i) => ({\n      x: new Date(t * 1000).getTime(),\n      o: q.open[i],\n      h: q.high[i],\n      l: q.low[i],\n      c: q.close[i],\n  }));   \n\n  charts.push({ json: { symbol: result.meta.symbol, candles }});\n  \n});\n\n\nreturn charts;\n"
+      },
+      "id": "7474bb34-556c-4ad3-bf0d-b1beed795150",
+      "name": "OHLC",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://quickchart.io/chart",
+        "sendBody": true,
+        "specifyBody": "=json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"version\": \"3\",\n  \"backgroundColor\": \"#fff\",\n  \"width\": 500,\n  \"height\": 300,\n  \"devicePixelRatio\": 1.0,\n  \"chart\": \"{  type: 'candlestick', data: {    datasets: [      {        data: [ {{$json.candles.map(item => '{ x : ' +item.x +', o : '+item.o+', h:'+ item.h +', l : '+ item.l+', c: '+item.c+'}') }}],      },    ],  },  options: {    scales:{      x:{        adapters: {          date: {            zone: 'UTC-4'          }        },        time: {          unit: 'day',          stepSize: 1,          displayFormats: {            day: '',            month: 'yyyy MMM',          }        },        ticks: {          autoSkip: false,        },      }    },    plugins: {      legend: {        display: false,      },    },  },}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        816,
+        -288
+      ],
+      "id": "2e8c5389-cbb3-4420-a7b7-b8639e629554",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "path": "4554be53-85ff-486d-b532-1820c57ba2e4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -256,
+        -496
+      ],
+      "id": "7e87f917-e377-4b67-8c72-87389f7541af",
+      "name": "Webhook",
+      "webhookId": "4554be53-85ff-486d-b532-1820c57ba2e4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Stock List": {
+      "main": [
+        [
+          {
+            "node": "Split Tickers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Tickers": {
+      "main": [
+        [
+          {
+            "node": "Yahoo Finance API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yahoo Finance API": {
+      "main": [
+        [
+          {
+            "node": "OHLC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Stock List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OHLC": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Stock List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "a2bfad97-09a0-4f1d-8c65-15886c85b1f1",
+  "meta": {
+    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+  },
+  "id": "t2OeoMTuxaCdpNEKIutLk",
+  "tags": []
+}

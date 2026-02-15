@@ -1,0 +1,81 @@
+{
+  "nodes": [
+    {
+      "id": "Manual Trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 400]
+    },
+    {
+      "id": "Config",
+      "name": "Config",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [400, 400],
+      "parameters": {
+        "functionCode": "return [{ json: {\n  timeframe: '1h', // 1h | 4h | 1d\n  limit: 120,\n  symbols: ['BTCUSDT','ETHUSDT','ADAUSDT','XRPUSDT','SOLUSDT']\n}}];"
+      }
+    },
+    {
+      "id": "Split Symbols",
+      "name": "Split Symbols",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [600, 250],
+      "parameters": { "batchSize": 1 }
+    },
+    {
+      "id": "Fetch OHLC",
+      "name": "Fetch OHLC (Binance)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [600, 400],
+      "parameters": {
+        "url": "={{`https://api.binance.com/api/v3/klines?symbol=${$json.symbol}&interval=${$node[\"Config\"].json.timeframe}&limit=${$node[\"Config\"].json.limit}`}}",
+        "method": "GET",
+        "responseFormat": "json"
+      }
+    },
+    {
+      "id": "Indicators",
+      "name": "Calculate EMA / RSI / MACD",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [850, 400],
+      "parameters": {
+        "functionCode": "const symbol = $json.symbol;\nconst data = items[0].json.map(c => ({\n  time: new Date(c[0]).toISOString().slice(0,10),\n  close: parseFloat(c[4]),\n  o: +c[1], h: +c[2], l: +c[3], c: +c[4]\n}));\n\nfunction EMA(period, values) {\n  const k = 2 / (period + 1);\n  let ema = values[0];\n  return values.map(v => ema = v * k + ema * (1 - k));\n}\n\nfunction RSI(period, values) {\n  let gains = [], losses = [];\n  for (let i = 1; i < values.length; i++) {\n    const diff = values[i] - values[i - 1];\n    gains.push(Math.max(0, diff));\n    losses.push(Math.max(0, -diff));\n  }\n  const avgGain = EMA(period, gains);\n  const avgLoss = EMA(period, losses);\n  return avgGain.map((g, i) => 100 - 100 / (1 + g / (avgLoss[i] || 1)));\n}\n\nconst closes = data.map(d => d.close);\nconst ema20 = EMA(20, closes);\nconst rsi14 = RSI(14, closes);\n\nconst ema12 = EMA(12, closes);\nconst ema26 = EMA(26, closes);\nconst macd = ema12.map((v, i) => v - ema26[i]);\nconst signal = EMA(9, macd);\n\nreturn [{ json: {\n  symbol,\n  candles: data.map((d, i) => ({ t: d.time, o: d.o, h: d.h, l: d.l, c: d.c })),\n  ema20: data.map((d, i) => ({ x: d.time, y: ema20[i] })),\n  rsi: data.map((d, i) => ({ x: d.time, y: rsi14[i] || null })),\n  macd: data.map((d, i) => ({ x: d.time, y: macd[i] })),\n  signal: data.map((d, i) => ({ x: d.time, y: signal[i] }))\n}}];"
+      }
+    },
+    {
+      "id": "Merge",
+      "name": "Merge All",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [1100, 400],
+      "parameters": { "mode": "append" }
+    },
+    {
+      "id": "Chart",
+      "name": "Generate TradingView-style Chart",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [1350, 400],
+      "parameters": {
+        "method": "POST",
+        "url": "https://quickchart.io/chart",
+        "responseFormat": "json",
+        "jsonParameters": true,
+        "bodyParametersJson": "={\n  \"width\": 1000,\n  \"height\": 2200,\n  \"charts\": $items().map(i => ({\n    \"type\": \"candlestick\",\n    \"data\": {\n      \"datasets\": [\n        { \"label\": i.json.symbol, \"data\": i.json.candles },\n        { \"type\": \"line\", \"label\": \"EMA20\", \"data\": i.json.ema20, \"borderColor\": \"orange\", \"pointRadius\": 0 }\n      ]\n    }\n  }))\n}"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Config", "type": "main", "index": 0 }]] },
+    "Config": { "main": [[{ "node": "Split Symbols", "type": "main", "index": 0 }]] },
+    "Split Symbols": { "main": [[{ "node": "Fetch OHLC", "type": "main", "index": 0 }]] },
+    "Fetch OHLC": { "main": [[{ "node": "Calculate EMA / RSI / MACD", "type": "main", "index": 0 }]] },
+    "Calculate EMA / RSI / MACD": { "main": [[{ "node": "Merge All", "type": "main", "index": 0 }]] },
+    "Merge All": { "main": [[{ "node": "Generate TradingView-style Chart", "type": "main", "index": 0 }]] }
+  }
+}

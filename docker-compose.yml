@@ -1,0 +1,84 @@
+services:    
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres   # ✅ service name
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=n8npass
+
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - TZ=Asia/Bangkok
+    volumes:
+      - n8n_data:/home/node/.n8n     
+
+  postgres:
+    image: postgres:15
+    container_name: n8n_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: n8n
+      POSTGRES_PASSWORD: n8npass
+      POSTGRES_DB: n8n
+    ports:
+      - "5432:5432"          # ✅ ให้โปรแกรมอื่นต่อได้
+    volumes:
+      - postgres_data:/var/lib/postgresql/data      
+     
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: n8n_pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      
+  nodeapp:
+    build: .
+    container_name: n8n_chartjs
+    ports:
+      - "5001:5001"
+    restart: always
+  
+  ldap:
+    image: osixia/openldap:latest
+    container_name: n8n_ldap-server
+    environment:
+      LDAP_ORGANISATION: "n8n"
+      LDAP_DOMAIN: "n8n.local"
+      LDAP_ADMIN_PASSWORD: "admin123"
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+    restart: always
+
+volumes:
+  n8n_data:
+  postgres_data:
+  pgadmin_data:    
+  ldap_data:
+  ldap_config:

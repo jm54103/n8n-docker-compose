@@ -1,0 +1,192 @@
+{
+  "name": "SET Index Form + Fetch Data",
+  "nodes": [
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.RadioButtonSET }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "SET"
+            },
+            {
+              "value2": "SET100",
+              "output": 1
+            },
+            {
+              "value2": "SET50",
+              "output": 2
+            },
+            {
+              "value2": "SETHD",
+              "output": 3
+            }
+          ]
+        }
+      },
+      "id": "575b22a4-0d45-440c-9202-213f28f77df1",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "path": "a46d9dad-07cf-43fd-b1ab-77cefdd58fab",
+        "formTitle": "Select SET Index",
+        "formDescription": "Choose index type",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "RadioButtonSET",
+              "fieldType": "radio",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "SET"
+                  },
+                  {
+                    "option": "SET100"
+                  },
+                  {
+                    "option": "SET50"
+                  },
+                  {
+                    "option": "SETHD"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "94e3976d-fc94-43e6-830b-679e45e2856f",
+      "name": "Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        48
+      ],
+      "webhookId": "a46d9dad-07cf-43fd-b1ab-77cefdd58fab"
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/^SET?range=1y&interval=1d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -192,
+        -240
+      ],
+      "id": "7d3f26f0-b0d1-497a-8339-434c2dae446a",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/SET100.BK?range=1y&interval=1d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -192,
+        -48
+      ],
+      "id": "586a6ead-d9af-4412-928c-a0d6867f84c9",
+      "name": "SET100"
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/SET50.BK?range=1y&interval=1d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -192,
+        144
+      ],
+      "id": "2c53fd89-adf3-44c7-8fb8-ac840006a0e5",
+      "name": "SET50"
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/SETHD.BK?range=1y&interval=1d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -192,
+        336
+      ],
+      "id": "6c106024-140e-4920-9aad-46379d6b9c8b",
+      "name": "SETHD"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SET100",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SET50",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SETHD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "54ae91ab-db9e-46eb-92d6-12d8f9ca13aa",
+  "meta": {
+    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+  },
+  "id": "YQbhWf9qaAXpBgAUhEIAp",
+  "tags": []
+}
