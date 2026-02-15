@@ -1,0 +1,8 @@
+/*--Reload--*/
+docker compose down
+docker compose build --no-cache
+docker compose up
+
+/*--Check Logs--*/
+docker compose logs -f nodeapp
+

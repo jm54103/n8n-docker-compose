@@ -55,23 +55,26 @@ services:
       - pgadmin_data:/var/lib/pgadmin
       
   nodeapp:
-    build: .
+    build:
+        context: ./app
+        target: production
     container_name: n8n_node-app
     ports:
-      - "5001:5001"
+      - "5000:5000"
     restart: always
     
-  n8n_nodeapp-dev:
+  nodeapp-dev:
     build:
-      context: .
+      context: ./app
       target: development  # บอกให้ใช้ Stage 'development' ใน Dockerfile
     container_name: n8n_node-app-dev
     ports:
-      - "5001:5001"
+      - "5137:5137"
     volumes:
       - .:/app             # เชื่อม Code ในเครื่องเข้ากับ /app ใน Container
       - /app/node_modules  # Anonymous Volume เพื่อไม่ให้ทับ node_modules ในเครื่อง
     environment:
+      - PORT=8080
       - NODE_ENV=development
     # สั่งให้ restart อัตโนมัติเมื่อไฟล์เปลี่ยน (ถ้าใน package.json มี nodemon)
     command: npm run dev

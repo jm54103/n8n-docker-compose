@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev": "concurrently \"node server.js\" \"vite\"",
+    "start": "node server.js",
     "build": "vite build"
   },
   "dependencies": {
@@ -14,6 +16,7 @@
     "luxon": "^3.4.4"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "vite": "^5.0.0"
   }
 }
