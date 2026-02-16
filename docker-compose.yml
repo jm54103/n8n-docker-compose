@@ -62,22 +62,21 @@ services:
     ports:
       - "5000:5000"
     restart: always
-    
+  
   nodeapp-dev:
     build:
-      context: ./app
-      target: development  # บอกให้ใช้ Stage 'development' ใน Dockerfile
+        context: ./app
+        target: development
     container_name: n8n_node-app-dev
     ports:
-      - "5137:5137"
-    volumes:
-      - .:/app             # เชื่อม Code ในเครื่องเข้ากับ /app ใน Container
-      - /app/node_modules  # Anonymous Volume เพื่อไม่ให้ทับ node_modules ในเครื่อง
+      - "5173:5173"      
+    volumes:      
+      - ./app:/app           # ✅ แมปโฟลเดอร์โปรเจกต์ (Hot Reload อาศัยส่วนนี้) 
+      - /app/node_modules    # ✅ ป้องกัน node_modules ในเครื่องทับใน Container 
     environment:
-      - PORT=8080
       - NODE_ENV=development
-    # สั่งให้ restart อัตโนมัติเมื่อไฟล์เปลี่ยน (ถ้าใน package.json มี nodemon)
-    command: npm run dev
+      - CHOKIDAR_USEPOLLING=true # ✅ ช่วยให้ Vite ตรวจจับการเปลี่ยนแปลงไฟล์ใน Docker ได้ดีขึ้น
+    command: npm run dev -- --host 0.0.0.0    
   
   ldap:
     image: osixia/openldap:latest
