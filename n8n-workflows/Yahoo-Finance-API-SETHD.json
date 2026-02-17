@@ -20,8 +20,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -64,
-        -768
+        -432,
+        -1040
       ]
     },
     {
@@ -34,8 +34,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        160,
-        -768
+        -224,
+        -880
       ]
     },
     {
@@ -52,8 +52,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        352,
-        -656
+        -32,
+        -880
       ],
       "onError": "continueRegularOutput"
     },
@@ -62,8 +62,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -384,
-        -384
+        -800,
+        -880
       ],
       "id": "a40de86c-da8f-4862-b3aa-08580df900d1",
       "name": "When clicking ‘Execute workflow’"
@@ -77,8 +77,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        576,
-        -656
+        208,
+        -640
       ]
     },
     {
@@ -89,8 +89,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -240,
-        -768
+        -800,
+        -1040
       ],
       "id": "7e87f917-e377-4b67-8c72-87389f7541af",
       "name": "Webhook",
@@ -119,21 +119,21 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        800,
-        -656
+        208,
+        -880
       ],
       "id": "2e8c5389-cbb3-4420-a7b7-b8639e629554",
       "name": "HTTP Request Candle Stick"
     },
     {
       "parameters": {
-        "jsCode": "// ================= Helper Functions =================\n\n// EMA\nfunction calculateEMA(prices, period) {\n  if (prices.length < period) return [];\n\n  const k = 2 / (period + 1);\n  let ema = [];\n  \n  // First EMA = SMA\n  let sma = prices.slice(0, period).reduce((a, b) => a + b, 0) / period;\n  ema[period - 1] = sma;\n\n  for (let i = period; i < prices.length; i++) {\n    ema[i] = (prices[i] - ema[i - 1]) * k + ema[i - 1];\n  }\n\n  return ema;\n}\n\n// RSI\nfunction calculateRSI(prices, period = 14) {\n  if (prices.length <= period) return [];\n\n  let gains = [];\n  let losses = [];\n\n  for (let i = 1; i < prices.length; i++) {\n    let change = prices[i] - prices[i - 1];\n    gains.push(change > 0 ? change : 0);\n    losses.push(change < 0 ? Math.abs(change) : 0);\n  }\n\n  let avgGain = gains.slice(0, period).reduce((a, b) => a + b, 0) / period;\n  let avgLoss = losses.slice(0, period).reduce((a, b) => a + b, 0) / period;\n\n  let rsi = [];\n\n  for (let i = period; i < gains.length; i++) {\n    avgGain = (avgGain * (period - 1) + gains[i]) / period;\n    avgLoss = (avgLoss * (period - 1) + losses[i]) / period;\n\n    let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;\n    rsi[i] = 100 - (100 / (1 + rs));\n  }\n\n  return rsi;\n}\n\n\n\n\n// ================= Main =================\n\nconst inputData = $input.all();\nlet output = [];\n\nfor (const item of inputData) {\n\n  const chartData = item.json.chart?.result?.[0];\n  if (!chartData) continue;\n\n  const symbol = chartData.meta.symbol;\n  const close = chartData.indicators.quote[0].close;\n\n  const ema50 = calculateEMA(close, 50);\n  const ema200 = calculateEMA(close, 200);\n  const rsi14 = calculateRSI(close, 14);\n\n  const lastIndex = close.length - 1;\n\n  const lastClose = close[lastIndex];\n  const lastEMA50 = ema50[lastIndex] || null;\n  const prevEMA50 = ema50[lastIndex - 1] || null;\n  const lastEMA200 = ema200[lastIndex] || null;\n  const prevEMA200 = ema200[lastIndex - 1] || null;\n  const lastRSI = rsi14[rsi14.length - 1] || null;\n\n  // ===== Signals =====\n  let goldenCross = false;\n  let deathCross = false;\n  let rsiOverbought = false;\n  let rsiOversold = false;\n\n  if (lastEMA50 && lastEMA200 && prevEMA50 && prevEMA200) {\n    goldenCross = prevEMA50 < prevEMA200 && lastEMA50 > lastEMA200;\n    deathCross = prevEMA50 > prevEMA200 && lastEMA50 < lastEMA200;\n  }\n\n  if (lastRSI !== null) {\n    rsiOverbought = lastRSI > 70;\n    rsiOversold = lastRSI < 30;\n  }\n\n  // Combine Signal Logic\n  let signal = \"NEUTRAL\";\n\n  if (goldenCross && !rsiOverbought) {\n    signal = \"STRONG BUY\";\n  } else if (deathCross && !rsiOversold) {\n    signal = \"STRONG SELL\";\n  } else if (rsiOversold) {\n    signal = \"BUY (RSI Oversold)\";\n  } else if (rsiOverbought) {\n    signal = \"SELL (RSI Overbought)\";\n  }\n\n  // ===== Trend Detection =====\n  let trend = \"SIDEWAYS\";\n\n  if (lastEMA50 && lastEMA200) {\n    if (lastEMA50 > lastEMA200) {\n      trend = \"BULLISH\";\n    } else if (lastEMA50 < lastEMA200) {\n      trend = \"BEARISH\";\n    }\n  }\n\n  output.push({\n    symbol,\n    lastClose,\n    signal,   \n    trend,   \n    RSI14: lastRSI,\n    rsiOverbought,\n    rsiOversold,    \n    EMA50: lastEMA50,\n    EMA200: lastEMA200,   \n    goldenCross,\n    deathCross,    \n  });\n}\n\nreturn output.map(i => ({ json: i }));\n"
+        "jsCode": "// ================= Helper Functions =================\n\n// EMA\nfunction calculateEMA(prices, period) {\n  if (prices.length < period) return [];\n\n  const k = 2 / (period + 1);\n  let ema = [];\n  \n  // First EMA = SMA\n  let sma = prices.slice(0, period).reduce((a, b) => a + b, 0) / period;\n  ema[period - 1] = sma;\n\n  for (let i = period; i < prices.length; i++) {\n    ema[i] = (prices[i] - ema[i - 1]) * k + ema[i - 1];\n  }\n\n  return ema;\n}\n\n// RSI\nfunction calculateRSI(prices, period = 14) {\n  if (prices.length <= period) return [];\n\n  let gains = [];\n  let losses = [];\n\n  for (let i = 1; i < prices.length; i++) {\n    let change = prices[i] - prices[i - 1];\n    gains.push(change > 0 ? change : 0);\n    losses.push(change < 0 ? Math.abs(change) : 0);\n  }\n\n  let avgGain = gains.slice(0, period).reduce((a, b) => a + b, 0) / period;\n  let avgLoss = losses.slice(0, period).reduce((a, b) => a + b, 0) / period;\n\n  let rsi = [];\n\n  for (let i = period; i < gains.length; i++) {\n    avgGain = (avgGain * (period - 1) + gains[i]) / period;\n    avgLoss = (avgLoss * (period - 1) + losses[i]) / period;\n\n    let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;\n    rsi[i] = 100 - (100 / (1 + rs));\n  }\n\n  return rsi;\n}\n\n\n\n\n// ================= Main =================\n\nconst inputData = $input.all();\nlet output = [];\n\nfor (const item of inputData) {\n\n  const chartData = item.json.chart?.result?.[0];\n  if (!chartData) continue;\n\n  const symbol = chartData.meta.symbol.replace('.BK','');\n  const close = chartData.indicators.quote[0].close;\n\n  const ema50 = calculateEMA(close, 50);\n  const ema200 = calculateEMA(close, 200);\n  const rsi14 = calculateRSI(close, 14);\n\n  const lastIndex = close.length - 1;\n\n  const lastClose = close[lastIndex];\n  const lastEMA50 = ema50[lastIndex] || null;\n  const prevEMA50 = ema50[lastIndex - 1] || null;\n  const lastEMA200 = ema200[lastIndex] || null;\n  const prevEMA200 = ema200[lastIndex - 1] || null;\n  const lastRSI = rsi14[rsi14.length - 1] || null;\n\n  // ===== Signals =====\n  let goldenCross = false;\n  let deathCross = false;\n  let rsiOverbought = false;\n  let rsiOversold = false;\n\n  if (lastEMA50 && lastEMA200 && prevEMA50 && prevEMA200) {\n    goldenCross = prevEMA50 < prevEMA200 && lastEMA50 > lastEMA200;\n    deathCross = prevEMA50 > prevEMA200 && lastEMA50 < lastEMA200;\n  }\n\n  if (lastRSI !== null) {\n    rsiOverbought = lastRSI > 70;\n    rsiOversold = lastRSI < 30;\n  }\n\n  // Combine Signal Logic\n  let signal = \"NEUTRAL\";\n\n  if (goldenCross && !rsiOverbought) {\n    signal = \"STRONG BUY\";\n  } else if (deathCross && !rsiOversold) {\n    signal = \"STRONG SELL\";\n  } else if (rsiOversold) {\n    signal = \"BUY (RSI Oversold)\";\n  } else if (rsiOverbought) {\n    signal = \"SELL (RSI Overbought)\";\n  }\n\n  // ===== Trend Detection =====\n  let trend = \"SIDEWAYS\";\n\n  if (lastEMA50 && lastEMA200) {\n    if (lastEMA50 > lastEMA200) {\n      trend = \"BULLISH\";\n    } else if (lastEMA50 < lastEMA200) {\n      trend = \"BEARISH\";\n    }\n  }\n\n  output.push({\n    symbol,\n    lastClose,\n    signal,   \n    trend,   \n    RSI14: lastRSI,\n    rsiOverbought,\n    rsiOversold,    \n    EMA50: lastEMA50,\n    EMA200: lastEMA200,   \n    goldenCross,\n    deathCross,    \n  });\n}\n\nreturn output.map(i => ({ json: i }));\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        576,
-        -432
+        208,
+        -1072
       ],
       "id": "9736e7f8-992b-46cf-9e4a-708b108ebbe0",
       "name": "SIGNAL BUY/SELL"
@@ -177,11 +177,156 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -224,
-        -496
+        -608,
+        -880
       ],
       "id": "6757bcc7-b99d-4940-a427-1a003fa41f74",
       "name": "Symbol",
+      "credentials": {
+        "postgres": {
+          "id": "NxUqE3XHL97tJnH6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "candle_sticks",
+          "mode": "list",
+          "cachedResultName": "candle_sticks"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "o": "={{ $input.item.json.h}}",
+            "h": "={{ $input.item.json.h}}",
+            "l": "={{ $input.item.json.l}}",
+            "c": "={{ $input.item.json.c}}",
+            "symbol": "={{ $input.item.json.symbol}}",
+            "x": "={{ new DateTime($input.item.json.x)}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "x",
+              "displayName": "x",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "o",
+              "displayName": "o",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "h",
+              "displayName": "h",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "l",
+              "displayName": "l",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "c",
+              "displayName": "c",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        976,
+        -768
+      ],
+      "id": "307f28d4-de38-4211-b29a-d2bd5c0319c5",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "NxUqE3XHL97tJnH6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst chart = [];\nfor (const item of $('OHLC').all()) {\n  item.json.candles.forEach(candle => {\n    candle.symbol = item.json.symbol.replace('.BK','');\n    chart.push(candle);\n  });   \n}\nreturn chart;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        -768
+      ],
+      "id": "df70715b-012a-487b-a006-12e2063a950f",
+      "name": "DataTable"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "candle_sticks",
+          "mode": "list",
+          "cachedResultName": "candle_sticks"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        400,
+        -640
+      ],
+      "id": "496bf8d4-482f-4646-b63a-cfa8c0bdc7cb",
+      "name": "TruncateCandleSticks",
       "credentials": {
         "postgres": {
           "id": "NxUqE3XHL97tJnH6",
@@ -196,10 +341,294 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -64,
-        -592
+        -432,
+        -880
       ],
       "id": "cf6aa9a7-069b-417b-b4fe-8ada32a7a02d",
+      "name": "Load Tickers"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
+              "leftValue": "={{ $json[\"success\"] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        576,
+        -640
+      ],
+      "id": "0e7d9629-d73a-4b4a-b921-2b508a25c1ef",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "market_signals",
+          "mode": "list",
+          "cachedResultName": "market_signals"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        400,
+        -1072
+      ],
+      "id": "00511b6b-930e-48bd-9e84-49cfefdcfd09",
+      "name": "TruncateMarketSignals",
+      "credentials": {
+        "postgres": {
+          "id": "NxUqE3XHL97tJnH6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
+              "leftValue": "={{ $json[\"success\"] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        560,
+        -1072
+      ],
+      "id": "2374339c-f662-497f-aa8d-7ffc13e89716",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "market_signals",
+          "mode": "list",
+          "cachedResultName": "market_signals"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "golden_cross": false,
+            "death_cross": false,
+            "last_close": "={{ $input.item.json.lastClose }}",
+            "rsi_14": "={{ $input.item.json.RSI14 }}",
+            "rsi_overbought": "={{ $input.item.json.rsiOverbought }}",
+            "rsi_oversold": "={{ $input.item.json.rsiOversold }}",
+            "ema_50": "={{ $input.item.json.EMA50}}",
+            "ema_200": "={{ $input.item.json.EMA200}}",
+            "symbol": "={{ $input.item.json.symbol}}",
+            "id": "={{ $input.item.json.id }}",
+            "signal": "={{ $input.item.json.signal }}",
+            "trend": "={{ $input.item.json.trend }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_close",
+              "displayName": "last_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "signal",
+              "displayName": "signal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "trend",
+              "displayName": "trend",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rsi_14",
+              "displayName": "rsi_14",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rsi_overbought",
+              "displayName": "rsi_overbought",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rsi_oversold",
+              "displayName": "rsi_oversold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ema_50",
+              "displayName": "ema_50",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ema_200",
+              "displayName": "ema_200",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "golden_cross",
+              "displayName": "golden_cross",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "death_cross",
+              "displayName": "death_cross",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        928,
+        -1184
+      ],
+      "id": "2ff32bbc-eb6d-4973-a96a-2a7846fd313a",
+      "name": "Insert rows in a table1",
+      "credentials": {
+        "postgres": {
+          "id": "NxUqE3XHL97tJnH6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nvar id=1;\nfor (const item of $('SIGNAL BUY/SELL').all()) {\n  item.json.id = id;\n  id++;\n}\n\nreturn $('SIGNAL BUY/SELL').all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        -1184
+      ],
+      "id": "22c3036f-f35b-4f9b-bfe1-4abb7d2fecfb",
       "name": "Code in JavaScript"
     }
   ],
@@ -239,6 +668,11 @@
             "node": "SIGNAL BUY/SELL",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "HTTP Request Candle Stick",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -258,7 +692,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request Candle Stick",
+            "node": "TruncateCandleSticks",
             "type": "main",
             "index": 0
           }
@@ -280,6 +714,93 @@
       "main": [
         [
           {
+            "node": "Load Tickers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Candle Stick": {
+      "main": [
+        []
+      ]
+    },
+    "DataTable": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        []
+      ]
+    },
+    "TruncateCandleSticks": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Tickers": {
+      "main": [
+        [
+          {
+            "node": "Split Tickers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "DataTable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SIGNAL BUY/SELL": {
+      "main": [
+        [
+          {
+            "node": "TruncateMarketSignals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TruncateMarketSignals": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
             "node": "Code in JavaScript",
             "type": "main",
             "index": 0
@@ -291,7 +812,7 @@
       "main": [
         [
           {
-            "node": "Split Tickers",
+            "node": "Insert rows in a table1",
             "type": "main",
             "index": 0
           }
@@ -304,7 +825,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "c51a6d6c-5d45-4176-874e-6430d62f5596",
+  "versionId": "e9ff56f4-43ae-4c19-b12e-43e9f21b02b9",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
