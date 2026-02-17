@@ -15,13 +15,13 @@
         },
         "options": {}
       },
-      "id": "1fd36d61-ab35-4afa-96ea-81c3c4bdfedb",
+      "id": "9891d9dc-dbd1-42a9-8c76-881d1ad339cf",
       "name": "Stock List",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -432,
-        -1040
+        -1296,
+        160
       ]
     },
     {
@@ -29,13 +29,13 @@
         "fieldToSplitOut": "tickers",
         "options": {}
       },
-      "id": "cba22e3e-a880-48d4-bc28-73b241b5c159",
+      "id": "5fe16e88-5411-41a1-827a-cdd333df1a9f",
       "name": "Split Tickers",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        -224,
-        -880
+        -1088,
+        320
       ]
     },
     {
@@ -47,13 +47,13 @@
           }
         }
       },
-      "id": "8622995d-c8e0-442f-8d80-6ee745b3febf",
+      "id": "e09a7feb-f7f3-4c7b-8b8a-08742e059fb6",
       "name": "Yahoo Finance API",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -32,
-        -880
+        -896,
+        320
       ],
       "onError": "continueRegularOutput"
     },
@@ -62,23 +62,23 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -800,
-        -880
+        -1664,
+        320
       ],
-      "id": "a40de86c-da8f-4862-b3aa-08580df900d1",
+      "id": "72f38d93-e4c6-4b70-a97d-bee074c30006",
       "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
         "jsCode": "const charts = [];  \n$input.all().forEach(item => {\n  \n  const result=item.json.chart.result[0];\n  const ts = result.timestamp;\n  const q = result.indicators.quote[0];\n\n  const candles = ts.map((t, i) => ({\n      x: new Date(t * 1000).getTime(),\n      o: q.open[i],\n      h: q.high[i],\n      l: q.low[i],\n      c: q.close[i],\n  }));   \n\n  charts.push({ json: { symbol: result.meta.symbol, candles }});\n  \n});\n\n\nreturn charts;\n"
       },
-      "id": "7474bb34-556c-4ad3-bf0d-b1beed795150",
+      "id": "b816c75c-25c6-4269-8ecd-6c8b4f5fabee",
       "name": "OHLC",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        208,
-        -640
+        -656,
+        560
       ]
     },
     {
@@ -89,10 +89,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -800,
-        -1040
+        -1664,
+        160
       ],
-      "id": "7e87f917-e377-4b67-8c72-87389f7541af",
+      "id": "feace621-cb92-4625-b4e3-877c49f49024",
       "name": "Webhook",
       "webhookId": "4554be53-85ff-486d-b532-1820c57ba2e4"
     },
@@ -119,10 +119,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        208,
-        -880
+        -656,
+        320
       ],
-      "id": "2e8c5389-cbb3-4420-a7b7-b8639e629554",
+      "id": "7190fcaa-ea9f-46ab-a6d5-5f6e4f555007",
       "name": "HTTP Request Candle Stick"
     },
     {
@@ -132,10 +132,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        208,
-        -1072
+        -656,
+        128
       ],
-      "id": "9736e7f8-992b-46cf-9e4a-708b108ebbe0",
+      "id": "dbcaedcf-2e83-4e71-a48f-bdad09bd511e",
       "name": "SIGNAL BUY/SELL"
     },
     {
@@ -177,131 +177,17 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -608,
-        -880
+        -1472,
+        320
       ],
-      "id": "6757bcc7-b99d-4940-a427-1a003fa41f74",
+      "id": "a1e51eeb-5b58-4e1d-9618-0987041d3aa2",
       "name": "Symbol",
       "credentials": {
         "postgres": {
-          "id": "NxUqE3XHL97tJnH6",
+          "id": "QlzKrRv21JGL4bDj",
           "name": "Postgres account"
         }
       }
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "value": "public",
-          "mode": "list",
-          "cachedResultName": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "candle_sticks",
-          "mode": "list",
-          "cachedResultName": "candle_sticks"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "o": "={{ $input.item.json.h}}",
-            "h": "={{ $input.item.json.h}}",
-            "l": "={{ $input.item.json.l}}",
-            "c": "={{ $input.item.json.c}}",
-            "symbol": "={{ $input.item.json.symbol}}",
-            "x": "={{ new DateTime($input.item.json.x)}}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "symbol",
-              "displayName": "symbol",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "x",
-              "displayName": "x",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "o",
-              "displayName": "o",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "h",
-              "displayName": "h",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "l",
-              "displayName": "l",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "c",
-              "displayName": "c",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        976,
-        -768
-      ],
-      "id": "307f28d4-de38-4211-b29a-d2bd5c0319c5",
-      "name": "Insert rows in a table",
-      "credentials": {
-        "postgres": {
-          "id": "NxUqE3XHL97tJnH6",
-          "name": "Postgres account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst chart = [];\nfor (const item of $('OHLC').all()) {\n  item.json.candles.forEach(candle => {\n    candle.symbol = item.json.symbol.replace('.BK','');\n    chart.push(candle);\n  });   \n}\nreturn chart;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        784,
-        -768
-      ],
-      "id": "df70715b-012a-487b-a006-12e2063a950f",
-      "name": "DataTable"
     },
     {
       "parameters": {
@@ -322,14 +208,14 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        400,
-        -640
+        -464,
+        560
       ],
-      "id": "496bf8d4-482f-4646-b63a-cfa8c0bdc7cb",
+      "id": "6a6c3ad6-e191-463f-996c-2659ee9a45b2",
       "name": "TruncateCandleSticks",
       "credentials": {
         "postgres": {
-          "id": "NxUqE3XHL97tJnH6",
+          "id": "QlzKrRv21JGL4bDj",
           "name": "Postgres account"
         }
       }
@@ -341,45 +227,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -432,
-        -880
+        -1296,
+        320
       ],
-      "id": "cf6aa9a7-069b-417b-b4fe-8ada32a7a02d",
+      "id": "fd3403aa-ba97-4057-9e02-6957c05f04fb",
       "name": "Load Tickers"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
-              "leftValue": "={{ $json[\"success\"] }}",
-              "rightValue": "true",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        576,
-        -640
-      ],
-      "id": "0e7d9629-d73a-4b4a-b921-2b508a25c1ef",
-      "name": "If"
     },
     {
       "parameters": {
@@ -400,51 +252,30 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        400,
-        -1072
+        -464,
+        128
       ],
-      "id": "00511b6b-930e-48bd-9e84-49cfefdcfd09",
+      "id": "5a17c372-f8c2-4d39-856a-a0d3c534f7bd",
       "name": "TruncateMarketSignals",
       "credentials": {
         "postgres": {
-          "id": "NxUqE3XHL97tJnH6",
+          "id": "QlzKrRv21JGL4bDj",
           "name": "Postgres account"
         }
       }
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
-              "leftValue": "={{ $json[\"success\"] }}",
-              "rightValue": "true",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nvar id=1;\nfor (const item of $('SIGNAL BUY/SELL').all()) {\n  item.json.id = id;\n  id++;\n}\n\nreturn $('SIGNAL BUY/SELL').all();"
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        560,
-        -1072
+        -48,
+        0
       ],
-      "id": "2374339c-f662-497f-aa8d-7ffc13e89716",
-      "name": "If1"
+      "id": "6e1bfca3-9f6f-48eb-8547-2d56a577f111",
+      "name": "MarketSignalDataTable"
     },
     {
       "parameters": {
@@ -606,30 +437,199 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        928,
-        -1184
+        160,
+        0
       ],
-      "id": "2ff32bbc-eb6d-4973-a96a-2a7846fd313a",
-      "name": "Insert rows in a table1",
+      "id": "fe8a7f30-ff15-4ad8-97c1-f1eec1637ff0",
+      "name": "InsertMarketSignal",
       "credentials": {
         "postgres": {
-          "id": "NxUqE3XHL97tJnH6",
+          "id": "QlzKrRv21JGL4bDj",
           "name": "Postgres account"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nvar id=1;\nfor (const item of $('SIGNAL BUY/SELL').all()) {\n  item.json.id = id;\n  id++;\n}\n\nreturn $('SIGNAL BUY/SELL').all();"
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst chart = [];\nfor (const item of $('OHLC').all()) {\n  item.json.candles.forEach(candle => {\n    candle.symbol = item.json.symbol.replace('.BK','');\n    chart.push(candle);\n  });   \n}\nreturn chart;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        768,
-        -1184
+        -48,
+        400
       ],
-      "id": "22c3036f-f35b-4f9b-bfe1-4abb7d2fecfb",
-      "name": "Code in JavaScript"
+      "id": "4d9f3886-3436-4ef0-82f6-2287395144fd",
+      "name": "CandleStickDataTable"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "candle_sticks",
+          "mode": "list",
+          "cachedResultName": "candle_sticks"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "o": "={{ $input.item.json.h}}",
+            "h": "={{ $input.item.json.h}}",
+            "l": "={{ $input.item.json.l}}",
+            "c": "={{ $input.item.json.c}}",
+            "symbol": "={{ $input.item.json.symbol}}",
+            "x": "={{ new DateTime($input.item.json.x)}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "x",
+              "displayName": "x",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "o",
+              "displayName": "o",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "h",
+              "displayName": "h",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "l",
+              "displayName": "l",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "c",
+              "displayName": "c",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        160,
+        400
+      ],
+      "id": "b4ca8159-db9c-463a-9e4e-6d425f7eaa2f",
+      "name": "InsertCandleSticks",
+      "credentials": {
+        "postgres": {
+          "id": "QlzKrRv21JGL4bDj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
+              "leftValue": "={{ $json[\"success\"] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -272,
+        480
+      ],
+      "id": "66400c6a-31e9-4ea6-bd00-9211cc377772",
+      "name": "IfDoneTruncateCandleSticks"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
+              "leftValue": "={{ $json[\"success\"] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -272,
+        64
+      ],
+      "id": "457303f8-9175-46d8-8972-20a62e231678",
+      "name": "IfDoneTruncateMarketSignal"
     }
   ],
   "pinData": {},
@@ -721,32 +721,11 @@
         ]
       ]
     },
-    "HTTP Request Candle Stick": {
-      "main": [
-        []
-      ]
-    },
-    "DataTable": {
-      "main": [
-        [
-          {
-            "node": "Insert rows in a table",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Insert rows in a table": {
-      "main": [
-        []
-      ]
-    },
     "TruncateCandleSticks": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "IfDoneTruncateCandleSticks",
             "type": "main",
             "index": 0
           }
@@ -758,17 +737,6 @@
         [
           {
             "node": "Split Tickers",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "DataTable",
             "type": "main",
             "index": 0
           }
@@ -790,29 +758,51 @@
       "main": [
         [
           {
-            "node": "If1",
+            "node": "IfDoneTruncateMarketSignal",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If1": {
+    "MarketSignalDataTable": {
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "InsertMarketSignal",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript": {
+    "CandleStickDataTable": {
       "main": [
         [
           {
-            "node": "Insert rows in a table1",
+            "node": "InsertCandleSticks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfDoneTruncateCandleSticks": {
+      "main": [
+        [
+          {
+            "node": "CandleStickDataTable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfDoneTruncateMarketSignal": {
+      "main": [
+        [
+          {
+            "node": "MarketSignalDataTable",
             "type": "main",
             "index": 0
           }
@@ -825,11 +815,11 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "e9ff56f4-43ae-4c19-b12e-43e9f21b02b9",
+  "versionId": "800a3528-3f65-4be1-95b7-a427105d2faf",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+    "instanceId": "b0928f12e1eb5a286630102dc00fd975db9222bc811d84b6d141f7aed7780aea"
   },
-  "id": "t2OeoMTuxaCdpNEKIutLk",
+  "id": "02AhfYvYZnvBzOAR3pPJ_",
   "tags": []
 }
