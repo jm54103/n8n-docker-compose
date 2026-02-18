@@ -101,8 +101,7 @@ const volumeData = raw.map(d => ({
 }));
 
 // กำหนด URL ของ API
-//const apiUrl = 'http://localhost:5000/candle-sticks/PTT';
-//const apiUrl = 'http://localhost:5000/PTT.json';
+const apiUrl = 'http://localhost:3000/candle-sticks/PTT';
 
 async function getCandleSticks() {
     try {
@@ -139,7 +138,7 @@ new Chart(ctx, {
       {
         type: "candlestick",
         label: "Price",
-        data: raw,
+        data: candles,
         yAxisID: "price",
         color: {
           up: "#00C853",

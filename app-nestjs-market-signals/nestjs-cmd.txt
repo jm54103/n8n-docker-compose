@@ -1,0 +1,3 @@
+nest g controller /modules/candle-sticks  
+nest g service /modules/candle-sticks  
+nest g module /modules/candle-sticks  

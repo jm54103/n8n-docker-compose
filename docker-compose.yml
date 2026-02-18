@@ -63,20 +63,20 @@ services:
       - "5000:5000"
     restart: always
   
-  nodeapp-dev:
-    build:
-        context: ./app
-        target: development
-    container_name: n8n_node-app-dev
-    ports:
-      - "5173:5173"      
-    volumes:      
-      - ./app:/app           # ✅ แมปโฟลเดอร์โปรเจกต์ (Hot Reload อาศัยส่วนนี้) 
-      - /app/node_modules    # ✅ ป้องกัน node_modules ในเครื่องทับใน Container 
-    environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true # ✅ ช่วยให้ Vite ตรวจจับการเปลี่ยนแปลงไฟล์ใน Docker ได้ดีขึ้น
-    command: npm run dev -- --host 0.0.0.0    
+  #nodeapp-dev:
+  #  build:
+  #      context: ./app
+  #      target: development
+  #  container_name: n8n_node-app-dev
+  #  ports:
+  #    - "5173:5173"      
+  # volumes:      
+  #    - ./app:/app           # ✅ แมปโฟลเดอร์โปรเจกต์ (Hot Reload อาศัยส่วนนี้) 
+  #    - /app/node_modules    # ✅ ป้องกัน node_modules ในเครื่องทับใน Container 
+  #  environment:
+  #    - NODE_ENV=development
+  #    - CHOKIDAR_USEPOLLING=true # ✅ ช่วยให้ Vite ตรวจจับการเปลี่ยนแปลงไฟล์ใน Docker ได้ดีขึ้น
+  #  command: npm run dev -- --host 0.0.0.0    
   
   ldap:
     image: osixia/openldap:latest
