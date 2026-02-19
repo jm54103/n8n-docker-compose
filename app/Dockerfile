@@ -1,34 +1,52 @@
-# ---------- Base ----------
-FROM node:20-alpine AS base
-WORKDIR /app
-COPY package*.json ./
+# =========================
+# 1️⃣ Frontend Build Stage
+# =========================
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /app/frontend
+
+COPY frontend/package*.json ./
 RUN npm ci
 
-# ---------- Development ----------
-FROM base AS development
-COPY . .
-ENV NODE_ENV=development
-CMD ["npm", "run", "dev"]
-
-# ---------- Builder ----------
-FROM base AS builder
-COPY . .
+COPY frontend ./
 RUN npm run build
 
-# ---------- Production ----------
-FROM node:20-alpine AS production
-WORKDIR /app
 
-COPY package*.json ./
+# =========================
+# 2️⃣ Backend Build Stage
+# =========================
+FROM node:20-alpine AS backend-builder
+
+WORKDIR /app/backend
+
+COPY backend/package*.json ./
+RUN npm ci
+
+COPY backend ./
+RUN npm run build
+
+
+# =========================
+# 3️⃣ Production Stage
+# =========================
+FROM node:20-alpine AS production
+
+WORKDIR /app/backend
+
+# Copy backend build
+COPY --from=backend-builder /app/backend/dist ./dist
+COPY --from=backend-builder /app/backend/package*.json ./
+
+# Install only production deps
 RUN npm ci --omit=dev
 
-COPY --from=builder /app/dist ./dist
-COPY server.js .
+# Copy frontend build into public folder
+COPY --from=frontend-builder /app/frontend/dist ./public
 
 ENV NODE_ENV=production
-EXPOSE 5000
+ENV PORT=3000
 
-RUN chown -R node:node /app
-USER node
+EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["node", "dist/main.js"]
+

@@ -36,7 +36,7 @@ services:
       POSTGRES_PASSWORD: n8npass
       POSTGRES_DB: n8n
     ports:
-      - "5432:5432"          # ✅ ให้โปรแกรมอื่นต่อได้
+      - "5432:5432"          
     volumes:
       - postgres_data:/var/lib/postgresql/data      
      
@@ -54,29 +54,16 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
       
-  nodeapp:
+  app-nestjs:
     build:
         context: ./app
         target: production
-    container_name: n8n_node-app
+    container_name: n8n_node-app-nestjs-market-signals
     ports:
-      - "5000:5000"
-    restart: always
-  
-  #nodeapp-dev:
-  #  build:
-  #      context: ./app
-  #      target: development
-  #  container_name: n8n_node-app-dev
-  #  ports:
-  #    - "5173:5173"      
-  # volumes:      
-  #    - ./app:/app           # ✅ แมปโฟลเดอร์โปรเจกต์ (Hot Reload อาศัยส่วนนี้) 
-  #    - /app/node_modules    # ✅ ป้องกัน node_modules ในเครื่องทับใน Container 
-  #  environment:
-  #    - NODE_ENV=development
-  #    - CHOKIDAR_USEPOLLING=true # ✅ ช่วยให้ Vite ตรวจจับการเปลี่ยนแปลงไฟล์ใน Docker ได้ดีขึ้น
-  #  command: npm run dev -- --host 0.0.0.0    
+      - "3000:3000"
+    depends_on:
+      - postgres
+    restart: always  
   
   ldap:
     image: osixia/openldap:latest
