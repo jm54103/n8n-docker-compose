@@ -20,10 +20,11 @@ export class CandleSticksService {
 
   // 2. ดึงข้อมูลแบบระบุช่วงวันที่ (Date Range)
   async findByDateRange(symbol: string, startDate: Date, endDate: Date): Promise<CandleStick[]> {
+    console.log('symbol:'+symbol);
     return await this.candleRepository.find({
-      where: {
+      where: { 
         symbol,
-        x: Between(startDate, endDate),
+        x : Between(startDate,endDate)
       },
       order: { x: 'ASC' },
     });

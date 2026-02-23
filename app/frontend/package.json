@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "deploy:fe": "powershell -Command \"Remove-Item -Path './../backend/public/*' -Recurse -Force -ErrorAction SilentlyContinue; Copy-Item -Path './dist/*' -Destination './../backend/public/' -Recurse -Force\"",   
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

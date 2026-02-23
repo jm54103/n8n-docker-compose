@@ -16,19 +16,25 @@ export class CandleSticksController {
   }
 
   @Get(':symbol/range')
-  @ApiOperation({ summary: 'ดึงข้อมูลแท่งเทียนตามช่วงวันที่' })
-  @ApiQuery({ name: 'start', example: '2024-01-01' })
-  @ApiQuery({ name: 'end', example: '2026-01-01' })
+  @ApiOperation({ summary: 'ดึงข้อมูลแท่งเทียนตามช่วงวันที่' })  
+  @ApiQuery({ name: 'start', example: '2026-01-01' })
+  @ApiQuery({ name: 'end', example: '2026-02-23' })
   async findByRange(
     @Param('symbol') symbol: string,
     @Query('start') start: string,
     @Query('end') end: string,
   ) {
+
+    const startDate=new Date(start);
+    const endDate=new Date(end);
+    
+    console.log(`${symbol} Searching between: ${start} and ${end}`);
+
     return await this.candleSticksService.findByDateRange(
-      symbol.toUpperCase(),
-      new Date(start),
-      new Date(end),
-    );
+      symbol,
+      startDate,
+      endDate,
+    )
   }
 
   @Post()

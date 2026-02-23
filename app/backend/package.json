@@ -5,6 +5,7 @@
     "v-dev": "concurrently \"node server.js\" \"vite\"",
     "v-start": "node server.js",
     "v-build": "vite build",
+    "deploy:fe": "powershell -Command \"Remove-Item -Path './public/*' -Recurse -Force -ErrorAction SilentlyContinue; Copy-Item -Path './../frontend/dist/*' -Destination './public/' -Recurse -Force\"",   
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",

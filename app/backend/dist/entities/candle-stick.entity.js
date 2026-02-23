@@ -9,8 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CandleStick = void 0;
+exports.CandleStick = exports.DateToNumberTransformer = exports.ColumnNumericTransformer = void 0;
 const typeorm_1 = require("typeorm");
+class ColumnNumericTransformer {
+    to(data) {
+        return data;
+    }
+    from(data) {
+        return parseFloat(data);
+    }
+}
+exports.ColumnNumericTransformer = ColumnNumericTransformer;
+class DateToNumberTransformer {
+    to(data) {
+        return data;
+    }
+    from(data) {
+        return new Date(data).getTime();
+    }
+}
+exports.DateToNumberTransformer = DateToNumberTransformer;
 let CandleStick = class CandleStick {
 };
 exports.CandleStick = CandleStick;
@@ -19,25 +37,29 @@ __decorate([
     __metadata("design:type", String)
 ], CandleStick.prototype, "symbol", void 0);
 __decorate([
-    (0, typeorm_1.PrimaryColumn)({ type: 'date' }),
+    (0, typeorm_1.PrimaryColumn)({ type: 'date', transformer: new DateToNumberTransformer() }),
     __metadata("design:type", Date)
 ], CandleStick.prototype, "x", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8 }),
+    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() }),
     __metadata("design:type", Number)
 ], CandleStick.prototype, "o", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8 }),
+    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() }),
     __metadata("design:type", Number)
 ], CandleStick.prototype, "h", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8 }),
+    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() }),
     __metadata("design:type", Number)
 ], CandleStick.prototype, "l", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8 }),
+    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() }),
     __metadata("design:type", Number)
 ], CandleStick.prototype, "c", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() }),
+    __metadata("design:type", Number)
+], CandleStick.prototype, "v", void 0);
 exports.CandleStick = CandleStick = __decorate([
     (0, typeorm_1.Entity)({ name: 'candle_sticks', schema: 'public' })
 ], CandleStick);

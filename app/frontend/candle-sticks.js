@@ -74,7 +74,7 @@ const sharedCrosshair = {
   }
 };
 
-Chart.register(sharedCrosshair);
+//Chart.register(sharedCrosshair);
 
 /* ================= Sample Data ================= */
 const raw = [];
@@ -90,18 +90,9 @@ for (let i = 0; i < 60; i++) {
   });
 }
 
-const rsiData = computeRSI(raw, 14);
-
-const volumeData = raw.map(d => ({
-  x: d.x,
-  y: d.v,
-  backgroundColor: d.c >= d.o
-    ? "rgba(0,200,100,0.4)"
-    : "rgba(200,0,0,0.4)"
-}));
 
 // กำหนด URL ของ API
-const apiUrl = 'http://localhost:3000/candle-sticks/PTT';
+const apiUrl = 'http://localhost:3000/candle-sticks/PTT/range?start=2026-01-01&end=2026-02-23';
 
 async function getCandleSticks() {
     try {
@@ -127,10 +118,22 @@ async function getCandleSticks() {
 }
 
 // เรียกใช้งานฟังก์ชัน
-const candles=getCandleSticks();
+const candle_sticks = await getCandleSticks();
+const rsiData = computeRSI(candles, 14);
+const volumeData = candles.map(d => ({
+  x: d.x,
+  y: d.v,
+  backgroundColor: d.c >= d.o
+    ? "rgba(0,200,100,0.4)"
+    : "rgba(200,0,0,0.4)"
+}));
+
 
 /* ================= Chart ================= */
 const ctx = document.getElementById("chart");
+
+console.log(candle_sticks.length);
+console.log(candle_sticks[0]);
 
 new Chart(ctx, {
   data: {
@@ -138,7 +141,7 @@ new Chart(ctx, {
       {
         type: "candlestick",
         label: "Price",
-        data: raw,
+        data: candle_sticks,
         yAxisID: "price",
         color: {
           up: "#00C853",

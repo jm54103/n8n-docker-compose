@@ -9,10 +9,15 @@ import { CandleStick } from './entities/candle-stick.entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-
+    ConfigModule.forRoot({     
+      // ถ้า NODE_ENV เป็น production ให้โหลด .env.production 
+      // ถ้าไม่ใช่ ให้โหลด .env.development
+      envFilePath: process.env.NODE_ENV === 'production' 
+        ? '.env.production' 
+        : '.env.development',
+      isGlobal: true,          
+    }  
+    ),    
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,

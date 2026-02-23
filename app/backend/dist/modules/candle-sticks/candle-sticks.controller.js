@@ -25,7 +25,10 @@ let CandleSticksController = class CandleSticksController {
         return await this.candleSticksService.findAllBySymbol(symbol.toUpperCase());
     }
     async findByRange(symbol, start, end) {
-        return await this.candleSticksService.findByDateRange(symbol.toUpperCase(), new Date(start), new Date(end));
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+        console.log(`${symbol} Searching between: ${start} and ${end}`);
+        return await this.candleSticksService.findByDateRange(symbol, startDate, endDate);
     }
     async create(candleData) {
         return await this.candleSticksService.create(candleData);
@@ -44,8 +47,8 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':symbol/range'),
     (0, swagger_1.ApiOperation)({ summary: 'ดึงข้อมูลแท่งเทียนตามช่วงวันที่' }),
-    (0, swagger_1.ApiQuery)({ name: 'start', example: '2024-01-01' }),
-    (0, swagger_1.ApiQuery)({ name: 'end', example: '2026-01-01' }),
+    (0, swagger_1.ApiQuery)({ name: 'start', example: '2026-01-01' }),
+    (0, swagger_1.ApiQuery)({ name: 'end', example: '2026-02-23' }),
     __param(0, (0, common_1.Param)('symbol')),
     __param(1, (0, common_1.Query)('start')),
     __param(2, (0, common_1.Query)('end')),

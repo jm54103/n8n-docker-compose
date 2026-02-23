@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const market_signals_module_1 = require("./modules/market-signals/market-signals.module");
 const market_signal_entity_1 = require("./entities/market-signal.entity");
@@ -19,13 +20,20 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule.forRoot({
+                envFilePath: process.env.NODE_ENV === 'production'
+                    ? '.env.production'
+                    : '.env.development',
+                isGlobal: true,
+            }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'n8n',
-                password: 'n8npass',
-                database: 'set100',
+                host: process.env.DB_HOST,
+                port: Number(process.env.DB_PORT) || 5432,
+                username: process.env.DB_USERNAME,
+                password: process.env.DB_PASSWORD,
+                database: process.env.DB_NAME,
+                autoLoadEntities: true,
                 entities: [market_signal_entity_1.MarketSignal, candle_stick_entity_1.CandleStick],
                 synchronize: false,
             }),

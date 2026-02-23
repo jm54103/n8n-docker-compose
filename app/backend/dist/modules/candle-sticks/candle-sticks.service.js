@@ -28,10 +28,11 @@ let CandleSticksService = class CandleSticksService {
         });
     }
     async findByDateRange(symbol, startDate, endDate) {
+        console.log('symbol:' + symbol);
         return await this.candleRepository.find({
             where: {
                 symbol,
-                x: (0, typeorm_2.Between)(startDate, endDate),
+                x: (0, typeorm_2.Between)(startDate, endDate)
             },
             order: { x: 'ASC' },
         });

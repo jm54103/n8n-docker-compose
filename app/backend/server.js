@@ -16,12 +16,10 @@ app.get('/api/health', (req, res) => {
 })
 
 if (!isDev) {
-
   app.use(express.static(path.join(__dirname, 'dist')))
-
+}else{
+  app.use(express.static(path.join(__dirname, 'public')))
 }
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on ${PORT}`)
