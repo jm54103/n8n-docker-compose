@@ -58,11 +58,11 @@ services:
     build:
         context: ./app
         target: production
-    container_name: n8n_node-app-nestjs-market-signals
+    container_name: n8n_node-app-nestjs
     depends_on:
        - postgres
     ports:
-       - "3000:3000"
+       - "5000:5000"
     environment:
        - NODE_ENV=production
        - DB_HOST=postgres

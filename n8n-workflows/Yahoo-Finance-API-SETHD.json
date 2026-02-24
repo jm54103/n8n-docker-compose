@@ -85,35 +85,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://quickchart.io/chart",
-        "sendBody": true,
-        "specifyBody": "=json",
-        "bodyParameters": {
-          "parameters": [
-            {}
-          ]
-        },
-        "jsonBody": "={\n  \"version\": \"3\",\n  \"backgroundColor\": \"#fff\",\n  \"width\": 500,\n  \"height\": 300,\n  \"devicePixelRatio\": 1.0,\n  \"chart\": \"{  type: 'candlestick', data: {    datasets: [      { label: '{{$json.symbol}}',  data: [ {{$json.candles.map(item => '{ x : ' +item.x +', o : '+item.o+', h:'+ item.h +', l : '+ item.l+', c: '+item.c+'}') }}],      },    ],  },  options: {    scales:{      x:{        adapters: {          date: {            zone: 'UTC-4'          }        },        time: {          unit: 'day',          stepSize: 1,          displayFormats: {            day: '',            month: 'MMM',          }        },        ticks: {          autoSkip: false,        },      }    },    plugins: {      legend: {        display: true,      },    },  },}\"\n}",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        208,
-        -880
-      ],
-      "id": "2e8c5389-cbb3-4420-a7b7-b8639e629554",
-      "name": "HTTP Request Candle Stick"
-    },
-    {
-      "parameters": {
         "jsCode": "// ================= Helper Functions =================\n\n// EMA\nfunction calculateEMA(prices, period) {\n  if (prices.length < period) return [];\n\n  const k = 2 / (period + 1);\n  let ema = [];\n  \n  // First EMA = SMA\n  let sma = prices.slice(0, period).reduce((a, b) => a + b, 0) / period;\n  ema[period - 1] = sma;\n\n  for (let i = period; i < prices.length; i++) {\n    ema[i] = (prices[i] - ema[i - 1]) * k + ema[i - 1];\n  }\n\n  return ema;\n}\n\n// RSI\nfunction calculateRSI(prices, period = 14) {\n  if (prices.length <= period) return [];\n\n  let gains = [];\n  let losses = [];\n\n  for (let i = 1; i < prices.length; i++) {\n    let change = prices[i] - prices[i - 1];\n    gains.push(change > 0 ? change : 0);\n    losses.push(change < 0 ? Math.abs(change) : 0);\n  }\n\n  let avgGain = gains.slice(0, period).reduce((a, b) => a + b, 0) / period;\n  let avgLoss = losses.slice(0, period).reduce((a, b) => a + b, 0) / period;\n\n  let rsi = [];\n\n  for (let i = period; i < gains.length; i++) {\n    avgGain = (avgGain * (period - 1) + gains[i]) / period;\n    avgLoss = (avgLoss * (period - 1) + losses[i]) / period;\n\n    let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;\n    rsi[i] = 100 - (100 / (1 + rs));\n  }\n\n  return rsi;\n}\n\n\n\n\n// ================= Main =================\n\nconst inputData = $input.all();\nlet output = [];\n\nfor (const item of inputData) {\n\n  const chartData = item.json.chart?.result?.[0];\n  if (!chartData) continue;\n\n  const symbol = chartData.meta.symbol.replace('.BK','');\n  const close = chartData.indicators.quote[0].close;\n\n  const ema50 = calculateEMA(close, 50);\n  const ema200 = calculateEMA(close, 200);\n  const rsi14 = calculateRSI(close, 14);\n\n  const lastIndex = close.length - 1;\n\n  const lastClose = close[lastIndex];\n  const lastEMA50 = ema50[lastIndex] || null;\n  const prevEMA50 = ema50[lastIndex - 1] || null;\n  const lastEMA200 = ema200[lastIndex] || null;\n  const prevEMA200 = ema200[lastIndex - 1] || null;\n  const lastRSI = rsi14[rsi14.length - 1] || null;\n\n  // ===== Signals =====\n  let goldenCross = false;\n  let deathCross = false;\n  let rsiOverbought = false;\n  let rsiOversold = false;\n\n  if (lastEMA50 && lastEMA200 && prevEMA50 && prevEMA200) {\n    goldenCross = prevEMA50 < prevEMA200 && lastEMA50 > lastEMA200;\n    deathCross = prevEMA50 > prevEMA200 && lastEMA50 < lastEMA200;\n  }\n\n  if (lastRSI !== null) {\n    rsiOverbought = lastRSI > 70;\n    rsiOversold = lastRSI < 30;\n  }\n\n  // Combine Signal Logic\n  let signal = \"NEUTRAL\";\n\n  if (goldenCross && !rsiOverbought) {\n    signal = \"STRONG BUY\";\n  } else if (deathCross && !rsiOversold) {\n    signal = \"STRONG SELL\";\n  } else if (rsiOversold) {\n    signal = \"BUY (RSI Oversold)\";\n  } else if (rsiOverbought) {\n    signal = \"SELL (RSI Overbought)\";\n  }\n\n  // ===== Trend Detection =====\n  let trend = \"SIDEWAYS\";\n\n  if (lastEMA50 && lastEMA200) {\n    if (lastEMA50 > lastEMA200) {\n      trend = \"BULLISH\";\n    } else if (lastEMA50 < lastEMA200) {\n      trend = \"BEARISH\";\n    }\n  }\n\n  output.push({\n    symbol,\n    lastClose,\n    signal,   \n    trend,   \n    RSI14: lastRSI,\n    rsiOverbought,\n    rsiOversold,    \n    EMA50: lastEMA50,\n    EMA200: lastEMA200,   \n    goldenCross,\n    deathCross,    \n  });\n}\n\nreturn output.map(i => ({ json: i }));\n"
       },
       "type": "n8n-nodes-base.code",
@@ -178,131 +149,6 @@
     },
     {
       "parameters": {
-        "schema": {
-          "__rl": true,
-          "value": "public",
-          "mode": "list",
-          "cachedResultName": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "candle_sticks",
-          "mode": "list",
-          "cachedResultName": "candle_sticks"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "o": "={{ $input.item.json.o}}",
-            "h": "={{ $input.item.json.h}}",
-            "l": "={{ $input.item.json.l}}",
-            "c": "={{ $input.item.json.c}}",
-            "symbol": "={{ $input.item.json.symbol}}",
-            "x": "={{ new Date($input.item.json.x)}}",
-            "v": "={{ $input.item.json.v}}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "symbol",
-              "displayName": "symbol",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "x",
-              "displayName": "x",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "o",
-              "displayName": "o",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "h",
-              "displayName": "h",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "l",
-              "displayName": "l",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "c",
-              "displayName": "c",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "v",
-              "displayName": "v",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.6,
-      "position": [
-        976,
-        -768
-      ],
-      "id": "307f28d4-de38-4211-b29a-d2bd5c0319c5",
-      "name": "Insert rows in a table",
-      "credentials": {
-        "postgres": {
-          "id": "NxUqE3XHL97tJnH6",
-          "name": "Postgres account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst chart = [];\nfor (const item of $('OHLCV').all()) {\n  item.json.candles.forEach(candle => {\n    candle.symbol = item.json.symbol.replace('.BK','');\n    chart.push(candle);\n  });   \n}\nreturn chart;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        784,
-        -768
-      ],
-      "id": "df70715b-012a-487b-a006-12e2063a950f",
-      "name": "DataTable"
-    },
-    {
-      "parameters": {
         "operation": "deleteTable",
         "schema": {
           "__rl": true,
@@ -347,40 +193,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
-              "leftValue": "={{ $json[\"success\"] }}",
-              "rightValue": "true",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        576,
-        -640
-      ],
-      "id": "0e7d9629-d73a-4b4a-b921-2b508a25c1ef",
-      "name": "If"
-    },
-    {
-      "parameters": {
         "operation": "deleteTable",
         "schema": {
           "__rl": true,
@@ -412,37 +224,16 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
-              "leftValue": "={{ $json[\"success\"] }}",
-              "rightValue": "true",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "jsCode": "const charts = [];  \n$input.all().forEach(item => {\n  \n  const result=item.json.chart.result[0];\n  const ts = result.timestamp;\n  const q = result.indicators.quote[0];\n\n  const candles = ts.map((t, i) => ({\n      x: new Date(t * 1000).getTime(),\n      o: q.open[i],\n      h: q.high[i],\n      l: q.low[i],\n      c: q.close[i],\n      v: q.volume[i]\n  }));   \n\n  charts.push({ json: { symbol: result.meta.symbol, candles }});\n  \n});\n\n\nreturn charts;\n"
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "id": "7474bb34-556c-4ad3-bf0d-b1beed795150",
+      "name": "OHLCV",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        560,
-        -1072
-      ],
-      "id": "2374339c-f662-497f-aa8d-7ffc13e89716",
-      "name": "If1"
+        208,
+        -640
+      ]
     },
     {
       "parameters": {
@@ -604,11 +395,11 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        928,
-        -1184
+        960,
+        -1248
       ],
       "id": "2ff32bbc-eb6d-4973-a96a-2a7846fd313a",
-      "name": "Insert rows in a table1",
+      "name": "InsertMarketSignals",
       "credentials": {
         "postgres": {
           "id": "NxUqE3XHL97tJnH6",
@@ -618,29 +409,238 @@
     },
     {
       "parameters": {
+        "method": "POST",
+        "url": "https://quickchart.io/chart",
+        "sendBody": true,
+        "specifyBody": "=json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"version\": \"3\",\n  \"backgroundColor\": \"#fff\",\n  \"width\": 500,\n  \"height\": 300,\n  \"devicePixelRatio\": 1.0,\n  \"chart\": \"{  type: 'candlestick', data: {    datasets: [      { label: '{{$json.symbol}}',  data: [ {{$json.candles.map(item => '{ x : ' +item.x +', o : '+item.o+', h:'+ item.h +', l : '+ item.l+', c: '+item.c+'}') }}],      },    ],  },  options: {    scales:{      x:{        adapters: {          date: {            zone: 'UTC-4'          }        },        time: {          unit: 'day',          stepSize: 1,          displayFormats: {            day: '',            month: 'MMM',          }        },        ticks: {          autoSkip: false,        },      }    },    plugins: {      legend: {        display: true,      },    },  },}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        -880
+      ],
+      "id": "2e8c5389-cbb3-4420-a7b7-b8639e629554",
+      "name": "QuickChartCandleStick"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
+              "leftValue": "={{ $json[\"success\"] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        576,
+        -1136
+      ],
+      "id": "2374339c-f662-497f-aa8d-7ffc13e89716",
+      "name": "IfTruncateMarketSignals"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst chart = [];\nfor (const item of $('OHLCV').all()) {\n  item.json.candles.forEach(candle => {\n    candle.symbol = item.json.symbol.replace('.BK','');\n    chart.push(candle);\n  });   \n}\nreturn chart;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        -864
+      ],
+      "id": "df70715b-012a-487b-a006-12e2063a950f",
+      "name": "PrepareCandleSticksDT"
+    },
+    {
+      "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nvar id=1;\nfor (const item of $('SIGNAL BUY/SELL').all()) {\n  item.json.id = id;\n  id++;\n}\n\nreturn $('SIGNAL BUY/SELL').all();"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        768,
-        -1184
+        752,
+        -1248
       ],
       "id": "22c3036f-f35b-4f9b-bfe1-4abb7d2fecfb",
-      "name": "Code in JavaScript"
+      "name": "PrepareMarketSignalsDT"
     },
     {
       "parameters": {
-        "jsCode": "const charts = [];  \n$input.all().forEach(item => {\n  \n  const result=item.json.chart.result[0];\n  const ts = result.timestamp;\n  const q = result.indicators.quote[0];\n\n  const candles = ts.map((t, i) => ({\n      x: new Date(t * 1000).getTime(),\n      o: q.open[i],\n      h: q.high[i],\n      l: q.low[i],\n      c: q.close[i],\n      v: q.volume[i]\n  }));   \n\n  charts.push({ json: { symbol: result.meta.symbol, candles }});\n  \n});\n\n\nreturn charts;\n"
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcf105fc-745d-4f62-9e56-2af7eeffb32e",
+              "leftValue": "={{ $json[\"success\"] }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
-      "id": "7474bb34-556c-4ad3-bf0d-b1beed795150",
-      "name": "OHLCV",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
       "position": [
-        208,
-        -640
-      ]
+        576,
+        -720
+      ],
+      "id": "0e7d9629-d73a-4b4a-b921-2b508a25c1ef",
+      "name": "IfTruncateCandleSticks"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "candle_sticks",
+          "mode": "list",
+          "cachedResultName": "candle_sticks"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "o": "={{ $input.item.json.o}}",
+            "h": "={{ $input.item.json.h}}",
+            "l": "={{ $input.item.json.l}}",
+            "c": "={{ $input.item.json.c}}",
+            "symbol": "={{ $input.item.json.symbol}}",
+            "x": "={{ new Date($input.item.json.x)}}",
+            "v": "={{ $input.item.json.v}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "x",
+              "displayName": "x",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "o",
+              "displayName": "o",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "h",
+              "displayName": "h",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "l",
+              "displayName": "l",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "c",
+              "displayName": "c",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "v",
+              "displayName": "v",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        976,
+        -864
+      ],
+      "id": "307f28d4-de38-4211-b29a-d2bd5c0319c5",
+      "name": "InsertCandleSticks",
+      "credentials": {
+        "postgres": {
+          "id": "NxUqE3XHL97tJnH6",
+          "name": "Postgres account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -681,7 +681,7 @@
             "index": 0
           },
           {
-            "node": "HTTP Request Candle Stick",
+            "node": "QuickChartCandleStick",
             "type": "main",
             "index": 0
           }
@@ -721,32 +721,11 @@
         ]
       ]
     },
-    "HTTP Request Candle Stick": {
-      "main": [
-        []
-      ]
-    },
-    "DataTable": {
-      "main": [
-        [
-          {
-            "node": "Insert rows in a table",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Insert rows in a table": {
-      "main": [
-        []
-      ]
-    },
     "TruncateCandleSticks": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "IfTruncateCandleSticks",
             "type": "main",
             "index": 0
           }
@@ -758,17 +737,6 @@
         [
           {
             "node": "Split Tickers",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "DataTable",
             "type": "main",
             "index": 0
           }
@@ -790,29 +758,7 @@
       "main": [
         [
           {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Insert rows in a table1",
+            "node": "IfTruncateMarketSignals",
             "type": "main",
             "index": 0
           }
@@ -829,6 +775,60 @@
           }
         ]
       ]
+    },
+    "QuickChartCandleStick": {
+      "main": [
+        []
+      ]
+    },
+    "IfTruncateMarketSignals": {
+      "main": [
+        [
+          {
+            "node": "PrepareMarketSignalsDT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PrepareCandleSticksDT": {
+      "main": [
+        [
+          {
+            "node": "InsertCandleSticks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PrepareMarketSignalsDT": {
+      "main": [
+        [
+          {
+            "node": "InsertMarketSignals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfTruncateCandleSticks": {
+      "main": [
+        [
+          {
+            "node": "PrepareCandleSticksDT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InsertCandleSticks": {
+      "main": [
+        []
+      ]
     }
   },
   "active": true,
@@ -836,7 +836,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "31f07f7c-e680-4e65-9f8c-ca8064da0d94",
+  "versionId": "9a35df73-fdb0-4a16-86ce-fd1491a49ea8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
