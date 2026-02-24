@@ -1,5 +1,5 @@
 # =========================
-# 1️⃣ Frontend Build Stage
+# 1.Frontend Build Stage
 # =========================
 FROM node:20-alpine AS frontend-builder
 
@@ -13,7 +13,7 @@ RUN npm run build
 
 
 # =========================
-# 2️⃣ Backend Build Stage
+# 2️.Backend Build Stage
 # =========================
 FROM node:20-alpine AS backend-builder
 
@@ -27,7 +27,7 @@ RUN npm run build
 
 
 # =========================
-# 3️⃣ Production Stage
+# 3️.Production Stage
 # =========================
 FROM node:20-alpine AS production
 

@@ -7,6 +7,9 @@ const path_1 = require("path");
 const express = require("express");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const isDev = process.env.NODE_ENV !== 'production';
+    const PORT = process.env.PORT;
+    console.log(`NODE_ENV ${process.env.NODE_ENV}`);
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Market Signal API')
         .setDescription('API สำหรับดึงข้อมูลสัญญาณเทคนิค (RSI, EMA, Crosses)')
@@ -16,14 +19,14 @@ async function bootstrap() {
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
     const frontendPath = (0, path_1.join)(__dirname, '..', 'public');
-    console.log(frontendPath);
+    console.log(`frontendPath => ${frontendPath}`);
     app.use(express.static(frontendPath));
     app.getHttpAdapter().get('/', (req, res) => {
         res.sendFile((0, path_1.join)(frontendPath, 'index.html'));
     });
-    await app.listen(3000);
-    console.log('🚀 API is running on: http://localhost:3000');
-    console.log('📖 Swagger Docs: http://localhost:3000/api');
+    await app.listen(PORT);
+    console.log(`🚀 API is running on: http://localhost:${PORT}`);
+    console.log(`📖 Swagger Docs: http://localhost:${PORT}/api`);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

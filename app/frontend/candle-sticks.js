@@ -90,9 +90,10 @@ for (let i = 0; i < 60; i++) {
   });
 }
 
+const host = window.location;
 
 // กำหนด URL ของ API
-const apiUrl = 'http://localhost:3000/candle-sticks/PTT/range?start=2026-01-01&end=2026-02-23';
+const apiUrl = `${host}candle-sticks/PTT/range?start=2025-06-01&end=2026-02-23`;
 
 async function getCandleSticks() {
     try {
@@ -119,8 +120,8 @@ async function getCandleSticks() {
 
 // เรียกใช้งานฟังก์ชัน
 const candle_sticks = await getCandleSticks();
-const rsiData = computeRSI(candles, 14);
-const volumeData = candles.map(d => ({
+const rsiData = computeRSI(candle_sticks, 14);
+const volumeData = candle_sticks.map(d => ({
   x: d.x,
   y: d.v,
   backgroundColor: d.c >= d.o

@@ -6,7 +6,14 @@ import { join } from 'path';
 import * as express from 'express';
 
 async function bootstrap() {
+
   const app = await NestFactory.create(AppModule);
+  
+  const isDev = process.env.NODE_ENV !== 'production';
+  const PORT = process.env.PORT;
+
+  console.log(`NODE_ENV ${process.env.NODE_ENV}`);
+ 
 
   // 2. ตั้งค่า Swagger
   const config = new DocumentBuilder()
@@ -17,11 +24,11 @@ async function bootstrap() {
     .build();
     
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // จะเข้าใช้งานผ่าน localhost:3000/api
+  SwaggerModule.setup('api', app, document); 
 
   const frontendPath = join(__dirname, '..', 'public');
 
-  console.log(frontendPath);
+  console.log(`frontendPath => ${frontendPath}`);
 
   // Serve static assets
   app.use(express.static(frontendPath));
@@ -31,9 +38,11 @@ async function bootstrap() {
     res.sendFile(join(frontendPath, 'index.html'));
   });
 
-  await app.listen(3000);
-  console.log('🚀 API is running on: http://localhost:3000');
-  console.log('📖 Swagger Docs: http://localhost:3000/api');
+  await app.listen(PORT);
+  console.log(`🚀 API is running on: http://localhost:${PORT}`);
+  console.log(`📖 Swagger Docs: http://localhost:${PORT}/api`);
 
 }
+
+
 bootstrap();
