@@ -1,10 +1,27 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MarketSignalsModule } from './modules/market-signals/market-signals.module';
-import { MarketSignal } from './entities/market-signal.entity';
-import { CandleSticksModule } from './modules/candle-sticks/candle-sticks.module';
-import { CandleStick } from './entities/candle-stick.entity';
+import { MarketSignalsModule } from './modules/app-markets/market-signals/market-signals.module';
+import { MarketSignal } from './modules/app-markets/market-signals/entities/market-signal.entity';
+import { CandleSticksModule } from './modules/app-markets/candle-sticks/candle-sticks.module';
+import { CandleStick } from './modules/app-markets/candle-sticks/entities/candle-stick.entity';
+
+/*--system--*/
+import { SystemParametersModule } from './modules/auth/system-parameters/system-parameter.module';
+import { SystemParameter } from './modules/auth/system-parameters/entities/system-parameter.entity';
+import { SystemPermissionsModule } from './modules/auth/system-permissions/system-permissions.module';
+import { SystemPermission } from './modules/auth/system-permissions/entities/system-permission.entity';
+/*--system--*/
+
+/*--user,usergroup--*/
+import { UsersModule } from './modules/auth/users/users.module';
+import { User } from './modules/auth/users/entities/user.entity';
+import { UserGroupsModule } from './modules/auth/user-groups/user-groups.module';
+import { UserGroup } from './modules/auth/user-groups/entities/user-group.entity';
+/*--user,usergroup--*/
+
+
+
 
 
 @Module({
@@ -26,10 +43,15 @@ import { CandleStick } from './entities/candle-stick.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,     
-      entities: [MarketSignal,CandleStick],
+      entities: [MarketSignal,CandleStick,SystemParameter,SystemPermission,User,UserGroup],
       synchronize: false, // สำคัญ: เพราะคุณสร้าง Table จาก SQL เองแล้ว ⚠️ production จริงควร false
     }),
-    MarketSignalsModule, CandleSticksModule,
+    MarketSignalsModule,
+    CandleSticksModule,
+    SystemParametersModule,
+    SystemPermissionsModule,
+    UsersModule,
+    UserGroupsModule
   ],
 })
 
