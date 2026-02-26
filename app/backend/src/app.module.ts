@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MarketSignalsModule } from './modules/app-markets/market-signals/market-signals.module';
-import { MarketSignal } from './modules/app-markets/market-signals/entities/market-signal.entity';
-import { CandleSticksModule } from './modules/app-markets/candle-sticks/candle-sticks.module';
-import { CandleStick } from './modules/app-markets/candle-sticks/entities/candle-stick.entity';
+import { MarketSignalsModule } from './modules/app/stocks/market-signals/market-signals.module';
+import { MarketSignal } from './modules/app/stocks/market-signals/entities/market-signal.entity';
+import { CandleSticksModule } from './modules/app/stocks/candle-sticks/candle-sticks.module';
+import { CandleStick } from './modules/app/stocks/candle-sticks/entities/candle-stick.entity';
 
 /*--system--*/
-import { SystemParametersModule } from './modules/auth/system-parameters/system-parameter.module';
+import { SystemParametersModule } from './modules/auth/system-parameters/system-parameters.module';
 import { SystemParameter } from './modules/auth/system-parameters/entities/system-parameter.entity';
 import { SystemPermissionsModule } from './modules/auth/system-permissions/system-permissions.module';
 import { SystemPermission } from './modules/auth/system-permissions/entities/system-permission.entity';

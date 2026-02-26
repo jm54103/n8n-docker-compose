@@ -1,0 +1,17 @@
+nest g controller /modules/module-name 
+nest g service /modules/module-name  
+nest g module /modules/module-name 
+
+cd backend
+npm run build
+npm run start:prod
+
+npm test 
+npm test -- user-activity-logs 
+npm run test:watch
+
+npx jest user-activity-logs --watch
+
+
+npx typeorm-ts-node-commonjs migration:generate ./src/migrations/crate_tables -d ./src/data-source.ts
+npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts

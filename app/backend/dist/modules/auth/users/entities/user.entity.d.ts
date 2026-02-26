@@ -14,5 +14,7 @@ export declare class User {
     lockUntil: Date;
     lastLogin: Date;
     createdAt: Date;
+    createdBy: string;
     updatedAt: Date;
+    updatedBy: string;
 }

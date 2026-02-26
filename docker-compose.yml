@@ -3,7 +3,7 @@ services:
   n8n:
     image: n8nio/n8n:latest
     container_name: n8n
-    restart: always
+    #restart: always
     depends_on:
       - postgres
     ports:
@@ -43,7 +43,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: n8n_pgadmin
-    restart: always
+    #restart: always
     ports:
       - "5050:80"
     environment:
@@ -70,7 +70,7 @@ services:
        - DB_USERNAME=n8n
        - DB_PASSWORD=n8npass
        - DB_NAME=set100
-    restart: always 
+    #restart: always 
   
   ldap:
     image: osixia/openldap:latest
@@ -85,7 +85,7 @@ services:
     volumes:
       - ldap_data:/var/lib/ldap
       - ldap_config:/etc/ldap/slapd.d
-    restart: always
+    #restart: always
 
 volumes:
   n8n_data:

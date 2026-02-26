@@ -53,7 +53,15 @@ import {
   
     @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
     createdAt: Date;
+
+    @Column({ name: 'created_by', length: 100 })
+    createdBy: string;
   
     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
     updatedAt: Date;
+
+    @Column({ name: 'updated_by', length: 100 })
+    updatedBy: string;
+
+
   }

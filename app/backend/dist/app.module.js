@@ -10,11 +10,11 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
-const market_signals_module_1 = require("./modules/app-markets/market-signals/market-signals.module");
-const market_signal_entity_1 = require("./modules/app-markets/market-signals/entities/market-signal.entity");
-const candle_sticks_module_1 = require("./modules/app-markets/candle-sticks/candle-sticks.module");
-const candle_stick_entity_1 = require("./modules/app-markets/candle-sticks/entities/candle-stick.entity");
-const system_parameter_module_1 = require("./modules/auth/system-parameters/system-parameter.module");
+const market_signals_module_1 = require("./modules/app/stocks/market-signals/market-signals.module");
+const market_signal_entity_1 = require("./modules/app/stocks/market-signals/entities/market-signal.entity");
+const candle_sticks_module_1 = require("./modules/app/stocks/candle-sticks/candle-sticks.module");
+const candle_stick_entity_1 = require("./modules/app/stocks/candle-sticks/entities/candle-stick.entity");
+const system_parameters_module_1 = require("./modules/auth/system-parameters/system-parameters.module");
 const system_parameter_entity_1 = require("./modules/auth/system-parameters/entities/system-parameter.entity");
 const system_permissions_module_1 = require("./modules/auth/system-permissions/system-permissions.module");
 const system_permission_entity_1 = require("./modules/auth/system-permissions/entities/system-permission.entity");
@@ -47,7 +47,7 @@ exports.AppModule = AppModule = __decorate([
             }),
             market_signals_module_1.MarketSignalsModule,
             candle_sticks_module_1.CandleSticksModule,
-            system_parameter_module_1.SystemParametersModule,
+            system_parameters_module_1.SystemParametersModule,
             system_permissions_module_1.SystemPermissionsModule,
             users_module_1.UsersModule,
             user_groups_module_1.UserGroupsModule
