@@ -14,14 +14,16 @@ const market_signals_module_1 = require("./modules/app/stocks/market-signals/mar
 const market_signal_entity_1 = require("./modules/app/stocks/market-signals/entities/market-signal.entity");
 const candle_sticks_module_1 = require("./modules/app/stocks/candle-sticks/candle-sticks.module");
 const candle_stick_entity_1 = require("./modules/app/stocks/candle-sticks/entities/candle-stick.entity");
-const system_parameters_module_1 = require("./modules/auth/system-parameters/system-parameters.module");
-const system_parameter_entity_1 = require("./modules/auth/system-parameters/entities/system-parameter.entity");
-const system_permissions_module_1 = require("./modules/auth/system-permissions/system-permissions.module");
-const system_permission_entity_1 = require("./modules/auth/system-permissions/entities/system-permission.entity");
-const users_module_1 = require("./modules/auth/users/users.module");
-const user_entity_1 = require("./modules/auth/users/entities/user.entity");
-const user_groups_module_1 = require("./modules/auth/user-groups/user-groups.module");
-const user_group_entity_1 = require("./modules/auth/user-groups/entities/user-group.entity");
+const system_parameters_module_1 = require("./modules/sys/system-parameters/system-parameters.module");
+const system_parameter_entity_1 = require("./modules/sys/system-parameters/entities/system-parameter.entity");
+const system_permissions_module_1 = require("./modules/sys/system-permissions/system-permissions.module");
+const system_permission_entity_1 = require("./modules/sys/system-permissions/entities/system-permission.entity");
+const users_module_1 = require("./modules/sys/users/users.module");
+const user_entity_1 = require("./modules/sys/users/entities/user.entity");
+const user_groups_module_1 = require("./modules/sys/user-groups/user-groups.module");
+const user_group_entity_1 = require("./modules/sys/user-groups/entities/user-group.entity");
+const auth_module_1 = require("./modules/sys/auth/auth.module");
+const user_session_entity_1 = require("./modules/sys/auth/entities/user-session.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -42,7 +44,15 @@ exports.AppModule = AppModule = __decorate([
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
                 autoLoadEntities: true,
-                entities: [market_signal_entity_1.MarketSignal, candle_stick_entity_1.CandleStick, system_parameter_entity_1.SystemParameter, system_permission_entity_1.SystemPermission, user_entity_1.User, user_group_entity_1.UserGroup],
+                entities: [
+                    market_signal_entity_1.MarketSignal,
+                    candle_stick_entity_1.CandleStick,
+                    system_parameter_entity_1.SystemParameter,
+                    system_permission_entity_1.SystemPermission,
+                    user_entity_1.User,
+                    user_group_entity_1.UserGroup,
+                    user_session_entity_1.UserSession,
+                ],
                 synchronize: false,
             }),
             market_signals_module_1.MarketSignalsModule,
@@ -50,7 +60,8 @@ exports.AppModule = AppModule = __decorate([
             system_parameters_module_1.SystemParametersModule,
             system_permissions_module_1.SystemPermissionsModule,
             users_module_1.UsersModule,
-            user_groups_module_1.UserGroupsModule
+            user_groups_module_1.UserGroupsModule,
+            auth_module_1.AuthModule,
         ],
     })
 ], AppModule);

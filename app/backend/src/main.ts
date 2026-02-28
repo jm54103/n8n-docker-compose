@@ -1,5 +1,6 @@
 
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'; // 1. Import
 import { AppModule } from './app.module';
 import { join } from 'path';
@@ -32,6 +33,15 @@ async function bootstrap() {
 
   // Serve static assets
   app.use(express.static(frontendPath));
+
+  // สำหรับ class-validator;
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   // SPA fallback (Express 5 safe)
   app.getHttpAdapter().get('/', (req, res) => {

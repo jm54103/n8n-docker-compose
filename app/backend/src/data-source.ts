@@ -1,11 +1,11 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./modules/auth/users/entities/user.entity" // เปลี่ยนเป็นชื่อ Entity ของคุณ
-import { UserGroup } from "./modules/auth/user-groups/entities/user-group.entity";
-import { UserAccessLog } from "./modules/auth/user-access-logs/entities/user-access-log.entity";
-import { UserActivityLog } from "./modules/auth/user-activity-logs/entities/user-activity-log.entity";
-import { SystemParameter } from "./modules/auth/system-parameters/entities/system-parameter.entity";
-import { SystemPermission } from "./modules/auth/system-permissions/entities/system-permission.entity";
+import { User } from "./modules/sys/users/entities/user.entity" // เปลี่ยนเป็นชื่อ Entity ของคุณ
+import { UserGroup } from "./modules/sys/user-groups/entities/user-group.entity";
+import { UserAccessLog } from "./modules/sys/user-access-logs/entities/user-access-log.entity";
+import { UserActivityLog } from "./modules/sys/user-activity-logs/entities/user-activity-log.entity";
+import { SystemParameter } from "./modules/sys/system-parameters/entities/system-parameter.entity";
+import { SystemPermission } from "./modules/sys/system-permissions/entities/system-permission.entity";
 
 export const AppDataSource = new DataSource({
     type: "postgres", // หรือ mysql, mariadb, sqlite ตามที่ใช้จริง
