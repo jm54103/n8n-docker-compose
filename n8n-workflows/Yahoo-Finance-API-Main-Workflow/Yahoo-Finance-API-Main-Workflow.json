@@ -1,0 +1,189 @@
+{
+  "name": "Yahoo-Finance-API-Main-Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "l3C57QVFP5zsd1fH",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/l3C57QVFP5zsd1fH",
+          "cachedResultName": "SUB1_US_Stock_Index"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "id": "843611b0-9e15-4f82-8d3e-3d79b314d130",
+      "name": "Call S1 US Index",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        -656,
+        -304
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1328,
+        -32
+      ],
+      "id": "ba4e0f5f-900c-48a2-8559-5e15f292ccfb",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "5f2Qjn4MWfDvfwYGK2Lfc",
+          "mode": "id",
+          "cachedResultUrl": "/workflow/5f2Qjn4MWfDvfwYGK2Lfc"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -656,
+        112
+      ],
+      "id": "4066de57-7fb4-471e-9fd3-2d26478242fd",
+      "name": "Call 'SUB3_USD_CURRENCY'"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "vI2wpcvx92rvyXM7",
+          "mode": "list",
+          "cachedResultName": "My Sub-Workflow 2",
+          "cachedResultUrl": "/workflow/vI2wpcvx92rvyXM7"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -656,
+        -112
+      ],
+      "id": "292647df-56bc-4bf2-86bf-b35465a52b0e",
+      "name": "Call SUB2_COMMODITY"
+    },
+    {
+      "parameters": {
+        "path": "1de65535-92d9-43f9-8513-6caaf1a0c33d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1328,
+        -288
+      ],
+      "id": "6c8a661b-4e94-4577-81df-603aa077d7f5",
+      "name": "Webhook",
+      "webhookId": "1de65535-92d9-43f9-8513-6caaf1a0c33d"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -976,
+        -112
+      ],
+      "id": "f207fdcd-15e0-4b38-b21d-1d1b86fc3bdf",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Call S1 US Index": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Call S1 US Index",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call SUB2_COMMODITY",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call 'SUB3_USD_CURRENCY'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "12f77a51-2664-422b-add9-bdc324688cae",
+  "meta": {
+    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+  },
+  "id": "kY-M4hUxFY3GoMq0r8bsr",
+  "tags": []
+}

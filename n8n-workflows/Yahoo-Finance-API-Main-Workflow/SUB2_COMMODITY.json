@@ -1,0 +1,181 @@
+{
+  "name": "SUB2_COMMODITY",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        48
+      ],
+      "id": "668fb5d9-1efe-4cc7-89fa-d20558f39061",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "=index",
+        "options": {
+          "destinationFieldName": "ticker"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        688,
+        -48
+      ],
+      "id": "0d7ee3e2-45fb-4f89-8e9d-e3ddbc764209",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet tickers=[];\nlet us_indexs=$input.first().json.us_indexs;\nfor (const item of us_indexs) {\n   let index = {'index':item};\n   tickers.push(index);\n}\n\nreturn tickers;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        -48
+      ],
+      "id": "bac0b920-4c81-4625-9e70-743d61da5587",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e01eefd9-05e8-4318-afa9-2101a66db787",
+              "name": "us_indexs",
+              "value": "={{[\"GC=F\",\"CL=F\",\"BZ=F\",\"NG=F\",\"SI=F\",\"HG=F\",\"ZC=F\",\"ZS=F\"]}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -48
+      ],
+      "id": "fdf192e3-cf90-48fa-94b1-0e83f5bf098a",
+      "name": "COMMODITY"
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/{{$json.ticker.slice()}}?range=1y&interval=1d",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": " Mozilla/5.0"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "17acd05e-4ccc-4a43-b882-5cca2cd24ec8",
+      "name": "Yahoo Finance API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        912,
+        -48
+      ],
+      "typeVersion": 4.3
+    },
+    {
+      "parameters": {
+        "path": "1d7696a8-f530-4fa1-ac17-aa1ed23cc327",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        -176
+      ],
+      "id": "8d0ec79c-51cb-40d1-8ad5-695dec4d6e77",
+      "name": "Webhook",
+      "webhookId": "1d7696a8-f530-4fa1-ac17-aa1ed23cc327"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "COMMODITY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Yahoo Finance API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "COMMODITY": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "COMMODITY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "7b90f84a-c86c-4165-a7df-4bbca530070c",
+  "meta": {
+    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+  },
+  "id": "vI2wpcvx92rvyXM7",
+  "tags": []
+}

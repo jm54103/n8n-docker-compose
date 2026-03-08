@@ -1,0 +1,181 @@
+{
+  "name": "SUB3_USD_CURRENCY",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        208
+      ],
+      "id": "17966b2e-b974-4c1e-9197-573c495290e5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "=index",
+        "options": {
+          "destinationFieldName": "ticker"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        592,
+        0
+      ],
+      "id": "ddf29cd9-92fb-48bc-a26e-5e1d7ab81615",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet tickers=[];\nlet us_indexs=$input.first().json.us_indexs;\nfor (const item of us_indexs) {\n   let index = {'index':item};\n   tickers.push(index);\n}\n\nreturn tickers;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "97c5736c-b086-41aa-b3b6-10a671ddd9b3",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/{{$json.ticker.slice()}}?range=1y&interval=1d",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": " Mozilla/5.0"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "547cf308-be2a-4b92-9772-3cb15b2e5a74",
+      "name": "Yahoo Finance API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        816,
+        0
+      ],
+      "typeVersion": 4.3
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e01eefd9-05e8-4318-afa9-2101a66db787",
+              "name": "us_indexs",
+              "value": "={{[\"USDTHB=X\",\"EURUSD=X\",\"GBPUSD=X\",\"USDJPY=X\"]}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c97e824a-8f0b-45af-898a-b3ea005748ae",
+      "name": "USD CURRENCY"
+    },
+    {
+      "parameters": {
+        "path": "79f6e34d-1929-4f08-bdeb-8fa9a6713be7",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -144
+      ],
+      "id": "d6977236-772c-4ade-b8fa-ea4e3505df5b",
+      "name": "Webhook",
+      "webhookId": "79f6e34d-1929-4f08-bdeb-8fa9a6713be7"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "USD CURRENCY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Yahoo Finance API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "USD CURRENCY": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "USD CURRENCY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "63a60334-f193-4046-b21f-1bd73656ee55",
+  "meta": {
+    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+  },
+  "id": "5f2Qjn4MWfDvfwYGK2Lfc",
+  "tags": []
+}

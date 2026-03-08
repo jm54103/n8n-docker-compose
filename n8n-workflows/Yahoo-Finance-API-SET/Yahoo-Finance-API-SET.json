@@ -1,5 +1,5 @@
 {
-  "name": "Yahoo-Finance-API-SETHD",
+  "name": "Yahoo-Finance-API-SET",
   "nodes": [
     {
       "parameters": {
@@ -26,7 +26,7 @@
     },
     {
       "parameters": {
-        "fieldToSplitOut": "tickers",
+        "fieldToSplitOut": "=tickers",
         "options": {}
       },
       "id": "cba22e3e-a880-48d4-bc28-73b241b5c159",
@@ -395,7 +395,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        960,
+        976,
         -1248
       ],
       "id": "2ff32bbc-eb6d-4973-a96a-2a7846fd313a",
@@ -477,7 +477,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        784,
+        800,
         -864
       ],
       "id": "df70715b-012a-487b-a006-12e2063a950f",
@@ -490,7 +490,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        752,
+        800,
         -1248
       ],
       "id": "22c3036f-f35b-4f9b-bfe1-4abb7d2fecfb",
@@ -630,7 +630,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        976,
+        992,
         -864
       ],
       "id": "307f28d4-de38-4211-b29a-d2bd5c0319c5",
@@ -836,7 +836,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "9a35df73-fdb0-4a16-86ce-fd1491a49ea8",
+  "versionId": "77c22a10-9447-423e-a9ee-998de729eaae",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"

@@ -1,0 +1,181 @@
+{
+  "name": "SUB1_US_Stock_Index",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://query1.finance.yahoo.com/v8/finance/chart/{{$json.ticker.slice()}}?range=1y&interval=1d",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": " Mozilla/5.0"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "a1cdf1a8-2111-41fb-8983-eacad90ef521",
+      "name": "Yahoo US Index API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        816,
+        0
+      ],
+      "typeVersion": 4.3
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        96
+      ],
+      "id": "0959481b-b974-45e4-a03f-4ae81cce947c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "=index",
+        "options": {
+          "destinationFieldName": "ticker"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        592,
+        0
+      ],
+      "id": "36a58626-4236-400f-88d6-a3ea32ce3ff1",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e01eefd9-05e8-4318-afa9-2101a66db787",
+              "name": "us_indexs",
+              "value": "={{[\"^GSPC\",\"^DJI\",\"^IXIC\",\"^RUT\"]}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5ed725f2-a773-49e4-a47b-8892f3af6eea",
+      "name": "US Indexs"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nlet tickers=[];\nlet us_indexs=$input.first().json.us_indexs;\nfor (const item of us_indexs) {\n   let index = {'index':item};\n   tickers.push(index);\n}\n\nreturn tickers;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "0c4911c9-bef5-4ce7-81bb-1032e99cd363",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "path": "e928d6bc-8457-47b9-8532-efdf92e3c7ba",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        -96
+      ],
+      "id": "6ef230bf-0cd9-47aa-aeff-8f329ccb2187",
+      "name": "Webhook",
+      "webhookId": "e928d6bc-8457-47b9-8532-efdf92e3c7ba"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "US Indexs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Yahoo US Index API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "US Indexs": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "US Indexs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "10533332-8297-447f-88fb-356e00c0ec97",
+  "meta": {
+    "instanceId": "5f1586b09ca7aa129ea18835723c914996d4ad640b8e02d9aa2ea8cf8c9c14e9"
+  },
+  "id": "l3C57QVFP5zsd1fH",
+  "tags": []
+}
