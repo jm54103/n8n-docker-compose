@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAccessLogDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateAccessLogDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { userId: { required: false, type: () => String, format: "uuid" }, actionType: { required: true, type: () => String }, ipAddress: { required: false, type: () => String }, userAgent: { required: false, type: () => String }, sessionId: { required: false, type: () => String } };
+    }
 }
 exports.CreateAccessLogDto = CreateAccessLogDto;
 __decorate([

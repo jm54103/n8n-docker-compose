@@ -10,9 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const user_group_entity_1 = require("../../user-groups/entities/user-group.entity");
 let User = class User {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { userId: { required: true, type: () => String }, username: { required: true, type: () => String }, email: { required: true, type: () => String }, passwordHash: { required: true, type: () => String }, group: { required: true, type: () => require("../../user-groups/entities/user-group.entity").UserGroup }, groupId: { required: true, type: () => Number }, isActive: { required: true, type: () => Boolean }, status: { required: true, type: () => String }, isLoggedIn: { required: true, type: () => Boolean }, sessionKey: { required: true, type: () => String }, loginAttempts: { required: true, type: () => Number }, lockUntil: { required: true, type: () => Date }, lastLogin: { required: true, type: () => Date }, createdAt: { required: true, type: () => Date }, createdBy: { required: true, type: () => String }, updatedAt: { required: true, type: () => Date }, updatedBy: { required: true, type: () => String } };
+    }
 };
 exports.User = User;
 __decorate([
@@ -73,7 +77,7 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'created_by', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'created_by', length: 100, nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "createdBy", void 0);
 __decorate([
@@ -81,7 +85,7 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'updated_by', length: 100 }),
+    (0, typeorm_1.Column)({ name: 'updated_by', length: 100, nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "updatedBy", void 0);
 exports.User = User = __decorate([

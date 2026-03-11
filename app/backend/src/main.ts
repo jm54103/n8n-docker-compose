@@ -16,13 +16,24 @@ async function bootstrap() {
   console.log(`NODE_ENV ${process.env.NODE_ENV}`);
  
 
-  // 2. ตั้งค่า Swagger
+  // 2. ตั้งค่า Swagger  
   const config = new DocumentBuilder()
     .setTitle('Market Signal API')
     .setDescription('API สำหรับดึงข้อมูลสัญญาณเทคนิค (RSI, EMA, Crosses)')
     .setVersion('1.0')
     .addTag('NestJs')
-    .build();
+    .addBearerAuth( // <--- เพิ่มบรรทัดนี้
+    {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'JWT',
+      description: 'ใส่เฉพาะ JWT Token (ไม่ต้องพิมพ์ Bearer นำหน้า)',
+      in: 'header',
+    },
+    'accessToken', // ชื่ออ้างอิงที่จะใช้ใน Decorator
+  )
+  .build();
     
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document); 

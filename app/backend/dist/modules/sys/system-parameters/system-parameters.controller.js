@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SystemParametersController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const system_parameters_service_1 = require("./system-parameters.service");
 const dto_1 = require("./dto");
@@ -37,6 +38,7 @@ let SystemParametersController = class SystemParametersController {
 exports.SystemParametersController = SystemParametersController;
 __decorate([
     (0, common_1.Post)(),
+    openapi.ApiResponse({ status: 201, type: require("./entities/system-parameter.entity").SystemParameter }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [dto_1.CreateSystemParameterDto]),
@@ -44,12 +46,14 @@ __decorate([
 ], SystemParametersController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/system-parameter.entity").SystemParameter] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], SystemParametersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':key/value'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('key')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -57,6 +61,7 @@ __decorate([
 ], SystemParametersController.prototype, "getValue", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    openapi.ApiResponse({ status: 200, type: require("./entities/system-parameter.entity").SystemParameter }),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

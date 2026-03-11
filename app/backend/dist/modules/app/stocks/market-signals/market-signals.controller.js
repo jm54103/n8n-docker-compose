@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MarketSignalsController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const market_signals_service_1 = require("./market-signals.service");
 let MarketSignalsController = class MarketSignalsController {
@@ -32,18 +33,21 @@ let MarketSignalsController = class MarketSignalsController {
 exports.MarketSignalsController = MarketSignalsController;
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/market-signal.entity").MarketSignal] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], MarketSignalsController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Get)('bullish'),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/market-signal.entity").MarketSignal] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], MarketSignalsController.prototype, "getBullish", null);
 __decorate([
     (0, common_1.Get)(':symbol'),
+    openapi.ApiResponse({ status: 200, type: require("./entities/market-signal.entity").MarketSignal }),
     __param(0, (0, common_1.Param)('symbol')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

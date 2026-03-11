@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateActivityLogDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateActivityLogDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { actorId: { required: false, type: () => String, format: "uuid" }, actionType: { required: true, type: () => String }, targetTable: { required: false, type: () => String }, targetId: { required: false, type: () => String, format: "uuid" }, oldValue: { required: false, type: () => Object }, newValue: { required: false, type: () => Object } };
+    }
 }
 exports.CreateActivityLogDto = CreateActivityLogDto;
 __decorate([

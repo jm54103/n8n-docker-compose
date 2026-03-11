@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SystemPermission = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 let SystemPermission = class SystemPermission {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { permissionId: { required: true, type: () => Number }, permissionKey: { required: true, type: () => String }, permissionName: { required: true, type: () => String }, description: { required: true, type: () => String } };
+    }
 };
 exports.SystemPermission = SystemPermission;
 __decorate([

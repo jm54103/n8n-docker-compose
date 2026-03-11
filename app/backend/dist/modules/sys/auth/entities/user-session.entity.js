@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSession = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 let UserSession = class UserSession {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { sessionId: { required: true, type: () => String }, userId: { required: true, type: () => String }, refreshTokenHash: { required: true, type: () => String }, expiresAt: { required: true, type: () => Date }, isActive: { required: true, type: () => Boolean }, deviceInfo: { required: true, type: () => String }, createdAt: { required: true, type: () => Date } };
+    }
 };
 exports.UserSession = UserSession;
 __decorate([
@@ -23,7 +27,7 @@ __decorate([
     __metadata("design:type", String)
 ], UserSession.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], UserSession.prototype, "refreshTokenHash", void 0);
 __decorate([

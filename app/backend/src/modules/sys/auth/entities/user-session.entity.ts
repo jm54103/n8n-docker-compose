@@ -8,7 +8,7 @@ export class UserSession {
   @Column()
   userId: string;
 
-  @Column()
+  @Column({ nullable: true })
   refreshTokenHash: string;
 
   @Column({ type: 'timestamptz' })

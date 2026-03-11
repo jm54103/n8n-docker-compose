@@ -42,6 +42,7 @@ export class AuthService {
       sub: user.username,
       sessionId: session.sessionId,
     };
+   
 
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: '15m',

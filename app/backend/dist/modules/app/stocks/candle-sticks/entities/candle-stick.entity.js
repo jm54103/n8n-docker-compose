@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CandleStick = exports.DateToNumberTransformer = exports.ColumnNumericTransformer = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 class ColumnNumericTransformer {
     to(data) {
@@ -17,6 +18,9 @@ class ColumnNumericTransformer {
     }
     from(data) {
         return parseFloat(data);
+    }
+    static _OPENAPI_METADATA_FACTORY() {
+        return {};
     }
 }
 exports.ColumnNumericTransformer = ColumnNumericTransformer;
@@ -27,9 +31,15 @@ class DateToNumberTransformer {
     from(data) {
         return new Date(data).getTime();
     }
+    static _OPENAPI_METADATA_FACTORY() {
+        return {};
+    }
 }
 exports.DateToNumberTransformer = DateToNumberTransformer;
 let CandleStick = class CandleStick {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { symbol: { required: true, type: () => String }, x: { required: true, type: () => Date }, o: { required: true, type: () => Number }, h: { required: true, type: () => Number }, l: { required: true, type: () => Number }, c: { required: true, type: () => Number }, v: { required: true, type: () => Number } };
+    }
 };
 exports.CandleStick = CandleStick;
 __decorate([

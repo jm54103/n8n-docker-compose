@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserAccessLogsController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const user_access_logs_service_1 = require("./user-access-logs.service");
 let UserAccessLogsController = class UserAccessLogsController {
@@ -29,6 +30,7 @@ let UserAccessLogsController = class UserAccessLogsController {
 exports.UserAccessLogsController = UserAccessLogsController;
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/user-access-log.entity").UserAccessLog] }),
     __param(0, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -36,6 +38,7 @@ __decorate([
 ], UserAccessLogsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('user/:userId'),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/user-access-log.entity").UserAccessLog] }),
     __param(0, (0, common_1.Param)('userId', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

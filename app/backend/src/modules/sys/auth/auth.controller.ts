@@ -21,50 +21,30 @@ export class AuthController {
     );
   }
 
+  
+
   @Post('refresh')
   @ApiBody({ type: RefreshDto })
   async refresh(@Body() dto: RefreshDto) {
     return this.authService.refresh(dto.refreshToken);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard)     
   @Post('logout')
   async logout(@Req() req: Request & { user: JwtPayload }) {
+    console.log('Logging out session:', req.user.sessionId);
     return this.authService.logout(req.user.sessionId);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @ApiBearerAuth('accessToken')  
+  @UseGuards(JwtAuthGuard)  
   @Post('logout-all')
   async logoutAll(@Req() req: Request & { user: JwtPayload }) {
+    console.log('Logging out all sessions for user:', req.user.sub);
     return this.authService.logoutAll(req.user.sub);
   }
+  
 }
 
 
-/*
-ถ้าอยากอัปเกรดเป็น Enterprise จริง ๆ
-
-ขั้นถัดไปที่แนะนำ:
-
-🔐 Refresh Token Rotation
-
-🔐 Redis session store
-
-🔐 Token Blacklist
-
-🔐 RBAC Guard
-
-🔐 Device Fingerprint
-
-🔐 2FA
-
-🔐 Key Rotation (JWT versioning)
-
-ถ้าคุณบอกว่า:
-
-“ทำ Auth ให้ระดับ enterprise เลย”
-
-ผมจะจัด architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
-*/

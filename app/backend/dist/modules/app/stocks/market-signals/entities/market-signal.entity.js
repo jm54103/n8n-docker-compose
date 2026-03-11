@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MarketSignal = exports.ColumnNumericTransformer = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 class ColumnNumericTransformer {
     to(data) {
@@ -18,9 +19,15 @@ class ColumnNumericTransformer {
     from(data) {
         return data ? parseFloat(data) : null;
     }
+    static _OPENAPI_METADATA_FACTORY() {
+        return {};
+    }
 }
 exports.ColumnNumericTransformer = ColumnNumericTransformer;
 let MarketSignal = class MarketSignal {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => Number }, symbol: { required: true, type: () => String }, last_close: { required: true, type: () => Number }, signal: { required: true, type: () => String }, trend: { required: true, type: () => String }, rsi_14: { required: true, type: () => Number }, rsi_overbought: { required: true, type: () => Number }, rsi_oversold: { required: true, type: () => Number }, ema_50: { required: true, type: () => Number }, ema_200: { required: true, type: () => Number }, golden_cross: { required: true, type: () => Boolean }, death_cross: { required: true, type: () => Boolean }, updated_at: { required: true, type: () => Date } };
+    }
 };
 exports.MarketSignal = MarketSignal;
 __decorate([

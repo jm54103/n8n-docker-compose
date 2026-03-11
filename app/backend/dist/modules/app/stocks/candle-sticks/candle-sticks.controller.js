@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CandleSticksController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const candle_sticks_service_1 = require("./candle-sticks.service");
@@ -39,6 +40,7 @@ __decorate([
     (0, common_1.Get)(':symbol'),
     (0, swagger_1.ApiOperation)({ summary: 'ดึงข้อมูลแท่งเทียนทั้งหมดตาม Symbol' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'คืนค่ารายการแท่งเทียน', type: [candle_stick_entity_1.CandleStick] }),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/candle-stick.entity").CandleStick] }),
     __param(0, (0, common_1.Param)('symbol')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -49,6 +51,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'ดึงข้อมูลแท่งเทียนตามช่วงวันที่' }),
     (0, swagger_1.ApiQuery)({ name: 'start', example: '2026-01-01' }),
     (0, swagger_1.ApiQuery)({ name: 'end', example: '2026-02-23' }),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/candle-stick.entity").CandleStick] }),
     __param(0, (0, common_1.Param)('symbol')),
     __param(1, (0, common_1.Query)('start')),
     __param(2, (0, common_1.Query)('end')),
@@ -60,6 +63,7 @@ __decorate([
     (0, common_1.Post)(),
     (0, swagger_1.ApiOperation)({ summary: 'บันทึกข้อมูลแท่งเทียนใหม่' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'บันทึกสำเร็จ' }),
+    openapi.ApiResponse({ status: 201, type: require("./entities/candle-stick.entity").CandleStick }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

@@ -49,6 +49,14 @@ async function bootstrap() {
         .setDescription('API สำหรับดึงข้อมูลสัญญาณเทคนิค (RSI, EMA, Crosses)')
         .setVersion('1.0')
         .addTag('NestJs')
+        .addBearerAuth({
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'ใส่เฉพาะ JWT Token (ไม่ต้องพิมพ์ Bearer นำหน้า)',
+        in: 'header',
+    }, 'accessToken')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);

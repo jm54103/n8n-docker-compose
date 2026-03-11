@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const auth_service_1 = require("./auth.service");
@@ -30,9 +31,11 @@ let AuthController = class AuthController {
         return this.authService.refresh(dto.refreshToken);
     }
     async logout(req) {
+        console.log('Logging out session:', req.user.sessionId);
         return this.authService.logout(req.user.sessionId);
     }
     async logoutAll(req) {
+        console.log('Logging out all sessions for user:', req.user.sub);
         return this.authService.logoutAll(req.user.sub);
     }
 };
@@ -40,6 +43,7 @@ exports.AuthController = AuthController;
 __decorate([
     (0, swagger_1.ApiBody)({ type: login_dto_1.LoginDto }),
     (0, common_1.Post)('login'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -49,24 +53,27 @@ __decorate([
 __decorate([
     (0, common_1.Post)('refresh'),
     (0, swagger_1.ApiBody)({ type: refresh_dto_1.RefreshDto }),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [refresh_dto_1.RefreshDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refresh", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)('accessToken'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Post)('logout'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "logout", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)('accessToken'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Post)('logout-all'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

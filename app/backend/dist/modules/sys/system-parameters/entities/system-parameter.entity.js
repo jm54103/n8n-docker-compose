@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SystemParameter = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 let SystemParameter = class SystemParameter {
     getTypedValue() {
@@ -21,6 +22,9 @@ let SystemParameter = class SystemParameter {
             default:
                 return this.paramValue;
         }
+    }
+    static _OPENAPI_METADATA_FACTORY() {
+        return { paramId: { required: true, type: () => Number }, paramKey: { required: true, type: () => String }, paramValue: { required: true, type: () => String }, valueType: { required: true, type: () => String }, description: { required: true, type: () => String }, updatedAt: { required: true, type: () => Date } };
     }
 };
 exports.SystemParameter = SystemParameter;

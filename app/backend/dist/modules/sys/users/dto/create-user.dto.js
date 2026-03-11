@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateUserDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { username: { required: true, type: () => String }, email: { required: true, type: () => String, format: "email" }, passwordHash: { required: true, type: () => String, minLength: 8 }, groupId: { required: true, type: () => Number }, status: { required: false, type: () => String } };
+    }
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([

@@ -4,7 +4,10 @@ nest g module /modules/module-name
 
 cd backend
 npm run build
+npm run start:dev
 npm run start:prod
+
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 5000).OwningProcess -Force
 
 npm test 
 npm test -- user-activity-logs 
@@ -15,3 +18,4 @@ npx jest user-activity-logs --watch
 
 npx typeorm-ts-node-commonjs migration:generate ./src/migrations/crate_tables -d ./src/data-source.ts
 npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts
+

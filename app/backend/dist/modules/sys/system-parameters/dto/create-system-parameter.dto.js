@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateSystemParameterDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateSystemParameterDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { paramKey: { required: true, type: () => String }, paramValue: { required: true, type: () => String }, valueType: { required: false, type: () => String }, description: { required: false, type: () => String } };
+    }
 }
 exports.CreateSystemParameterDto = CreateSystemParameterDto;
 __decorate([

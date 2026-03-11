@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateSystemPermissionDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateSystemPermissionDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { permissionKey: { required: true, type: () => String, pattern: "/^[a-z0-9.]*$/" }, permissionName: { required: true, type: () => String }, description: { required: false, type: () => String } };
+    }
 }
 exports.CreateSystemPermissionDto = CreateSystemPermissionDto;
 __decorate([

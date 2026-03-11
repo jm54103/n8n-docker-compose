@@ -5,6 +5,7 @@ require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("./modules/sys/users/entities/user.entity");
 const user_group_entity_1 = require("./modules/sys/user-groups/entities/user-group.entity");
+const user_session_entity_1 = require("./modules/sys/auth/entities/user-session.entity");
 const user_access_log_entity_1 = require("./modules/sys/user-access-logs/entities/user-access-log.entity");
 const user_activity_log_entity_1 = require("./modules/sys/user-activity-logs/entities/user-activity-log.entity");
 const system_parameter_entity_1 = require("./modules/sys/system-parameters/entities/system-parameter.entity");
@@ -16,9 +17,9 @@ exports.AppDataSource = new typeorm_1.DataSource({
     username: "n8n",
     password: "n8npass",
     database: "auth",
-    synchronize: false,
+    synchronize: true,
     logging: true,
-    entities: [user_entity_1.User, user_group_entity_1.UserGroup, user_access_log_entity_1.UserAccessLog, user_activity_log_entity_1.UserActivityLog, system_parameter_entity_1.SystemParameter, system_permission_entity_1.SystemPermission],
+    entities: [user_entity_1.User, user_group_entity_1.UserGroup, user_session_entity_1.UserSession, user_access_log_entity_1.UserAccessLog, user_activity_log_entity_1.UserActivityLog, system_parameter_entity_1.SystemParameter, system_permission_entity_1.SystemPermission],
     migrations: ["src/migrations/*.ts"],
     subscribers: [],
 });

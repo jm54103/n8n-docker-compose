@@ -10,10 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateUserDto = void 0;
+const openapi = require("@nestjs/swagger");
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_user_dto_1 = require("./create-user.dto");
 const class_validator_1 = require("class-validator");
 class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { isActive: { required: false, type: () => Boolean }, isLoggedIn: { required: false, type: () => Boolean } };
+    }
 }
 exports.UpdateUserDto = UpdateUserDto;
 __decorate([

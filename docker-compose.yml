@@ -54,6 +54,21 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
       
+  redis:
+    image: redis:7-alpine
+    container_name: n8n_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  
   app-nestjs:
     build:
         context: ./app
@@ -61,6 +76,7 @@ services:
     container_name: n8n_node-app-nestjs
     depends_on:
        - postgres
+       - redis
     ports:
        - "3000:3000"
     environment:
@@ -70,6 +86,8 @@ services:
        - DB_USERNAME=n8n
        - DB_PASSWORD=n8npass
        - DB_NAME=set100
+       - REDIS_HOST=redis
+       - REDIS_PORT=6379
     #restart: always 
   
   ldap:
@@ -93,3 +111,4 @@ volumes:
   pgadmin_data:    
   ldap_data:
   ldap_config:
+  redis_data:

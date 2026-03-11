@@ -1,0 +1,32 @@
+ทดสอบ AuthController
+OK 1.login
+OK 2.logout
+OK 3.logout-all
+4.refresh
+
+
+
+
+ถ้าอยากอัปเกรดเป็น Enterprise จริง ๆ
+
+ขั้นถัดไปที่แนะนำ:
+
+🔐 Refresh Token Rotation
+
+🔐 Redis session store
+
+🔐 Token Blacklist
+
+🔐 RBAC Guard
+
+🔐 Device Fingerprint
+
+🔐 2FA
+
+🔐 Key Rotation (JWT versioning)
+
+ถ้าคุณบอกว่า:
+
+“ทำ Auth ให้ระดับ enterprise เลย”
+
+ผมจะจัด architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀

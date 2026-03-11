@@ -19,20 +19,26 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const passport_jwt_1 = require("passport-jwt");
 const user_session_entity_1 = require("../../entities/user-session.entity");
+const config_1 = require("@nestjs/config");
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
-    constructor(sessionRepo) {
+    constructor(sessionRepo, configService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: process.env.JWT_SECRET,
+            ignoreExpiration: false,
+            secretOrKey: configService.get('JWT_SECRET'),
         });
         this.sessionRepo = sessionRepo;
+        this.configService = configService;
     }
     async validate(payload) {
+        console.log('1. JWT Payload:', payload);
         const session = await this.sessionRepo.findOne({
             where: { sessionId: payload.sessionId, isActive: true },
         });
+        console.log('2. Session from DB:', session);
         if (!session) {
-            throw new common_1.UnauthorizedException('Session expired');
+            console.log('3. Validate Failed: Session not found or inactive');
+            throw new common_1.UnauthorizedException('Session is no longer active');
         }
         return payload;
     }
@@ -41,6 +47,7 @@ exports.JwtStrategy = JwtStrategy;
 exports.JwtStrategy = JwtStrategy = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_session_entity_1.UserSession)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        config_1.ConfigService])
 ], JwtStrategy);
 //# sourceMappingURL=jwt.strategy.js.map
