@@ -15,6 +15,7 @@ export declare class AuthService {
     private readonly jwtService;
     constructor(userRepo: Repository<User>, sessionRepo: Repository<UserSession>, paramRepo: Repository<SystemParameter>, redis: Redis, configService: ConfigService, jwtService: JwtService);
     private getParam;
+    private getConfig;
     loginRepo(user: LoginDto, deviceInfo: string): Promise<{
         accessToken: string;
         refreshToken: string;

@@ -23,6 +23,7 @@ export class AuthController {
   @Post('refresh')
   @ApiBody({ type: RefreshDto })
   async refresh(@Body() dto: RefreshDto) {
+    console.log('Refreshing token with refreshToken:', dto.refreshToken);
     /*--Redis--*/
     return this.authService.refreshRedis(dto.refreshToken);
   }

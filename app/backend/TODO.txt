@@ -1,23 +1,23 @@
 
 ถ้าอยากอัปเกรดเป็น Enterprise จริง ๆ
-
 ขั้นถัดไปที่แนะนำ:
-
-
-🔐 Refresh Token Rotation
-
 🔐 Token Blacklist
-
+🔐 Refresh Token Rotation
+🔐 Key Rotation (JWT versioning)
 🔐 RBAC Guard
-
 🔐 Device Fingerprint
-
 🔐 2FA
 
-🔐 Key Rotation (JWT versioning)
-
 ถ้าคุณบอกว่า:
-
 “ทำ Auth ให้ระดับ enterprise เลย”
-
 ผมจะจัด architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
+
+
+[BACKEND]
+- System Parameter
+- System Permission
+- Master Referrence Data
+
+[FRONTEND]
+-Dynamic form schema
+-Static form 

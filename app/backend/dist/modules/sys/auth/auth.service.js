@@ -74,10 +74,13 @@ let AuthService = class AuthService {
         const param = await this.paramRepo.findOne({ where: { paramKey: key } });
         return param.getTypedValue();
     }
+    async getConfig(key) {
+        return this.configService.get(key);
+    }
     async loginRepo(user, deviceInfo) {
         const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
-        const accessTokenExpire = this.configService.get('JWT_EXPIRES_IN');
-        const refreshTokenExpire = this.configService.get('JWT_REFRESH_EXPIRES_IN');
+        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+        const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
         const session = this.sessionRepo.create({
             userId: user.username,
             expiresAt: new Date(Date.now() + sessionTimeout * 1000),
@@ -88,8 +91,12 @@ let AuthService = class AuthService {
             sub: user.username,
             sessionId: session.sessionId,
         };
-        const accessToken = this.jwtService.sign(payload, { expiresIn: '15m', });
-        const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d', });
+        const mins = parseInt(accessTokenExpiresIn, 10);
+        const days = parseInt(refreshTokenExpiresIn, 10);
+        const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
+        const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
+        const accessToken = this.jwtService.sign(payload, accessTokenJwtSignOptions);
+        const refreshToken = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
         session.refreshTokenHash = await bcrypt.hash(refreshToken, 10);
         await this.sessionRepo.save(session);
         return {
@@ -98,13 +105,17 @@ let AuthService = class AuthService {
         };
     }
     async loginRedis(user, deviceInfo) {
-        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
         const sessionId = (0, uuid_1.v4)();
-        const accessTokenExpire = this.configService.get('JWT_EXPIRES_IN');
-        const refreshTokenExpire = this.configService.get('JWT_REFRESH_EXPIRES_IN');
+        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+        const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
         const payload = { sub: user.username, sessionId };
-        const accessToken = this.jwtService.sign(payload, { expiresIn: '15m', });
-        const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d', });
+        const mins = parseInt(accessTokenExpiresIn, 10);
+        const days = parseInt(refreshTokenExpiresIn, 10);
+        const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
+        const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
+        const accessToken = this.jwtService.sign(payload, accessTokenJwtSignOptions);
+        const refreshToken = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
         const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
         const sessionData = {
             userId: user.username,
@@ -127,14 +138,18 @@ let AuthService = class AuthService {
         const isValid = await bcrypt.compare(refreshToken, session.refreshTokenHash);
         if (!isValid)
             throw new common_1.UnauthorizedException();
-        const newRefresh = this.jwtService.sign({ sub: payload.sub, sessionId: payload.sessionId }, { expiresIn: '7d' });
+        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+        const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+        const mins = parseInt(accessTokenExpiresIn, 10);
+        const days = parseInt(refreshTokenExpiresIn, 10);
+        const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
+        const newAccess = this.jwtService.sign(payload, accessTokenJwtSignOptions);
+        const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
+        const newRefresh = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
         session.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
         await this.sessionRepo.save(session);
-        const newAccess = this.jwtService.sign({ sub: payload.sub, sessionId: payload.sessionId }, { expiresIn: '15m' });
-        return {
-            accessToken: newAccess,
-            refreshToken: newRefresh,
-        };
+        return { accessToken: newAccess, refreshToken: newRefresh };
     }
     async refreshRedis(refreshToken) {
         const payload = this.jwtService.verify(refreshToken);
@@ -147,25 +162,29 @@ let AuthService = class AuthService {
         if (!isValid)
             throw new common_1.UnauthorizedException('Invalid refresh token');
         const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
-        const newRefresh = this.jwtService.sign({ sub: payload.sub, sessionId: payload.sessionId }, { expiresIn: '7d' });
-        const newAccess = this.jwtService.sign({ sub: payload.sub, sessionId: payload.sessionId }, { expiresIn: '15m' });
+        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+        const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+        const mins = parseInt(accessTokenExpiresIn, 10);
+        const days = parseInt(refreshTokenExpiresIn, 10);
+        const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
+        const newAccess = this.jwtService.sign(payload, accessTokenJwtSignOptions);
+        const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
+        const newRefresh = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
         sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
         await this.redis.set(sessionKey, JSON.stringify(sessionData), 'EX', sessionTimeout);
-        console.log('Session Data updated in Redis:', sessionData);
-        console.log('sessionTimeout:', sessionTimeout);
         return { accessToken: newAccess, refreshToken: newRefresh };
     }
     async logoutRepo(sessionId) {
         let session = await this.sessionRepo.update({ sessionId }, { isActive: false });
-        return (session == null) ? undefined : { success: true };
+        return (session == null) ? { success: false } : { success: true };
     }
     async logoutRedis(sessionId) {
         const result = await this.redis.del(`session:${sessionId}`);
-        return result > 0 ? { success: true } : undefined;
+        return result > 0 ? { success: true } : { success: false };
     }
     async logoutAll(userId) {
         let session = await this.sessionRepo.update({ userId }, { isActive: false });
-        return (session == null) ? undefined : { success: true };
+        return (session == null) ? { success: false } : { success: true };
     }
     async logoutAllRedis(userId) {
         const keys = await this.redis.keys('session:*');
@@ -180,7 +199,7 @@ let AuthService = class AuthService {
                 }
             }
         }
-        return deletedCount > 0 ? { success: true } : undefined;
+        return deletedCount > 0 ? { success: true } : { success: false };
     }
     async validateUser(dto) {
         const user = await this.userRepo

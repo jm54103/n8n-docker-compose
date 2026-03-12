@@ -10,7 +10,6 @@ import { ConfigService } from '@nestjs/config';
 // สำหรับ Redis
 import Redis from 'ioredis';
 import { InjectRedis } from '@nestjs-modules/ioredis';
-import { v4 as uuidv4 } from 'uuid'; // แนะนำให้ใช้ uuid สำหรับ sessionId
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -36,16 +35,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     console.log('call validate()');
     
-    console.log('1. JWT Payload:', payload);
+    //console.log('1. JWT Payload:', payload);
     // ถ้ารหัสผ่าน (Secret) ถูกต้อง มันจะเข้ามาทำงานในนี้
     const session = await this.sessionRepo.findOne({
       where: { sessionId: payload.sessionId, isActive: true },
     });
     
-    console.log('2. Session from DB:', session);
+    //console.log('2. Session from DB:', session);
     
     if (!session) {
-      console.log('3. Validate Failed: Session not found or inactive');
+      //console.log('3. Validate Failed: Session not found or inactive');
       throw new UnauthorizedException('Session is no longer active');
     }
     return payload; // ข้อมูลนี้จะไปอยู่ที่ req.user

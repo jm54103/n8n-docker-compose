@@ -41,13 +41,10 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
     }
     async validateByRepo(payload) {
         console.log('call validate()');
-        console.log('1. JWT Payload:', payload);
         const session = await this.sessionRepo.findOne({
             where: { sessionId: payload.sessionId, isActive: true },
         });
-        console.log('2. Session from DB:', session);
         if (!session) {
-            console.log('3. Validate Failed: Session not found or inactive');
             throw new common_1.UnauthorizedException('Session is no longer active');
         }
         return payload;

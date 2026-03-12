@@ -29,6 +29,7 @@ let AuthController = class AuthController {
         return this.authService.loginRedis(dto, req.headers['user-agent']);
     }
     async refresh(dto) {
+        console.log('Refreshing token with refreshToken:', dto.refreshToken);
         return this.authService.refreshRedis(dto.refreshToken);
     }
     async logout(req) {
