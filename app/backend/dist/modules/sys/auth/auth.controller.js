@@ -25,18 +25,19 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     async login(dto, req) {
-        return this.authService.login(dto, req.headers['user-agent']);
+        console.log('Logging in user:', dto.username);
+        return this.authService.loginRedis(dto, req.headers['user-agent']);
     }
     async refresh(dto) {
-        return this.authService.refresh(dto.refreshToken);
+        return this.authService.refreshRedis(dto.refreshToken);
     }
     async logout(req) {
         console.log('Logging out session:', req.user.sessionId);
-        return this.authService.logout(req.user.sessionId);
+        return this.authService.logoutRedis(req.user.sessionId);
     }
     async logoutAll(req) {
         console.log('Logging out all sessions for user:', req.user.sub);
-        return this.authService.logoutAll(req.user.sub);
+        return this.authService.logoutAllRedis(req.user.sub);
     }
 };
 exports.AuthController = AuthController;

@@ -18,6 +18,7 @@
     "start:prod": "cross-env NODE_ENV=production node dist/main"
   },
   "dependencies": {
+    "@nestjs-modules/ioredis": "^2.0.2",
     "@nestjs/cache-manager": "^3.1.0",
     "@nestjs/config": "^4.0.3",
     "@nestjs/jwt": "^11.0.2",
@@ -32,6 +33,7 @@
     "class-validator": "^0.14.3",
     "cross-env": "^10.1.0",
     "express": "^5.2.1",
+    "ioredis": "^5.10.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.18.0",

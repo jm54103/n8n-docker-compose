@@ -1,0 +1,5 @@
+npm test 
+npm test -- user-activity-logs 
+npm run test:watch
+
+npx jest user-activity-logs --watch

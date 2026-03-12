@@ -1,0 +1,17 @@
+
+nest g controller /modules/module-name 
+nest g service /modules/module-name  
+nest g module /modules/module-name 
+
+cd backend
+npm run build
+npm run start:dev
+npm run start:prod
+
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 5000).OwningProcess -Force
+
+
+
+
+
+

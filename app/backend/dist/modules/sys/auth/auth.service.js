@@ -44,6 +44,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
@@ -54,19 +57,27 @@ const user_session_entity_1 = require("./entities/user-session.entity");
 const user_entity_1 = require("../users/entities/user.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const config_1 = require("@nestjs/config");
+const ioredis_1 = __importDefault(require("ioredis"));
+const ioredis_2 = require("@nestjs-modules/ioredis");
+const uuid_1 = require("uuid");
 let AuthService = class AuthService {
-    constructor(userRepo, sessionRepo, paramRepo, jwtService) {
+    constructor(userRepo, sessionRepo, paramRepo, redis, configService, jwtService) {
         this.userRepo = userRepo;
         this.sessionRepo = sessionRepo;
         this.paramRepo = paramRepo;
+        this.redis = redis;
+        this.configService = configService;
         this.jwtService = jwtService;
     }
     async getParam(key) {
         const param = await this.paramRepo.findOne({ where: { paramKey: key } });
         return param.getTypedValue();
     }
-    async login(user, deviceInfo) {
+    async loginRepo(user, deviceInfo) {
         const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+        const accessTokenExpire = this.configService.get('JWT_EXPIRES_IN');
+        const refreshTokenExpire = this.configService.get('JWT_REFRESH_EXPIRES_IN');
         const session = this.sessionRepo.create({
             userId: user.username,
             expiresAt: new Date(Date.now() + sessionTimeout * 1000),
@@ -77,12 +88,8 @@ let AuthService = class AuthService {
             sub: user.username,
             sessionId: session.sessionId,
         };
-        const accessToken = this.jwtService.sign(payload, {
-            expiresIn: '15m',
-        });
-        const refreshToken = this.jwtService.sign(payload, {
-            expiresIn: '7d',
-        });
+        const accessToken = this.jwtService.sign(payload, { expiresIn: '15m', });
+        const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d', });
         session.refreshTokenHash = await bcrypt.hash(refreshToken, 10);
         await this.sessionRepo.save(session);
         return {
@@ -90,7 +97,27 @@ let AuthService = class AuthService {
             refreshToken,
         };
     }
-    async refresh(refreshToken) {
+    async loginRedis(user, deviceInfo) {
+        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+        const sessionId = (0, uuid_1.v4)();
+        const accessTokenExpire = this.configService.get('JWT_EXPIRES_IN');
+        const refreshTokenExpire = this.configService.get('JWT_REFRESH_EXPIRES_IN');
+        const payload = { sub: user.username, sessionId };
+        const accessToken = this.jwtService.sign(payload, { expiresIn: '15m', });
+        const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d', });
+        const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+        const sessionData = {
+            userId: user.username,
+            deviceInfo,
+            refreshTokenHash,
+            isActive: true,
+        };
+        console.log('Session Data to store in Redis:', sessionData);
+        console.log('sessionTimeout:', sessionTimeout);
+        await this.redis.set(`session:${sessionId}`, JSON.stringify(sessionData), 'EX', sessionTimeout);
+        return { accessToken, refreshToken };
+    }
+    async refreshRepo(refreshToken) {
         const payload = this.jwtService.verify(refreshToken);
         const session = await this.sessionRepo.findOne({
             where: { sessionId: payload.sessionId, isActive: true },
@@ -109,13 +136,51 @@ let AuthService = class AuthService {
             refreshToken: newRefresh,
         };
     }
-    async logout(sessionId) {
+    async refreshRedis(refreshToken) {
+        const payload = this.jwtService.verify(refreshToken);
+        const sessionKey = `session:${payload.sessionId}`;
+        const cachedSession = await this.redis.get(sessionKey);
+        if (!cachedSession)
+            throw new common_1.UnauthorizedException('Session expired');
+        const sessionData = JSON.parse(cachedSession);
+        const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
+        if (!isValid)
+            throw new common_1.UnauthorizedException('Invalid refresh token');
+        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+        const newRefresh = this.jwtService.sign({ sub: payload.sub, sessionId: payload.sessionId }, { expiresIn: '7d' });
+        const newAccess = this.jwtService.sign({ sub: payload.sub, sessionId: payload.sessionId }, { expiresIn: '15m' });
+        sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
+        await this.redis.set(sessionKey, JSON.stringify(sessionData), 'EX', sessionTimeout);
+        console.log('Session Data updated in Redis:', sessionData);
+        console.log('sessionTimeout:', sessionTimeout);
+        return { accessToken: newAccess, refreshToken: newRefresh };
+    }
+    async logoutRepo(sessionId) {
         let session = await this.sessionRepo.update({ sessionId }, { isActive: false });
         return (session == null) ? undefined : { success: true };
+    }
+    async logoutRedis(sessionId) {
+        const result = await this.redis.del(`session:${sessionId}`);
+        return result > 0 ? { success: true } : undefined;
     }
     async logoutAll(userId) {
         let session = await this.sessionRepo.update({ userId }, { isActive: false });
         return (session == null) ? undefined : { success: true };
+    }
+    async logoutAllRedis(userId) {
+        const keys = await this.redis.keys('session:*');
+        let deletedCount = 0;
+        for (const key of keys) {
+            const data = await this.redis.get(key);
+            if (data) {
+                const session = JSON.parse(data);
+                if (session.userId === userId) {
+                    await this.redis.del(key);
+                    deletedCount++;
+                }
+            }
+        }
+        return deletedCount > 0 ? { success: true } : undefined;
     }
     async validateUser(dto) {
         const user = await this.userRepo
@@ -137,9 +202,12 @@ exports.AuthService = AuthService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(user_session_entity_1.UserSession)),
     __param(2, (0, typeorm_1.InjectRepository)(system_parameter_entity_1.SystemParameter)),
+    __param(3, (0, ioredis_2.InjectRedis)()),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
+        ioredis_1.default,
+        config_1.ConfigService,
         jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

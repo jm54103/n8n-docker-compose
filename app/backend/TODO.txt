@@ -1,19 +1,10 @@
-ทดสอบ AuthController
-OK 1.login
-OK 2.logout
-OK 3.logout-all
-4.refresh
-
-
-
 
 ถ้าอยากอัปเกรดเป็น Enterprise จริง ๆ
 
 ขั้นถัดไปที่แนะนำ:
 
-🔐 Refresh Token Rotation
 
-🔐 Redis session store
+🔐 Refresh Token Rotation
 
 🔐 Token Blacklist
 

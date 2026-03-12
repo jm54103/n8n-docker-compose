@@ -10,6 +10,7 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const ioredis_1 = require("@nestjs-modules/ioredis");
 const market_signals_module_1 = require("./modules/app/stocks/market-signals/market-signals.module");
 const market_signal_entity_1 = require("./modules/app/stocks/market-signals/entities/market-signal.entity");
 const candle_sticks_module_1 = require("./modules/app/stocks/candle-sticks/candle-sticks.module");
@@ -36,6 +37,13 @@ exports.AppModule = AppModule = __decorate([
                     : '.env.development',
                 isGlobal: true,
             }),
+            ioredis_1.RedisModule.forRoot({
+                type: 'single',
+                options: {
+                    host: process.env.REDIS_HOST || 'localhost',
+                    port: Number(process.env.REDIS_PORT) || 6379,
+                },
+            }),
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: process.env.DB_HOST,
@@ -61,6 +69,7 @@ exports.AppModule = AppModule = __decorate([
             system_permissions_module_1.SystemPermissionsModule,
             users_module_1.UsersModule,
             user_groups_module_1.UserGroupsModule,
+            ioredis_1.RedisModule,
             auth_module_1.AuthModule,
         ],
     })

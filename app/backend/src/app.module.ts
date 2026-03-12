@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+/*-- Redis  --*/
+import { RedisModule } from '@nestjs-modules/ioredis';
 
 /* ===== Stocks ===== */
 import { MarketSignalsModule } from './modules/app/stocks/market-signals/market-signals.module';
@@ -33,7 +35,13 @@ import { UserSession } from './modules/sys/auth/entities/user-session.entity';
           : '.env.development',
       isGlobal: true,
     }),
-
+    RedisModule.forRoot({
+    type: 'single',
+      options: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: Number(process.env.REDIS_PORT) || 6379,
+      },
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -61,6 +69,7 @@ import { UserSession } from './modules/sys/auth/entities/user-session.entity';
     SystemPermissionsModule,
     UsersModule,
     UserGroupsModule,
+    RedisModule,
     AuthModule,
   ],
 })

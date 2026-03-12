@@ -53,11 +53,11 @@ describe('AuthController', () => {
         refreshToken: 'refresh-token',
       };
 
-      authService.login.mockResolvedValue(expectedResult);
+      authService.loginRepo.mockResolvedValue(expectedResult);
 
       const result = await controller.login(dto, mockRequest);
 
-      expect(authService.login).toHaveBeenCalledWith(
+      expect(authService.loginRepo).toHaveBeenCalledWith(
         dto,
         'jest-test',
       );
@@ -80,11 +80,11 @@ describe('AuthController', () => {
         refreshToken: 'new-refresh-token',
       };
 
-      authService.refresh.mockResolvedValue(expectedResult);
+      authService.refreshRepo.mockResolvedValue(expectedResult);
 
       const result = await controller.refresh(dto);
 
-      expect(authService.refresh).toHaveBeenCalledWith(
+      expect(authService.refreshRepo).toHaveBeenCalledWith(
         dto.refreshToken,
       );
 
@@ -103,13 +103,13 @@ describe('AuthController', () => {
         },
       };
 
-      authService.logout.mockResolvedValue({
+      authService.logoutRepo.mockResolvedValue({
         success: true,
       });
 
       const result = await controller.logout(mockRequest);
 
-      expect(authService.logout).toHaveBeenCalledWith(
+      expect(authService.loginRepo).toHaveBeenCalledWith(
         'session-123',
       );
 

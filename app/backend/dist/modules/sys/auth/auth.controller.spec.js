@@ -41,9 +41,9 @@ describe('AuthController', () => {
                 accessToken: 'access-token',
                 refreshToken: 'refresh-token',
             };
-            authService.login.mockResolvedValue(expectedResult);
+            authService.loginRepo.mockResolvedValue(expectedResult);
             const result = await controller.login(dto, mockRequest);
-            expect(authService.login).toHaveBeenCalledWith(dto, 'jest-test');
+            expect(authService.loginRepo).toHaveBeenCalledWith(dto, 'jest-test');
             expect(result).toEqual(expectedResult);
         });
     });
@@ -56,9 +56,9 @@ describe('AuthController', () => {
                 accessToken: 'new-access',
                 refreshToken: 'new-refresh-token',
             };
-            authService.refresh.mockResolvedValue(expectedResult);
+            authService.refreshRepo.mockResolvedValue(expectedResult);
             const result = await controller.refresh(dto);
-            expect(authService.refresh).toHaveBeenCalledWith(dto.refreshToken);
+            expect(authService.refreshRepo).toHaveBeenCalledWith(dto.refreshToken);
             expect(result).toEqual(expectedResult);
         });
     });
@@ -69,11 +69,11 @@ describe('AuthController', () => {
                     sessionId: 'session-123',
                 },
             };
-            authService.logout.mockResolvedValue({
+            authService.logoutRepo.mockResolvedValue({
                 success: true,
             });
             const result = await controller.logout(mockRequest);
-            expect(authService.logout).toHaveBeenCalledWith('session-123');
+            expect(authService.loginRepo).toHaveBeenCalledWith('session-123');
             expect(result).toEqual({ success: true });
         });
     });
