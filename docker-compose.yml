@@ -71,14 +71,14 @@ services:
   
   app-nestjs:
     build:
-        context: ./app
+        context: ./webapps
         target: production
     container_name: n8n_node-app-nestjs
     depends_on:
        - postgres
        - redis
     ports:
-       - "3000:3000"
+       - "5050:5000"
     environment:
        - NODE_ENV=production
        - DB_HOST=postgres
@@ -88,7 +88,17 @@ services:
        - DB_NAME=set100
        - REDIS_HOST=redis
        - REDIS_PORT=6379
-    #restart: always 
+    #restart: always   
+  
+  browserless:
+    image: browserless/chrome:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - MAX_CONCURRENT_SESSIONS=10
+      - ENABLE_DEBUGGER=true  # เพิ่มบรรทัดนี้เพื่อเปิดหน้า Dashboard
+    shm_size: '2gb'
+    restart: always
   
   ldap:
     image: osixia/openldap:latest
