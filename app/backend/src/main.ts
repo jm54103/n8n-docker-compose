@@ -1,14 +1,21 @@
 
 import { NestFactory } from '@nestjs/core';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'; // 1. Import
 import { AppModule } from './app.module';
 import { join } from 'path';
 import * as express from 'express';
 
+
+
+
 async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
+
+  // ใช้ Winston เป็น Logger หลักของระบบ
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   
   const isDev = process.env.NODE_ENV !== 'production';
   const PORT = process.env.PORT;

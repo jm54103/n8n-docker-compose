@@ -33,18 +33,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validateByRepo(payload: any) {
 
-    console.log('call validate()');
+    console.debug('call validate()');
     
-    //console.log('1. JWT Payload:', payload);
+    //console.debug('1. JWT Payload:', payload);
     // ถ้ารหัสผ่าน (Secret) ถูกต้อง มันจะเข้ามาทำงานในนี้
     const session = await this.sessionRepo.findOne({
       where: { sessionId: payload.sessionId, isActive: true },
     });
     
-    //console.log('2. Session from DB:', session);
+    //console.debug('2. Session from DB:', session);
     
     if (!session) {
-      //console.log('3. Validate Failed: Session not found or inactive');
+      //console.debug('3. Validate Failed: Session not found or inactive');
       throw new UnauthorizedException('Session is no longer active');
     }
     return payload; // ข้อมูลนี้จะไปอยู่ที่ req.user
@@ -57,7 +57,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const cachedSession = await this.redis.get(`session:${sessionId}`);
   
     if (cachedSession) {
-      console.log('--- Cache Hit: Session found in Redis ---');
+      console.debug('--- Cache Hit: Session found in Redis ---');
       // ถ้าใน Redis เก็บสถานะไว้ หรือเก็บเป็น String "true"/"false"
       if (cachedSession === 'inactive') {
         throw new UnauthorizedException('Session is no longer active');
@@ -67,7 +67,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     /*
     // 2. ถ้าใน Redis ไม่มี (Cache Miss) ให้เช็คจาก Database
-    console.log('--- Cache Miss: Checking Database ---');
+    console.debug('--- Cache Miss: Checking Database ---');
     const session = await this.sessionRepo.findOne({
     where: { sessionId, isActive: true },
     });

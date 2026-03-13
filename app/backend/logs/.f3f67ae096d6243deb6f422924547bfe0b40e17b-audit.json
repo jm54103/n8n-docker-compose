@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "logs\\.f3f67ae096d6243deb6f422924547bfe0b40e17b-audit.json",
+    "files": [
+        {
+            "date": 1773402441789,
+            "name": "logs\\verbose-2026-03-13.log",
+            "hash": "a741f791fc2833a8c66f65e9e28128051b9c9c4ebc6750b10e5c1dbb2a95d89a"
+        }
+    ],
+    "hashType": "sha256"
+}

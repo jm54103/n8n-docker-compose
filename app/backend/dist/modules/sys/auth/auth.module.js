@@ -20,13 +20,15 @@ const user_entity_1 = require("../users/entities/user.entity");
 const user_session_entity_1 = require("./entities/user-session.entity");
 const system_parameter_entity_1 = require("./../system-parameters/entities/system-parameter.entity");
 const config_service_1 = require("@nestjs/config/dist/config.service");
+const auth_logger_1 = require("./auth.logger");
+require("winston-daily-rotate-file");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
+        providers: [auth_service_1.AuthService, auth_logger_1.AuthLogger, jwt_strategy_1.JwtStrategy],
         imports: [
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, user_session_entity_1.UserSession, system_parameter_entity_1.SystemParameter]),
             passport_1.PassportModule,

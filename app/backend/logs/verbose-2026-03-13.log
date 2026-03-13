@@ -1,0 +1,37 @@
+[2026-03-13T11:47:22.162Z] info: [RoutesResolver] MarketSignalsController {/MarketSignals}:
+[2026-03-13T11:47:22.166Z] info: [RouterExplorer] Mapped {/MarketSignals, GET} route
+[2026-03-13T11:47:22.167Z] info: [RouterExplorer] Mapped {/MarketSignals/bullish, GET} route
+[2026-03-13T11:47:22.169Z] info: [RouterExplorer] Mapped {/MarketSignals/:symbol, GET} route
+[2026-03-13T11:47:22.169Z] info: [RoutesResolver] CandleSticksController {/candle-sticks}:
+[2026-03-13T11:47:22.171Z] info: [RouterExplorer] Mapped {/candle-sticks/:symbol, GET} route
+[2026-03-13T11:47:22.173Z] info: [RouterExplorer] Mapped {/candle-sticks/:symbol/range, GET} route
+[2026-03-13T11:47:22.174Z] info: [RouterExplorer] Mapped {/candle-sticks, POST} route
+[2026-03-13T11:47:22.175Z] info: [RoutesResolver] SystemParametersController {/system-parameters}:
+[2026-03-13T11:47:22.176Z] info: [RouterExplorer] Mapped {/system-parameters, POST} route
+[2026-03-13T11:47:22.176Z] info: [RouterExplorer] Mapped {/system-parameters, GET} route
+[2026-03-13T11:47:22.177Z] info: [RouterExplorer] Mapped {/system-parameters/:key/value, GET} route
+[2026-03-13T11:47:22.178Z] info: [RouterExplorer] Mapped {/system-parameters/:id, PATCH} route
+[2026-03-13T11:47:22.179Z] info: [RoutesResolver] SystemPermissionsController {/system-permissions}:
+[2026-03-13T11:47:22.179Z] info: [RouterExplorer] Mapped {/system-permissions, POST} route
+[2026-03-13T11:47:22.180Z] info: [RouterExplorer] Mapped {/system-permissions, GET} route
+[2026-03-13T11:47:22.181Z] info: [RouterExplorer] Mapped {/system-permissions/:id, GET} route
+[2026-03-13T11:47:22.182Z] info: [RouterExplorer] Mapped {/system-permissions/:id, PATCH} route
+[2026-03-13T11:47:22.182Z] info: [RouterExplorer] Mapped {/system-permissions/:id, DELETE} route
+[2026-03-13T11:47:22.183Z] info: [RoutesResolver] UsersController {/users}:
+[2026-03-13T11:47:22.183Z] info: [RouterExplorer] Mapped {/users, POST} route
+[2026-03-13T11:47:22.184Z] info: [RouterExplorer] Mapped {/users, GET} route
+[2026-03-13T11:47:22.185Z] info: [RouterExplorer] Mapped {/users/:id, GET} route
+[2026-03-13T11:47:22.186Z] info: [RouterExplorer] Mapped {/users/:id, PATCH} route
+[2026-03-13T11:47:22.187Z] info: [RouterExplorer] Mapped {/users/:id, DELETE} route
+[2026-03-13T11:47:22.187Z] info: [RoutesResolver] UserGroupsController {/user-groups}:
+[2026-03-13T11:47:22.188Z] info: [RouterExplorer] Mapped {/user-groups, POST} route
+[2026-03-13T11:47:22.189Z] info: [RouterExplorer] Mapped {/user-groups, GET} route
+[2026-03-13T11:47:22.189Z] info: [RouterExplorer] Mapped {/user-groups/:id, GET} route
+[2026-03-13T11:47:22.190Z] info: [RouterExplorer] Mapped {/user-groups/:id, PATCH} route
+[2026-03-13T11:47:22.191Z] info: [RouterExplorer] Mapped {/user-groups/:id, DELETE} route
+[2026-03-13T11:47:22.191Z] info: [RoutesResolver] AuthController {/auth}:
+[2026-03-13T11:47:22.192Z] info: [RouterExplorer] Mapped {/auth/login, POST} route
+[2026-03-13T11:47:22.193Z] info: [RouterExplorer] Mapped {/auth/refresh, POST} route
+[2026-03-13T11:47:22.193Z] info: [RouterExplorer] Mapped {/auth/logout, POST} route
+[2026-03-13T11:47:22.194Z] info: [RouterExplorer] Mapped {/auth/logout-all, POST} route
+[2026-03-13T11:47:22.198Z] info: [NestApplication] Nest application successfully started

@@ -11,12 +11,15 @@ import { User } from '../users/entities/user.entity';
 import { UserSession } from './entities/user-session.entity';
 import { SystemParameter } from './../system-parameters/entities/system-parameter.entity';
 import { ConfigService } from '@nestjs/config/dist/config.service';
-
+import { AuthLogger } from './auth.logger';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
+import 'winston-daily-rotate-file';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
-  imports: [
+  providers: [AuthService, AuthLogger, JwtStrategy],
+  imports: [    
     TypeOrmModule.forFeature([User,UserSession,SystemParameter]),            
     PassportModule,    
     RedisModule, // <--- ต้องใส่ตัวนี้ (เพื่อให้ Inject @InjectRedis() ได้)

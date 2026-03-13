@@ -13,10 +13,14 @@
 ผมจะจัด architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
 
 
+
+
 [BACKEND]
-- System Parameter
-- System Permission
-- Master Referrence Data
+- User Access Log 
+- User Activity Log
+- System Parameter (Audit Trail)
+- System Permission (Audit Trail)
+- Master Referrence Data 
 
 [FRONTEND]
 -Dynamic form schema

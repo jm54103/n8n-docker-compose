@@ -61,14 +61,18 @@ const config_1 = require("@nestjs/config");
 const ioredis_1 = __importDefault(require("ioredis"));
 const ioredis_2 = require("@nestjs-modules/ioredis");
 const uuid_1 = require("uuid");
+const winston_constants_1 = require("nest-winston/dist/winston.constants");
+const auth_logger_1 = require("./auth.logger");
 let AuthService = class AuthService {
-    constructor(userRepo, sessionRepo, paramRepo, redis, configService, jwtService) {
+    constructor(logger, userRepo, sessionRepo, paramRepo, redis, configService, jwtService, auth_logger) {
+        this.logger = logger;
         this.userRepo = userRepo;
         this.sessionRepo = sessionRepo;
         this.paramRepo = paramRepo;
         this.redis = redis;
         this.configService = configService;
         this.jwtService = jwtService;
+        this.auth_logger = auth_logger;
     }
     async getParam(key) {
         const param = await this.paramRepo.findOne({ where: { paramKey: key } });
@@ -104,29 +108,32 @@ let AuthService = class AuthService {
             refreshToken,
         };
     }
-    async loginRedis(user, deviceInfo) {
-        const sessionId = (0, uuid_1.v4)();
-        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
-        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
-        const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-        const payload = { sub: user.username, sessionId };
-        const mins = parseInt(accessTokenExpiresIn, 10);
-        const days = parseInt(refreshTokenExpiresIn, 10);
-        const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
-        const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
-        const accessToken = this.jwtService.sign(payload, accessTokenJwtSignOptions);
-        const refreshToken = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
-        const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
-        const sessionData = {
-            userId: user.username,
-            deviceInfo,
-            refreshTokenHash,
-            isActive: true,
-        };
-        console.log('Session Data to store in Redis:', sessionData);
-        console.log('sessionTimeout:', sessionTimeout);
-        await this.redis.set(`session:${sessionId}`, JSON.stringify(sessionData), 'EX', sessionTimeout);
-        return { accessToken, refreshToken };
+    async loginRedisWithLogging(user, deviceInfo) {
+        try {
+            const sessionId = (0, uuid_1.v4)();
+            const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+            const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+            const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+            const payload = { sub: user.username, sessionId };
+            const mins = parseInt(accessTokenExpiresIn, 10);
+            const days = parseInt(refreshTokenExpiresIn, 10);
+            const accessToken = this.jwtService.sign(payload, { expiresIn: `${mins}min` });
+            const refreshToken = this.jwtService.sign(payload, { expiresIn: `${days}d` });
+            const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+            const sessionData = {
+                userId: user.username,
+                deviceInfo,
+                refreshTokenHash,
+                isActive: true,
+            };
+            await this.redis.set(`session:${sessionId}`, JSON.stringify(sessionData), 'EX', sessionTimeout);
+            this.auth_logger.log(`User ${user.username} logged in from device: ${deviceInfo}`, 'AuthService');
+            return { accessToken, refreshToken };
+        }
+        catch (error) {
+            this.logger.error(`Login error for user ${user.username}`, error.stack, 'AuthService');
+            throw new common_1.InternalServerErrorException('Login failed due to server error');
+        }
     }
     async refreshRepo(refreshToken) {
         const payload = this.jwtService.verify(refreshToken);
@@ -151,55 +158,78 @@ let AuthService = class AuthService {
         await this.sessionRepo.save(session);
         return { accessToken: newAccess, refreshToken: newRefresh };
     }
-    async refreshRedis(refreshToken) {
-        const payload = this.jwtService.verify(refreshToken);
-        const sessionKey = `session:${payload.sessionId}`;
-        const cachedSession = await this.redis.get(sessionKey);
-        if (!cachedSession)
-            throw new common_1.UnauthorizedException('Session expired');
-        const sessionData = JSON.parse(cachedSession);
-        const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
-        if (!isValid)
-            throw new common_1.UnauthorizedException('Invalid refresh token');
-        const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
-        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
-        const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-        const mins = parseInt(accessTokenExpiresIn, 10);
-        const days = parseInt(refreshTokenExpiresIn, 10);
-        const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
-        const newAccess = this.jwtService.sign(payload, accessTokenJwtSignOptions);
-        const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
-        const newRefresh = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
-        sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
-        await this.redis.set(sessionKey, JSON.stringify(sessionData), 'EX', sessionTimeout);
-        return { accessToken: newAccess, refreshToken: newRefresh };
+    async refreshRedisWithLogging(refreshToken) {
+        try {
+            const payload = this.jwtService.verify(refreshToken);
+            const sessionKey = `session:${payload.sessionId}`;
+            const cachedSession = await this.redis.get(sessionKey);
+            if (!cachedSession)
+                throw new common_1.UnauthorizedException('Session expired');
+            const sessionData = JSON.parse(cachedSession);
+            const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
+            if (!isValid)
+                throw new common_1.UnauthorizedException('Invalid refresh token');
+            const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+            const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+            const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+            const mins = parseInt(accessTokenExpiresIn, 10);
+            const days = parseInt(refreshTokenExpiresIn, 10);
+            const accessTokenJwtSignOptions = { expiresIn: `${mins}min` };
+            const newAccess = this.jwtService.sign(payload, accessTokenJwtSignOptions);
+            const refreshTokenJwtSignOptions = { expiresIn: `${days}d` };
+            const newRefresh = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
+            sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
+            await this.redis.set(sessionKey, JSON.stringify(sessionData), 'EX', sessionTimeout);
+            this.logger.warn(`Token rotated for user ${payload.sub}`, 'AuthService');
+            return { accessToken: newAccess, refreshToken: newRefresh };
+        }
+        catch (error) {
+            if (error instanceof common_1.UnauthorizedException)
+                throw error;
+            this.logger.error('Refresh token process failed', error.stack, 'AuthService');
+            throw new common_1.UnauthorizedException('Token verification failed');
+        }
     }
     async logoutRepo(sessionId) {
         let session = await this.sessionRepo.update({ sessionId }, { isActive: false });
         return (session == null) ? { success: false } : { success: true };
     }
-    async logoutRedis(sessionId) {
-        const result = await this.redis.del(`session:${sessionId}`);
-        return result > 0 ? { success: true } : { success: false };
+    async logoutRedisWithLogging(userId, sessionId) {
+        try {
+            const result = await this.redis.del(`session:${sessionId}`);
+            this.auth_logger.log(`User ${userId} session ${sessionId} logout`, 'AuthService');
+            return result > 0 ? { success: true } : { success: false };
+        }
+        catch (error) {
+            this.logger.error(`Logout failed for user ${userId} session ${sessionId}`, error.stack, 'AuthService');
+            throw new common_1.InternalServerErrorException('Logout all failed');
+        }
     }
     async logoutAll(userId) {
         let session = await this.sessionRepo.update({ userId }, { isActive: false });
         return (session == null) ? { success: false } : { success: true };
     }
-    async logoutAllRedis(userId) {
-        const keys = await this.redis.keys('session:*');
-        let deletedCount = 0;
-        for (const key of keys) {
-            const data = await this.redis.get(key);
-            if (data) {
-                const session = JSON.parse(data);
-                if (session.userId === userId) {
-                    await this.redis.del(key);
-                    deletedCount++;
+    async logoutAllRedisWithLogging(userId) {
+        try {
+            const keys = await this.redis.keys('session:*');
+            let deletedCount = 0;
+            for (const key of keys) {
+                const data = await this.redis.get(key);
+                if (data) {
+                    const session = JSON.parse(data);
+                    if (session.userId === userId) {
+                        await this.redis.del(key);
+                        deletedCount++;
+                    }
                 }
             }
+            this.auth_logger.log(`User ${userId} forced logout from ${deletedCount} sessions`, 'AuthService');
+            return deletedCount > 0 ? { success: true } : { success: false };
         }
-        return deletedCount > 0 ? { success: true } : { success: false };
+        catch (error) {
+            this.logger.error(`LogoutAll failed for user ${userId}`, error.stack, 'AuthService');
+            throw new common_1.InternalServerErrorException('Logout all failed');
+        }
     }
     async validateUser(dto) {
         const user = await this.userRepo
@@ -218,15 +248,17 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
-    __param(1, (0, typeorm_1.InjectRepository)(user_session_entity_1.UserSession)),
-    __param(2, (0, typeorm_1.InjectRepository)(system_parameter_entity_1.SystemParameter)),
-    __param(3, (0, ioredis_2.InjectRedis)()),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
+    __param(0, (0, common_1.Inject)(winston_constants_1.WINSTON_MODULE_NEST_PROVIDER)),
+    __param(1, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(2, (0, typeorm_1.InjectRepository)(user_session_entity_1.UserSession)),
+    __param(3, (0, typeorm_1.InjectRepository)(system_parameter_entity_1.SystemParameter)),
+    __param(4, (0, ioredis_2.InjectRedis)()),
+    __metadata("design:paramtypes", [Object, typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         ioredis_1.default,
         config_1.ConfigService,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        auth_logger_1.AuthLogger])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

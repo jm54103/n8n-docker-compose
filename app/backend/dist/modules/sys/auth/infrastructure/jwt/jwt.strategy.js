@@ -40,7 +40,7 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         return this.validateRedis(payload);
     }
     async validateByRepo(payload) {
-        console.log('call validate()');
+        console.debug('call validate()');
         const session = await this.sessionRepo.findOne({
             where: { sessionId: payload.sessionId, isActive: true },
         });
@@ -53,7 +53,7 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         const { sessionId } = payload;
         const cachedSession = await this.redis.get(`session:${sessionId}`);
         if (cachedSession) {
-            console.log('--- Cache Hit: Session found in Redis ---');
+            console.debug('--- Cache Hit: Session found in Redis ---');
             if (cachedSession === 'inactive') {
                 throw new common_1.UnauthorizedException('Session is no longer active');
             }

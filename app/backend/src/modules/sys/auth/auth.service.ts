@@ -1,4 +1,4 @@
-import { Injectable,UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable,InternalServerErrorException,LoggerService,UnauthorizedException } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { SystemParameter } from "../system-parameters/entities/system-parameter.entity";
@@ -12,10 +12,14 @@ import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import { v4 as uuidv4 } from 'uuid'; // แนะนำให้ใช้ uuid สำหรับ sessionId
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston/dist/winston.constants';
+import { AuthLogger } from './auth.logger';
 
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject(WINSTON_MODULE_NEST_PROVIDER) 
+    private readonly logger: LoggerService,
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
     @InjectRepository(UserSession)
@@ -26,6 +30,7 @@ export class AuthService {
     private readonly redis: Redis, // Inject Redis เข้ามาใช้งาน    
     private readonly configService: ConfigService, // Inject ConfigService เข้ามา    
     private readonly jwtService: JwtService,
+    private readonly auth_logger: AuthLogger
   ) {}
 
   private async getParam(key: string): Promise<number> {
@@ -76,46 +81,43 @@ export class AuthService {
     };
   }
 
-  async loginRedis(user: LoginDto, deviceInfo: string) {
+  async loginRedisWithLogging(user: LoginDto, deviceInfo: string) {
+    try 
+    {
+      const sessionId = uuidv4();
+      const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+      const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+      const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
-    const sessionId = uuidv4(); // สร้าง session id ใหม่
-    const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');    
-    const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
-    const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+      const payload = { sub: user.username, sessionId };
+      const mins = parseInt(accessTokenExpiresIn, 10);
+      const days = parseInt(refreshTokenExpiresIn, 10);
 
-    const payload = { sub: user.username, sessionId };
+      const accessToken = this.jwtService.sign(payload, { expiresIn: `${mins}min` });
+      const refreshToken = this.jwtService.sign(payload, { expiresIn: `${days}d` });
+      const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
 
-    const mins=parseInt(accessTokenExpiresIn, 10);
-    const days=parseInt(refreshTokenExpiresIn, 10);
+      const sessionData = {
+        userId: user.username,
+        deviceInfo,
+        refreshTokenHash,
+        isActive: true,
+      };
 
-    const accessTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${mins}min` };    
-    const refreshTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${days}d` };
-   
-    const accessToken = this.jwtService.sign(payload,accessTokenJwtSignOptions);
-    const refreshToken = this.jwtService.sign(payload,refreshTokenJwtSignOptions);
-    const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+      // บันทึกลง Redis
+      await this.redis.set(
+        `session:${sessionId}`,
+        JSON.stringify(sessionData),
+        'EX',
+        sessionTimeout,
+      );      
+      this.auth_logger.log(`User ${user.username} logged in from device: ${deviceInfo}`, 'AuthService');
+      return { accessToken, refreshToken };
 
-    // เก็บข้อมูลลง Redis (ใช้ sessionId เป็น Key)
-    // สามารถเก็บเป็น JSON string
-    const sessionData = {
-      userId: user.username,
-      deviceInfo,
-      refreshTokenHash,
-      isActive: true,
-    };
-
-    console.log('Session Data to store in Redis:', sessionData);
-    console.log('sessionTimeout:', sessionTimeout);
-
-    // บันทึกลง Redis พร้อมตั้งเวลาล่วงลับ (TTL)
-    await this.redis.set(
-      `session:${sessionId}`,
-      JSON.stringify(sessionData),
-      'EX',
-      sessionTimeout,
-    );
-
-    return { accessToken, refreshToken };
+    } catch (error) {
+      this.logger.error(`Login error for user ${user.username}`, error.stack, 'AuthService');
+      throw new InternalServerErrorException('Login failed due to server error');
+    }
   }
 
   async refreshRepo(refreshToken: string) {
@@ -155,45 +157,51 @@ export class AuthService {
     return { accessToken: newAccess, refreshToken: newRefresh };
   }
 
-  async refreshRedis(refreshToken: string) {
-
-    const payload = this.jwtService.verify(refreshToken);
-    const sessionKey = `session:${payload.sessionId}`;
-    
-    // 1. ดึงข้อมูลจาก Redis
-    const cachedSession = await this.redis.get(sessionKey);
-    if (!cachedSession) throw new UnauthorizedException('Session expired');
-
-    const sessionData = JSON.parse(cachedSession);
-
-    // 2. ตรวจสอบ Refresh Token Hash
-    const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
-    if (!isValid) throw new UnauthorizedException('Invalid refresh token');
-
-    // 3. สร้าง Token ใหม่ (Rotation)    
-    const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');    
-    const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
-    const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-
-    const mins=parseInt(accessTokenExpiresIn, 10);
-    const days=parseInt(refreshTokenExpiresIn, 10);
-
-    const accessTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${mins}min` };    
-    const newAccess = this.jwtService.sign(payload,accessTokenJwtSignOptions);
-
-    const refreshTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${days}d` };    
-    const newRefresh = this.jwtService.sign(payload,refreshTokenJwtSignOptions);
+  async refreshRedisWithLogging(refreshToken: string) {
+    try
+    {      
+      const payload = this.jwtService.verify(refreshToken);
+      const sessionKey = `session:${payload.sessionId}`;
       
-    // 4. อัปเดต Hash ใหม่กลับลง Redis
-    sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
-    await this.redis.set(
-      sessionKey,
-      JSON.stringify(sessionData),
-      'EX',
-      sessionTimeout,
-    );
+      // 1. ดึงข้อมูลจาก Redis
+      const cachedSession = await this.redis.get(sessionKey);
+      if (!cachedSession) throw new UnauthorizedException('Session expired');
 
-    return { accessToken: newAccess, refreshToken: newRefresh };
+      const sessionData = JSON.parse(cachedSession);
+
+      // 2. ตรวจสอบ Refresh Token Hash
+      const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
+      if (!isValid) throw new UnauthorizedException('Invalid refresh token');
+
+      // 3. สร้าง Token ใหม่ (Rotation)    
+      const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');    
+      const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
+      const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+
+      const mins=parseInt(accessTokenExpiresIn, 10);
+      const days=parseInt(refreshTokenExpiresIn, 10);
+
+      const accessTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${mins}min` };    
+      const newAccess = this.jwtService.sign(payload,accessTokenJwtSignOptions);
+
+      const refreshTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${days}d` };    
+      const newRefresh = this.jwtService.sign(payload,refreshTokenJwtSignOptions);
+        
+      // 4. อัปเดต Hash ใหม่กลับลง Redis
+      sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
+      await this.redis.set(
+        sessionKey,
+        JSON.stringify(sessionData),
+        'EX',
+        sessionTimeout,
+      );
+      this.logger.warn(`Token rotated for user ${payload.sub}`, 'AuthService');
+      return { accessToken: newAccess, refreshToken: newRefresh };
+    } catch (error) {
+       if (error instanceof UnauthorizedException) throw error;    
+      this.logger.error('Refresh token process failed', error.stack, 'AuthService');
+      throw new UnauthorizedException('Token verification failed');
+    }    
   }
 
   async logoutRepo(sessionId: string) {
@@ -204,13 +212,18 @@ export class AuthService {
       return (session==null) ? { success: false } : { success: true };
   }
 
-  async logoutRedis(sessionId: string) {
-    // สั่งลบ key จาก Redis โดยตรง
-    // คืนค่าเป็นจำนวน key ที่ถูกลบ (1 = สำเร็จ, 0 = ไม่เจอ key)
-    const result = await this.redis.del(`session:${sessionId}`);        
-    return result > 0 ? { success: true } : { success: false } ;
+  async logoutRedisWithLogging(userId: string, sessionId: string) {
+    try{
+      // สั่งลบ key จาก Redis โดยตรง
+      // คืนค่าเป็นจำนวน key ที่ถูกลบ (1 = สำเร็จ, 0 = ไม่เจอ key)
+      const result = await this.redis.del(`session:${sessionId}`);  
+      this.auth_logger.log(`User ${userId} session ${sessionId} logout`, 'AuthService');           
+      return result > 0 ? { success: true } : { success: false } ;
+    } catch (error) {
+      this.logger.error(`Logout failed for user ${userId} session ${sessionId}`, error.stack, 'AuthService');
+      throw new InternalServerErrorException('Logout all failed');
+    }
   }
-
 
   async logoutAll(userId: string) {
       let session=await this.sessionRepo.update(
@@ -220,23 +233,29 @@ export class AuthService {
       return (session==null) ? { success: false } : { success: true };
   }
 
-  async logoutAllRedis(userId: string) {
-    // ค้นหา key ทั้งหมดที่ข้อมูลข้างในมี userId ตรงกัน (หรือใช้ naming convention)
-    // หมายเหตุ: ใน Production ที่มี data เยอะๆ แนะนำให้เก็บ key แบบ 'user:{userId}:sessions' เป็น Set จะเร็วขึ้น
-    const keys = await this.redis.keys('session:*');
-    let deletedCount = 0;
+  async logoutAllRedisWithLogging(userId: string) {
+    try{
+      // ค้นหา key ทั้งหมดที่ข้อมูลข้างในมี userId ตรงกัน (หรือใช้ naming convention)
+      // หมายเหตุ: ใน Production ที่มี data เยอะๆ แนะนำให้เก็บ key แบบ 'user:{userId}:sessions' เป็น Set จะเร็วขึ้น
+      const keys = await this.redis.keys('session:*');
+      let deletedCount = 0;
 
-    for (const key of keys) {
-      const data = await this.redis.get(key);
-      if (data) {
-        const session = JSON.parse(data);
-        if (session.userId === userId) {
-          await this.redis.del(key);
-          deletedCount++;
+      for (const key of keys) {
+        const data = await this.redis.get(key);
+        if (data) {
+          const session = JSON.parse(data);
+          if (session.userId === userId) {
+            await this.redis.del(key);
+            deletedCount++;
+          }
         }
-      }
+      }      
+      this.auth_logger.log(`User ${userId} forced logout from ${deletedCount} sessions`, 'AuthService');
+      return deletedCount > 0 ? { success: true } : { success: false };
+    } catch (error) {
+      this.logger.error(`LogoutAll failed for user ${userId}`, error.stack, 'AuthService');
+      throw new InternalServerErrorException('Logout all failed');
     }
-    return deletedCount > 0 ? { success: true } : { success: false };
   }
   
   async validateUser(dto: LoginDto): Promise<User> {

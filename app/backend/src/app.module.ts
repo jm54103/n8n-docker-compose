@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 /*-- Redis  --*/
 import { RedisModule } from '@nestjs-modules/ioredis';
 
@@ -26,8 +27,123 @@ import { UserGroup } from './modules/sys/user-groups/entities/user-group.entity'
 import { AuthModule } from './modules/sys/auth/auth.module';
 import { UserSession } from './modules/sys/auth/entities/user-session.entity';
 
+/*--Logger--*/
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
+import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด้วย
+/*--Logger--*/
+
 @Module({
   imports: [
+       WinstonModule.forRoot({
+      transports: [
+        // 1. แสดงผลบน Console
+        new winston.transports.Console({
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.colorize(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+          ),
+        }),
+        // 2.1 เก็บลงไฟล์ (Error เท่านั้น)     
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/error-%DATE%.log',
+          level: 'error',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '50m',
+          maxFiles: '30d', // เก็บย้อนหลัง 30 วัน
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+            //winston.format.json(),
+          ),
+        }),         
+        // 2.2 เก็บลงไฟล์ (Warning เท่านั้น)
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/warning-%DATE%.log',
+          level: 'warn',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '50m',
+          maxFiles: '30d', // เก็บย้อนหลัง 30 วัน
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+            //winston.format.json(),
+          ),
+        }),
+        // 2.3 เก็บลงไฟล์ (Info เท่านั้น)
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/info-%DATE%.log',
+          level: 'info',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '50m',
+          maxFiles: '30d', // เก็บย้อนหลัง 30 วัน
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+            //winston.format.json(),
+          ),
+        }),
+        // 2.4 เก็บลงไฟล์ (Debug เท่านั้น)       
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/debug-%DATE%.log',
+          level: 'debug',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '50m',
+          maxFiles: '30d', // เก็บย้อนหลัง 30 วัน
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+            //winston.format.json(),
+          ),
+        }),       
+        // 2.5 เก็บลงไฟล์ (verbose เท่านั้น)                  
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/verbose-%DATE%.log',
+          level: 'verbose',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '50m',
+          maxFiles: '30d', // เก็บย้อนหลัง 30 วัน
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+            //winston.format.json(),
+          ),
+        }),        
+        // --- 3. ไฟล์รวม Log ทุกประเภท (Combined) ---
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/application-%DATE%.log',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '50m',
+          maxFiles: '30d', // เก็บย้อนหลัง 30 วัน
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.printf(({ timestamp, level, message, context }) => {
+              return `[${timestamp}] ${level}: [${context || 'App'}] ${message}`;
+            }),
+            //winston.format.json(),
+          ),
+        }),
+      ],
+    }),
     ConfigModule.forRoot({
       envFilePath:
         process.env.NODE_ENV === 'production'
@@ -61,6 +177,7 @@ import { UserSession } from './modules/sys/auth/entities/user-session.entity';
       ],
       synchronize: false, // production = false
     }),
+
 
     /* Modules */
     MarketSignalsModule,
