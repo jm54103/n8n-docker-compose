@@ -17,14 +17,14 @@ export class AuthController {
   @Post('login')
   async login(@Body() dto: LoginDto, @Req() req: Request) {        
     console.debug('Logging in user:', dto.username);
-    return this.authService.loginRedisWithLogging(dto, req.headers['user-agent'] as string);
+    return this.authService.login(dto, req.headers['user-agent'] as string);
   }
   
   @Post('refresh')
   @ApiBody({ type: RefreshDto })
   async refresh(@Body() dto: RefreshDto) {
     console.debug('Refreshing token with refreshToken:', dto.refreshToken);
-    return this.authService.refreshRedisWithLogging(dto.refreshToken);
+    return this.authService.refresh(dto.refreshToken);
   }
 
   @ApiBearerAuth('accessToken')
@@ -32,7 +32,7 @@ export class AuthController {
   @Post('logout')
   async logout(@Req() req: Request & { user: JwtPayload }) {
     console.debug('Logging out session:', req.user.sessionId);    
-    return this.authService.logoutRedisWithLogging(req.user.sub, req.user.sessionId);
+    return this.authService.logout(req.user.sub, req.user.sessionId);
   }
 
   @ApiBearerAuth('accessToken')  
@@ -40,7 +40,7 @@ export class AuthController {
   @Post('logout-all')
   async logoutAll(@Req() req: Request & { user: JwtPayload }) {
     console.debug('Logging out all sessions for user:', req.user.sub);    
-    return this.authService.logoutAllRedisWithLogging(req.user.sub);
+    return this.authService.logoutAll(req.user.sub);
   }
   
 }

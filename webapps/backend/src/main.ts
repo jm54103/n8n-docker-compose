@@ -1,4 +1,3 @@
-
 import { NestFactory } from '@nestjs/core';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ValidationPipe } from '@nestjs/common';
@@ -6,9 +5,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'; // 1. Import
 import { AppModule } from './app.module';
 import { join } from 'path';
 import * as express from 'express';
-
-
-
+import * as fs from 'fs';
 
 async function bootstrap() {
 
@@ -43,7 +40,11 @@ async function bootstrap() {
   .build();
     
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); 
+  SwaggerModule.setup('api', app, document);  
+  
+  // เขียนไฟล์ swagger.json ลงเครื่องเพื่อใช้กับ Generator
+  fs.writeFileSync('./swagger.json', JSON.stringify(document));
+
 
   const frontendPath = join(__dirname, '..', 'public');
 

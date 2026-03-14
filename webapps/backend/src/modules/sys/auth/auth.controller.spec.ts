@@ -40,8 +40,8 @@ describe('AuthController', () => {
   describe('login', () => {
     it('should call authService.login and return result', async () => {
       const dto: LoginDto = {
-        username: 'test',
-        password: '1234',
+        username: 'tester',
+        password: 'SecretPassword1234',
       };
 
       const mockRequest: any = {
@@ -53,11 +53,11 @@ describe('AuthController', () => {
         refreshToken: 'refresh-token',
       };
 
-      authService.loginRepo.mockResolvedValue(expectedResult);
+      authService.login.mockResolvedValue(expectedResult);
 
       const result = await controller.login(dto, mockRequest);
 
-      expect(authService.loginRepo).toHaveBeenCalledWith(
+      expect(authService.login).toHaveBeenCalledWith(
         dto,
         'jest-test',
       );
@@ -80,11 +80,11 @@ describe('AuthController', () => {
         refreshToken: 'new-refresh-token',
       };
 
-      authService.refreshRepo.mockResolvedValue(expectedResult);
+      authService.refresh.mockResolvedValue(expectedResult);
 
       const result = await controller.refresh(dto);
 
-      expect(authService.refreshRepo).toHaveBeenCalledWith(
+      expect(authService.refresh).toHaveBeenCalledWith(
         dto.refreshToken,
       );
 
@@ -103,13 +103,13 @@ describe('AuthController', () => {
         },
       };
 
-      authService.logoutRepo.mockResolvedValue({
+      authService.logout.mockResolvedValue({
         success: true,
       });
 
       const result = await controller.logout(mockRequest);
 
-      expect(authService.loginRepo).toHaveBeenCalledWith(
+      expect(authService.login).toHaveBeenCalledWith(
         'session-123',
       );
 

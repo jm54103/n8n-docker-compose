@@ -3,3 +3,10 @@ npm test -- user-activity-logs
 npm run test:watch
 
 npx jest user-activity-logs --watch
+npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/api-json -g typescript-axios -o ./src/api-client
+
+
+
+
+# ใช้ npx รันแบบไม่ต้องลงโปรแกรมเพิ่ม
+npx ts-node src/api/test-api.ts

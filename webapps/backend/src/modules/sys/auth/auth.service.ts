@@ -1,4 +1,4 @@
-import { Inject, Injectable,InternalServerErrorException,LoggerService,UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable,InternalServerErrorException,LoggerService,UnauthorizedException } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { SystemParameter } from "../system-parameters/entities/system-parameter.entity";
@@ -33,19 +33,134 @@ export class AuthService {
     private readonly auth_logger: AuthLogger
   ) {}
 
-  private async getParam(key: string): Promise<number> {
-    const param = await this.paramRepo.findOne({ where: { paramKey: key } });
-    return param.getTypedValue() as number;
+
+
+  private async getSystemParameter(key: string): Promise<number> {
+    const redisKey = `config:param:${key}`;
+
+    try {
+      // 1. ตรวจสอบค่าใน Redis
+      const cachedValue = await this.redis.get(redisKey);
+      
+      if (cachedValue !== null) {
+        return Number(cachedValue);
+      }
+
+      // 2. ถ้าไม่มีใน Redis ให้ดึงจาก Database
+      const param = await this.paramRepo.findOne({ where: { paramKey: key } });
+      if (!param) return null;
+
+      const value = param.getTypedValue() as number;
+
+      // 3. บันทึกลง Redis พร้อมตั้งเวลาหมดอายุ (TTL) เช่น 1 ชั่วโมง (3600 วินาที)
+      // ใช้ 'EX' สำหรับ set expiration
+      await this.redis.set(redisKey, value.toString(), 'EX', 3600);
+
+      return value;
+    } catch (error) {
+      // Fallback: ถ้า Redis ล่ม ให้ดึงจาก DB ตรงๆ เพื่อไม่ให้ระบบ Login พัง
+      console.error('Redis Error:', error);
+      const param = await this.paramRepo.findOne({ where: { paramKey: key } });
+      return param ? (param.getTypedValue() as number) : null;
+    }
   }
 
   private async getConfig(key: string): Promise<string> {
     return this.configService.get<string>(key);
   }
 
+  public async login(LoginDto: LoginDto, deviceInfo: string) {
+    const user = await this.checkPassword(LoginDto);
+    if (user) {
+      return await this.loginRedisWithLogging(LoginDto, deviceInfo)
+    }
+  }
 
-  async loginRepo(user: LoginDto, deviceInfo: string) {
+  public async refresh(refreshToken: string) {
+    return await this.refreshRedisWithLogging(refreshToken);
+  }
 
-    const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');    
+  public async logout(userId: string, sessionId: string) {
+    return await this.logoutRedisWithLogging(userId, sessionId);
+  }
+  public async logoutAll(userId: string) {
+    return await this.logoutAllRedisWithLogging(userId);  
+  } 
+
+  private async checkPassword(LoginDto: LoginDto): Promise<User> {
+    
+    const username = LoginDto.username.trim().toLowerCase(); // Normalize username
+    const password = LoginDto.password;
+
+
+    // 1. ค้นหา User (รวมถึงฟิลด์ที่จำเป็นต้องใช้เช็คเงื่อนไข)
+    const user = await this.userRepo.findOne(
+      { where: { username },
+        select: ['userId', 'username', 'passwordHash', 'isActive', 'status', 'loginAttempts', 'lockUntil'] 
+      });
+
+    if (!user) {
+      throw new UnauthorizedException('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+    }
+
+    const now = new Date();
+
+    // 2. ตรวจสอบสถานะการใช้งาน (is_active / status)
+    if (!user.isActive || user.status !== 'ACTIVE') {
+      throw new ForbiddenException('บัญชีนี้ถูกระงับการใช้งาน');
+    }
+
+    // 3. ตรวจสอบการโดนล็อก (lock_until)
+    if (user.lockUntil && user.lockUntil > now) {
+      const remainingMinutes = Math.ceil((user.lockUntil.getTime() - now.getTime()) / 60000);
+      throw new ForbiddenException(`บัญชีถูกล็อกชั่วคราว กรุณาลองใหม่ในอีก ${remainingMinutes} นาที`);
+    }
+
+    if (!password || !user.passwordHash) {
+    throw new UnauthorizedException('ข้อมูลไม่ครบถ้วน');
+}
+
+    // Debug log 
+    console.debug(`User ${username} found. Proceeding to password check...`); 
+    
+    // 4. ตรวจสอบรหัสผ่านด้วย bcrypt
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+
+    if (isMatch) {
+      // --- กรณีรหัสผ่านถูกต้อง ---
+      user.loginAttempts = 0;
+      user.lockUntil = null;
+      user.lastLogin = now;
+      user.isLoggedIn = true;
+      // user.session_key = ... (สร้าง session/token ใหม่ถ้าต้องการเก็บลง DB)      
+      return await this.userRepo.save(user);
+
+    } else {
+      // --- กรณีรหัสผ่านผิด ---
+      const MAX_LOGIN_ATTEMPTS = await this.getSystemParameter('MAX_LOGIN_ATTEMPTS');     
+      const LOCKOUT_DURATION_MINUTES = await this.getSystemParameter('LOCKOUT_DURATION_MINUTES');
+          
+      user.loginAttempts += 1;
+
+      // เงื่อนไข: ถ้าผิดครบ MAX_LOGIN_ATTEMPTS ครั้ง ให้ล็อกบัญชี LOCKOUT_DURATION_MINUTES นาที
+      if (user.loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+        user.lockUntil = new Date(now.getTime() + LOCKOUT_DURATION_MINUTES * 60000);
+      }
+
+      await this.userRepo.save(user);
+
+      if (user.loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+        throw new ForbiddenException('รหัสผ่านผิดเกินกำหนด บัญชีของคุณถูกล็อก 30 นาที');
+      }
+      
+      throw new UnauthorizedException('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+    }
+  }
+
+
+  private async loginRepo(user: LoginDto, deviceInfo: string) {
+
+    const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');    
     const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
     const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
    
@@ -81,11 +196,13 @@ export class AuthService {
     };
   }
 
-  async loginRedisWithLogging(user: LoginDto, deviceInfo: string) {
+  
+
+  private async loginRedisWithLogging(user: LoginDto, deviceInfo: string) {
     try 
     {
       const sessionId = uuidv4();
-      const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');
+      const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');
       const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
       const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
@@ -120,7 +237,7 @@ export class AuthService {
     }
   }
 
-  async refreshRepo(refreshToken: string) {
+  private async refreshRepo(refreshToken: string) {
 
     const payload = this.jwtService.verify(refreshToken);
 
@@ -137,7 +254,7 @@ export class AuthService {
 
 
     // 3. สร้าง Token ใหม่ (Rotation)    
-    const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');    
+    const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');    
     const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
     const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
@@ -157,7 +274,7 @@ export class AuthService {
     return { accessToken: newAccess, refreshToken: newRefresh };
   }
 
-  async refreshRedisWithLogging(refreshToken: string) {
+  private async refreshRedisWithLogging(refreshToken: string) {
     try
     {      
       const payload = this.jwtService.verify(refreshToken);
@@ -174,7 +291,7 @@ export class AuthService {
       if (!isValid) throw new UnauthorizedException('Invalid refresh token');
 
       // 3. สร้าง Token ใหม่ (Rotation)    
-      const sessionTimeout = await this.getParam('SESSION_TIMEOUT_SEC');    
+      const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');    
       const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
       const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
@@ -204,7 +321,7 @@ export class AuthService {
     }    
   }
 
-  async logoutRepo(sessionId: string) {
+  private async logoutRepo(sessionId: string) {
       let session=await this.sessionRepo.update(
         { sessionId },
         { isActive: false },
@@ -212,7 +329,7 @@ export class AuthService {
       return (session==null) ? { success: false } : { success: true };
   }
 
-  async logoutRedisWithLogging(userId: string, sessionId: string) {
+  private async logoutRedisWithLogging(userId: string, sessionId: string) {
     try{
       // สั่งลบ key จาก Redis โดยตรง
       // คืนค่าเป็นจำนวน key ที่ถูกลบ (1 = สำเร็จ, 0 = ไม่เจอ key)
@@ -225,7 +342,7 @@ export class AuthService {
     }
   }
 
-  async logoutAll(userId: string) {
+  private async logoutAllRepo(userId: string) {
       let session=await this.sessionRepo.update(
         { userId },
         { isActive: false },
@@ -233,7 +350,7 @@ export class AuthService {
       return (session==null) ? { success: false } : { success: true };
   }
 
-  async logoutAllRedisWithLogging(userId: string) {
+  private async logoutAllRedisWithLogging(userId: string) {
     try{
       // ค้นหา key ทั้งหมดที่ข้อมูลข้างในมี userId ตรงกัน (หรือใช้ naming convention)
       // หมายเหตุ: ใน Production ที่มี data เยอะๆ แนะนำให้เก็บ key แบบ 'user:{userId}:sessions' เป็น Set จะเร็วขึ้น
@@ -258,24 +375,7 @@ export class AuthService {
     }
   }
   
-  async validateUser(dto: LoginDto): Promise<User> {
-    const user = await this.userRepo
-      .createQueryBuilder('u')
-      .addSelect('u.passwordHash')
-      .where('u.username = :username', { username: dto.username })
-      .getOne();
   
-    if (!user) throw new UnauthorizedException();
-  
-    const isMatch = await bcrypt.compare(
-      dto.password,
-      user.passwordHash,
-    );
-  
-    if (!isMatch) throw new UnauthorizedException();
-  
-    return user;
-  }
 
 }
 

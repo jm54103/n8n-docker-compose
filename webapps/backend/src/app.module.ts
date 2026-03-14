@@ -39,7 +39,7 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
       transports: [
         // 1. แสดงผลบน Console
         new winston.transports.Console({
-          format: winston.format.combine(
+            format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.colorize(),
             winston.format.printf(({ timestamp, level, message, context }) => {
