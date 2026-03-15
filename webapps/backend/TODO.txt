@@ -1,5 +1,4 @@
 
-ถ้าอยากอัปเกรดเป็น Enterprise จริง ๆ
 ขั้นถัดไปที่แนะนำ:
 🔐 Token Blacklist
 🔐 Refresh Token Rotation

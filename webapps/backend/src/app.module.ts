@@ -180,12 +180,12 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
 
 
     /* Modules */
-    MarketSignalsModule,
-    CandleSticksModule,
-    SystemParametersModule,
-    SystemPermissionsModule,
-    UsersModule,
-    UserGroupsModule,
+    //MarketSignalsModule,
+    //CandleSticksModule,
+    //SystemParametersModule,
+    //SystemPermissionsModule,
+    //UsersModule,
+    //UserGroupsModule,
     RedisModule,
     AuthModule,
   ],
