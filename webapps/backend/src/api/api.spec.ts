@@ -1,5 +1,5 @@
 // src/api/api.spec.ts
-import { apiClient } from './test-api';
+import { apiClient } from './client';
 
 describe('API Client Integration Test', () => {
   

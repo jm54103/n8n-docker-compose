@@ -23,7 +23,7 @@ export class AuthController {
   @Post('refresh')
   @ApiBody({ type: RefreshDto })
   async refresh(@Body() dto: RefreshDto) {
-    console.debug('Refreshing token with refreshToken:', dto.refreshToken);
+    //console.debug('Refreshing token with refreshToken:', dto.refreshToken);
     return this.authService.refresh(dto.refreshToken);
   }
 

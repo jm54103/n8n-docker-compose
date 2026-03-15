@@ -9,4 +9,4 @@ npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/api-js
 
 
 # ใช้ npx รันแบบไม่ต้องลงโปรแกรมเพิ่ม
-npx ts-node src/api/test-api.ts
+npx ts-node src/api/client.ts

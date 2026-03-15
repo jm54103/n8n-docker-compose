@@ -201,8 +201,7 @@ export class AuthService {
   private async loginRedisWithLogging(user: LoginDto, deviceInfo: string) {
     try 
     {
-      const sessionId = uuidv4();
-      const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');
+      const sessionId = uuidv4();      
       const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
       const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
@@ -222,11 +221,12 @@ export class AuthService {
       };
 
       // บันทึกลง Redis
+      const refreshTokenTTL = days * 24 * 60 * 60; // แปลง '7d' เป็นวินาที
       await this.redis.set(
         `session:${sessionId}`,
         JSON.stringify(sessionData),
         'EX',
-        sessionTimeout,
+        refreshTokenTTL
       );      
       this.auth_logger.log(`User ${user.username} logged in from device: ${deviceInfo}`, 'AuthService');
       return { accessToken, refreshToken };
@@ -275,50 +275,65 @@ export class AuthService {
   }
 
   private async refreshRedisWithLogging(refreshToken: string) {
+    
     try
-    {      
+    {               
+
       const payload = this.jwtService.verify(refreshToken);
       const sessionKey = `session:${payload.sessionId}`;
-      
+            
       // 1. ดึงข้อมูลจาก Redis
       const cachedSession = await this.redis.get(sessionKey);
-      if (!cachedSession) throw new UnauthorizedException('Session expired');
+      if (!cachedSession) {
+        console.debug(`No session found in Redis for sessionId ${payload.sessionId}`); 
+        throw new UnauthorizedException('Session expired');
+      }
+      console.debug(`Token refreshed for session ${payload.sessionId}, user ${payload.sub}`); 
 
       const sessionData = JSON.parse(cachedSession);
 
       // 2. ตรวจสอบ Refresh Token Hash
       const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
       if (!isValid) throw new UnauthorizedException('Invalid refresh token');
+      console.debug(`Refresh token valid for session ${payload.sessionId}, user ${payload.sub}`); 
 
-      // 3. สร้าง Token ใหม่ (Rotation)    
-      const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');    
-      const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
-      const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+      // 3. สร้าง Token ใหม่ (Rotation)        
+      const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');
+      const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+      const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
-      const mins=parseInt(accessTokenExpiresIn, 10);
-      const days=parseInt(refreshTokenExpiresIn, 10);
+      const new_payload = { sub: payload.sub, sessionId: payload.sessionId };
+      const mins = parseInt(accessTokenExpiresIn, 10);
+      const days = parseInt(refreshTokenExpiresIn, 10);
 
-      const accessTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${mins}min` };    
-      const newAccess = this.jwtService.sign(payload,accessTokenJwtSignOptions);
+      const new_accessToken = this.jwtService.sign(new_payload, { expiresIn: `${mins}min` });
+      const new_refreshToken = this.jwtService.sign(new_payload, { expiresIn: `${days}d` });      
 
-      const refreshTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${days}d` };    
-      const newRefresh = this.jwtService.sign(payload,refreshTokenJwtSignOptions);
+      console.debug(`New tokens generated for session ${payload.sessionId}, user ${payload.sub}`); 
         
-      // 4. อัปเดต Hash ใหม่กลับลง Redis
-      sessionData.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
+      // 4. อัปเดต Hash ใหม่กลับลง Redis      
+      sessionData.refreshTokenHash = await bcrypt.hash(new_refreshToken, 10);
+      sessionData.lastRefreshedAt = new Date().toISOString(); // เพิ่ม log เวลาที่ refresh ล่าสุด
+      // ใช้ค่า TTL (Time To Live) ที่สัมพันธ์กับ Refresh Token
+      const refreshTokenTTL = days * 24 * 60 * 60; // แปลง '7d' เป็นวินาที
+      
       await this.redis.set(
         sessionKey,
         JSON.stringify(sessionData),
-        'EX',
-        sessionTimeout,
+        'EX',        
+        refreshTokenTTL // ใช้เวลาของ Refresh Token เป็นตัวตัดสินอายุของ Session ใน Redis
       );
+
       this.logger.warn(`Token rotated for user ${payload.sub}`, 'AuthService');
-      return { accessToken: newAccess, refreshToken: newRefresh };
+      
+      return { accessToken: new_accessToken, refreshToken: new_refreshToken };    
+
     } catch (error) {
-       if (error instanceof UnauthorizedException) throw error;    
+      if (error instanceof UnauthorizedException) throw error;    
       this.logger.error('Refresh token process failed', error.stack, 'AuthService');
       throw new UnauthorizedException('Token verification failed');
-    }    
+    } 
+       
   }
 
   private async logoutRepo(sessionId: string) {

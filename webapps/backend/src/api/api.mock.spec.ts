@@ -1,5 +1,5 @@
 // src/api/api.mock.spec.ts
-import { apiClient } from './test-api';
+import { apiClient } from './client';
 
 // Mock axios ที่อยู่ข้างใน api-client
 import axios from 'axios';
