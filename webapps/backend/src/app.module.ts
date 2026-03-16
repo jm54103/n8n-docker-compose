@@ -35,7 +35,7 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
 
 @Module({
   imports: [
-       WinstonModule.forRoot({
+      WinstonModule.forRoot({
       transports: [
         // 1. แสดงผลบน Console
         new winston.transports.Console({
@@ -47,6 +47,8 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
             }),
           ),
         }),
+        /*--DailyRotateFile log--*/
+        /*
         // 2.1 เก็บลงไฟล์ (Error เท่านั้น)     
         new winston.transports.DailyRotateFile({
           filename: 'logs/error-%DATE%.log',
@@ -142,6 +144,7 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
             //winston.format.json(),
           ),
         }),
+        */
       ],
     }),
     ConfigModule.forRoot({

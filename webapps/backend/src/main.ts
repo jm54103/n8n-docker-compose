@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  // ใช้ Winston เป็น Logger หลักของระบบ
+  // 1.ใช้ Winston เป็น Logger หลักของระบบ
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   
   const isDev = process.env.NODE_ENV !== 'production';

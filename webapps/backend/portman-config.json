@@ -1,0 +1,48 @@
+{
+  "version": 3,
+  "tests": {
+    "contractTests": [
+      {
+        "openApiOperation": "AuthController_login",
+        "statusSuccess": { "enabled": true }
+      },
+      {
+        "openApiOperation": "AuthController_refresh",
+        "statusSuccess": { "enabled": true }
+      },
+      {
+        "openApiOperation": "AuthController_logout",
+        "statusSuccess": { "enabled": true }
+      },
+      {
+        "openApiOperation": "AuthController_logoutAll",
+        "statusSuccess": { "enabled": true }
+      }
+    ]
+  },
+  "assignVariables": [
+    {
+      "openApiOperation": "AuthController_login",
+      "collectionVariables": [
+        {
+          "responseBodyProp": "accessToken",
+          "name": "accessToken"
+        }
+      ]
+    },
+    {
+      "openApiOperation": "AuthController_refresh",
+      "collectionVariables": [
+        {
+          "responseBodyProp": "accessToken",
+          "name": "accessToken"
+        }
+      ]
+    }
+  ],
+  "globals": {
+    "keyValueReplacements": {
+      "baseUrl": "http://localhost:5000"
+    }
+  }
+}

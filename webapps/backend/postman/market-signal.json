@@ -1,0 +1,361 @@
+{
+  "_": {
+    "postman_id": "4479acd4-1333-49fd-86c0-886953eedf24"
+  },
+  "item": [
+    {
+      "id": "5aeb1593-f104-46cb-a5f0-ddddd939e45a",
+      "name": "NestJs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "2e3dfa70-de26-4462-9c03-ff9a9d00199e",
+      "name": "Authentication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "245c35ee-02f9-4422-a259-d2c79f0d5539",
+          "name": "Auth Controller login",
+          "request": {
+            "name": "Auth Controller login",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"tester01\",\n  \"password\": \"SecretPassword123\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "text"
+              },
+              "id": "2113b75a-f6c8-456f-b3d3-f672f7fb2af6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"tester01\",\n  \"password\": \"SecretPassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18025059-1aaf-40e1-b5e7-c20836d53d6d",
+          "name": "Auth Controller refresh",
+          "request": {
+            "name": "Auth Controller refresh",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"ipsum aliquip dolore\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "text"
+              },
+              "id": "d10cce37-087c-4487-8206-05f3ff9ea770",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"ipsum aliquip dolore\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41ffb883-2940-4bca-a756-c0d5d712a6a6",
+          "name": "Auth Controller logout",
+          "request": {
+            "name": "Auth Controller logout",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "logout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "text"
+              },
+              "id": "ff1817d1-ba59-47b3-96a2-7c33f15770df",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "063c8689-cc35-4e6b-88e9-28393cac9959",
+          "name": "Auth Controller logout All",
+          "request": {
+            "name": "Auth Controller logout All",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "logout-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "text"
+              },
+              "id": "1f3008af-2f55-4e21-a6a8-b844f69909f2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "logout-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:5000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4479acd4-1333-49fd-86c0-886953eedf24",
+    "name": "Market Signal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API สำหรับดึงข้อมูลสัญญาณเทคนิค (RSI, EMA, Crosses)",
+      "type": "text/plain"
+    }
+  }
+}
