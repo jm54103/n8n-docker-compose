@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 22, "column": 0}, "map": {"version":3,"sources":["file:///D:/DOCKER_COMPOSE/n8n/webapps/frontend/admin/src/app/main/page.tsx"],"sourcesContent":["// app/main/page.tsx\r\nexport default function MainPannel() {\r\n  return (\r\n    <div>\r\n      <h2 className=\"text-2xl font-bold\">ยินดีต้อนรับสู่ Dashboard</h2>\r\n      <p className=\"text-slate-500\">เลือกเมนูด้านซ้ายเพื่อดูสัญญาณ Market Signal</p>\r\n    </div>\r\n  );\r\n}"],"names":[],"mappings":"AAAA,oBAAoB;;;;;;;AACL,SAAS;IACtB,qBACE,8QAAC;;0BACC,8QAAC;gBAAG,WAAU;0BAAqB;;;;;;0BACnC,8QAAC;gBAAE,WAAU;0BAAiB;;;;;;;;;;;;AAGpC"}}]
+}
