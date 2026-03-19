@@ -7,11 +7,8 @@
 🔐 Device Fingerprint
 🔐 2FA
 
-ถ้าคุณบอกว่า:
-“ทำ Auth ให้ระดับ enterprise เลย”
-ผมจะจัด architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
-
-
+ทำ Auth ให้ระดับ enterprise
+architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
 
 
 [BACKEND]

@@ -1,5 +1,15 @@
 {
-  "/login/page": "app/login/page.js",
-  "/main/page": "app/main/page.js",
-  "/page": "app/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/main/operations/analysis/page": "app/main/operations/analysis/page.js",
+  "/main/operations/dashboard/page": "app/main/operations/dashboard/page.js",
+  "/main/operations/signals/page": "app/main/operations/signals/page.js",
+  "/main/references/isic/page": "app/main/references/isic/page.js",
+  "/main/references/titlename/page": "app/main/references/titlename/page.js",
+  "/main/references/zipcode/page": "app/main/references/zipcode/page.js",
+  "/main/settings/parameters/page": "app/main/settings/parameters/page.js",
+  "/main/settings/permissions/page": "app/main/settings/permissions/page.js",
+  "/main/settings/users/page": "app/main/settings/users/page.js",
+  "/main/tracking/calendar/page": "app/main/tracking/calendar/page.js",
+  "/main/tracking/portfolio/page": "app/main/tracking/portfolio/page.js",
+  "/main/tracking/watchlist/page": "app/main/tracking/watchlist/page.js"
 }

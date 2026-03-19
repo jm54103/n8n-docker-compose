@@ -189,9 +189,21 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin
 var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/next/dist/compiled/react/compiler-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/src/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$src$2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/src/lib/api.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$table$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Table$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/table.js [app-client] (ecmascript) <export default as Table>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/log-out.js [app-client] (ecmascript) <export default as LogOut>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/shield-check.js [app-client] (ecmascript) <export default as ShieldCheck>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cog$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Cog$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/cog.js [app-client] (ecmascript) <export default as Cog>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$layout$2d$dashboard$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LayoutDashboard$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/layout-dashboard.js [app-client] (ecmascript) <export default as LayoutDashboard>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LineChart$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/chart-line.js [app-client] (ecmascript) <export default as LineChart>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$candlestick$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CandlestickChart$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/chart-candlestick.js [app-client] (ecmascript) <export default as CandlestickChart>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/calendar-days.js [app-client] (ecmascript) <export default as CalendarDays>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/star.js [app-client] (ecmascript) <export default as Star>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wallet$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Wallet$3e$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/lucide-react/dist/esm/icons/wallet.js [app-client] (ecmascript) <export default as Wallet>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/webapps/frontend/admin/node_modules/next/navigation.js [app-client] (ecmascript)"); // ใช้สำหรับเช็คว่าอยู่หน้าไหน
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -200,20 +212,135 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
+;
+;
 function MainLayout(t0) {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(15);
-    if ($[0] !== "73177a0047c3e1a91ec17ed39c2d1a9c4cff054cacf004dd1992464180482192") {
-        for(let $i = 0; $i < 15; $i += 1){
+    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(33);
+    if ($[0] !== "80c3205dab768a72b71115e8ab11ad54920389230e886a203cedddc14d88fd01") {
+        for(let $i = 0; $i < 33; $i += 1){
             $[$i] = Symbol.for("react.memo_cache_sentinel");
         }
-        $[0] = "73177a0047c3e1a91ec17ed39c2d1a9c4cff054cacf004dd1992464180482192";
+        $[0] = "80c3205dab768a72b71115e8ab11ad54920389230e886a203cedddc14d88fd01";
     }
     const { children } = t0;
+    const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
+    const menuGroups = [
+        {
+            groupLabel: "Main Operations",
+            items: [
+                {
+                    label: "Dashboard",
+                    href: "/main/operations/dashboard",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$layout$2d$dashboard$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LayoutDashboard$3e$__["LayoutDashboard"]
+                },
+                {
+                    label: "Market Signals",
+                    href: "/main/operations/signals",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LineChart$3e$__["LineChart"]
+                },
+                {
+                    label: "Technical Analysis",
+                    href: "/main/operations/analysis",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$candlestick$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CandlestickChart$3e$__["CandlestickChart"]
+                }
+            ]
+        },
+        {
+            groupLabel: "Portfolio & Tracking",
+            items: [
+                {
+                    label: "Economic Calendar",
+                    href: "/main/tracking/calendar",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2d$days$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CalendarDays$3e$__["CalendarDays"]
+                },
+                {
+                    label: "Watchlist",
+                    href: "/main/tracking/watchlist",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"]
+                },
+                {
+                    label: "Portfolio Tracker",
+                    href: "/main/tracking/portfolio",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wallet$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Wallet$3e$__["Wallet"]
+                }
+            ]
+        },
+        {
+            groupLabel: "Data Reference",
+            items: [
+                {
+                    label: "Title Name",
+                    href: "/main/references/titlename",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$table$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Table$3e$__["Table"]
+                },
+                {
+                    label: "ISIC",
+                    href: "/main/references/isic",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$table$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Table$3e$__["Table"]
+                },
+                {
+                    label: "ZipCode",
+                    href: "/main/references/zipcode",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$table$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Table$3e$__["Table"]
+                }
+            ]
+        },
+        {
+            groupLabel: "Settings & Administration",
+            items: [
+                {
+                    label: "User Management",
+                    href: "/main/settings/users",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"]
+                },
+                {
+                    label: "Permission",
+                    href: "/main/settings/permissions",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__["ShieldCheck"]
+                },
+                {
+                    label: "Parameter",
+                    href: "/main/settings/parameters",
+                    icon: __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cog$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Cog$3e$__["Cog"]
+                }
+            ]
+        }
+    ];
     const [isLoggingOut, setIsLoggingOut] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [userPayload, setUserPayload] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     let t1;
+    let t2;
     if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
         t1 = ({
+            "MainLayout[useEffect()]": ()=>{
+                const token = localStorage.getItem("accessToken");
+                if (token) {
+                    ;
+                    try {
+                        const base64Url = token.split(".")[1];
+                        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+                        const jsonPayload = decodeURIComponent(window.atob(base64).split("").map(_MainLayoutUseEffectAnonymous).join(""));
+                        setUserPayload(JSON.parse(jsonPayload));
+                    } catch (t3) {
+                        const error = t3;
+                        console.error("Failed to parse JWT:", error);
+                    }
+                }
+            }
+        })["MainLayout[useEffect()]"];
+        t2 = [];
+        $[1] = t1;
+        $[2] = t2;
+    } else {
+        t1 = $[1];
+        t2 = $[2];
+    }
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])(t1, t2);
+    let t3;
+    if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
+        t3 = ({
             "MainLayout[handleLogout]": async ()=>{
                 if (confirm("\u0E04\u0E38\u0E13\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E23\u0E30\u0E1A\u0E1A\u0E43\u0E0A\u0E48\u0E2B\u0E23\u0E37\u0E2D\u0E44\u0E21\u0E48?")) {
                     setIsLoggingOut(true);
@@ -222,204 +349,321 @@ function MainLayout(t0) {
                 }
             }
         })["MainLayout[handleLogout]"];
-        $[1] = t1;
-    } else {
-        t1 = $[1];
-    }
-    const handleLogout = t1;
-    let t2;
-    if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-        t2 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "font-bold text-xl text-blue-600",
-            children: "APPLICATION NAME"
-        }, void 0, false, {
-            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 38,
-            columnNumber: 10
-        }, this);
-        $[2] = t2;
-    } else {
-        t2 = $[2];
-    }
-    let t3;
-    if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-        t3 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-            className: "text-sm font-medium text-slate-600 italic",
-            children: "User profile payload"
-        }, void 0, false, {
-            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 45,
-            columnNumber: 10
-        }, this);
         $[3] = t3;
     } else {
         t3 = $[3];
     }
-    let t4;
-    if ($[4] !== isLoggingOut) {
-        t4 = isLoggingOut ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+    const handleLogout = t3;
+    const t4 = "flex h-screen flex-col overflow-hidden bg-slate-50";
+    let t5;
+    if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
+        t5 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "font-bold text-xl text-blue-600",
+            children: "APPLICATION NAME"
+        }, void 0, false, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 134,
+            columnNumber: 10
+        }, this);
+        $[4] = t5;
+    } else {
+        t5 = $[4];
+    }
+    let t6;
+    if ($[5] !== userPayload) {
+        t6 = userPayload ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
+            className: "text-blue-700",
+            children: userPayload.sub || userPayload.username
+        }, void 0, false, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 141,
+            columnNumber: 24
+        }, this) : "\u0E44\u0E21\u0E48\u0E21\u0E35\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49";
+        $[5] = userPayload;
+        $[6] = t6;
+    } else {
+        t6 = $[6];
+    }
+    let t7;
+    if ($[7] !== t6) {
+        t7 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+            className: "text-sm font-medium text-slate-600 flex items-center gap-2",
+            children: [
+                "ผู้ใช้งาน:",
+                t6
+            ]
+        }, void 0, true, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 149,
+            columnNumber: 10
+        }, this);
+        $[7] = t6;
+        $[8] = t7;
+    } else {
+        t7 = $[8];
+    }
+    let t8;
+    if ($[9] !== isLoggingOut) {
+        t8 = isLoggingOut ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
             className: "h-4 w-4 animate-spin mr-2"
         }, void 0, false, {
             fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 52,
+            lineNumber: 157,
             columnNumber: 25
         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
             className: "h-4 w-4 mr-2"
         }, void 0, false, {
             fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 52,
+            lineNumber: 157,
             columnNumber: 77
         }, this);
-        $[4] = isLoggingOut;
-        $[5] = t4;
+        $[9] = isLoggingOut;
+        $[10] = t8;
     } else {
-        t4 = $[5];
+        t8 = $[10];
     }
-    let t5;
-    if ($[6] !== isLoggingOut || $[7] !== t4) {
-        t5 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
+    let t9;
+    if ($[11] !== handleLogout || $[12] !== isLoggingOut || $[13] !== t8) {
+        t9 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+            variant: "ghost",
+            size: "sm",
+            className: "text-red-500 hover:text-red-600 hover:bg-red-50",
+            onClick: handleLogout,
+            disabled: isLoggingOut,
+            children: [
+                t8,
+                "ออกจากระบบ"
+            ]
+        }, void 0, true, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 165,
+            columnNumber: 10
+        }, this);
+        $[11] = handleLogout;
+        $[12] = isLoggingOut;
+        $[13] = t8;
+        $[14] = t9;
+    } else {
+        t9 = $[14];
+    }
+    let t10;
+    if ($[15] !== t7 || $[16] !== t9) {
+        t10 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
             className: "h-16 border-b bg-white flex items-center px-6 justify-between shadow-sm",
             children: [
-                t2,
+                t5,
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex items-center gap-4",
                     children: [
-                        t3,
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                            variant: "ghost",
-                            size: "sm",
-                            className: "text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors",
-                            onClick: handleLogout,
-                            disabled: isLoggingOut,
-                            children: [
-                                t4,
-                                "ออกจากระบบ"
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                            lineNumber: 60,
-                            columnNumber: 151
-                        }, this)
+                        t7,
+                        t9
                     ]
                 }, void 0, true, {
                     fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                    lineNumber: 60,
-                    columnNumber: 106
+                    lineNumber: 175,
+                    columnNumber: 107
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 60,
-            columnNumber: 10
+            lineNumber: 175,
+            columnNumber: 11
         }, this);
-        $[6] = isLoggingOut;
-        $[7] = t4;
-        $[8] = t5;
+        $[15] = t7;
+        $[16] = t9;
+        $[17] = t10;
     } else {
-        t5 = $[8];
+        t10 = $[17];
     }
-    let t6;
-    if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-        t6 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
-            className: "w-64 border-r bg-white overflow-y-auto hidden md:block",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                className: "p-4 space-y-2",
+    const t11 = "flex flex-1 overflow-hidden";
+    const t12 = "w-64 border-r bg-white overflow-y-auto hidden md:block";
+    const t13 = "p-4 space-y-6";
+    const t14 = " ";
+    const t15 = menuGroups.map({
+        "MainLayout[menuGroups.map()]": (group, groupIdx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "space-y-1",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-2 hover:bg-slate-100 rounded cursor-pointer",
-                        children: "Dashboard"
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2",
+                        children: group.groupLabel
                     }, void 0, false, {
                         fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                        lineNumber: 69,
-                        columnNumber: 115
+                        lineNumber: 187,
+                        columnNumber: 100
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-2 hover:bg-slate-100 rounded cursor-pointer font-semibold text-blue-600",
-                        children: "Market Signals"
-                    }, void 0, false, {
-                        fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                        lineNumber: 69,
-                        columnNumber: 193
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-2 hover:bg-slate-100 rounded cursor-pointer",
-                        children: "Technical Analysis"
-                    }, void 0, false, {
-                        fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                        lineNumber: 69,
-                        columnNumber: 304
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-2 hover:bg-slate-100 rounded cursor-pointer",
-                        children: "Settings"
-                    }, void 0, false, {
-                        fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                        lineNumber: 69,
-                        columnNumber: 391
-                    }, this)
+                    group.items.map({
+                        "MainLayout[menuGroups.map() > group.items.map()]": (item)=>{
+                            const Icon = item.icon;
+                            const isActive = pathname === item.href;
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                href: item.href,
+                                className: `flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group ${isActive ? "bg-blue-50 text-blue-600 shadow-sm" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
+                                        className: `h-4 w-4 ${isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"}`
+                                    }, void 0, false, {
+                                        fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+                                        lineNumber: 191,
+                                        columnNumber: 259
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-sm font-medium",
+                                        children: item.label
+                                    }, void 0, false, {
+                                        fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+                                        lineNumber: 191,
+                                        columnNumber: 365
+                                    }, this)
+                                ]
+                            }, item.href, true, {
+                                fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+                                lineNumber: 191,
+                                columnNumber: 18
+                            }, this);
+                        }
+                    }["MainLayout[menuGroups.map() > group.items.map()]"])
+                ]
+            }, groupIdx, true, {
+                fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+                lineNumber: 187,
+                columnNumber: 58
+            }, this)
+    }["MainLayout[menuGroups.map()]"]);
+    let t16;
+    let t17;
+    if ($[18] === Symbol.for("react.memo_cache_sentinel")) {
+        t16 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
+            className: "h-5 w-5 text-slate-400 group-hover:text-slate-600"
+        }, void 0, false, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 198,
+            columnNumber: 11
+        }, this);
+        t17 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+            className: "text-sm font-medium",
+            children: "Logout"
+        }, void 0, false, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 199,
+            columnNumber: 11
+        }, this);
+        $[18] = t16;
+        $[19] = t17;
+    } else {
+        t16 = $[18];
+        t17 = $[19];
+    }
+    let t18;
+    if ($[20] !== handleLogout) {
+        t18 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+            href: "#",
+            onClick: handleLogout,
+            className: "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group text-slate-500 hover:bg-slate-50 hover:text-slate-900",
+            children: [
+                t16,
+                t17
+            ]
+        }, "logout", true, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 208,
+            columnNumber: 11
+        }, this);
+        $[20] = handleLogout;
+        $[21] = t18;
+    } else {
+        t18 = $[21];
+    }
+    let t19;
+    if ($[22] !== t15 || $[23] !== t18) {
+        t19 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
+            className: t12,
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+                className: t13,
+                children: [
+                    t14,
+                    t15,
+                    t18
                 ]
             }, void 0, true, {
                 fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                lineNumber: 69,
-                columnNumber: 84
+                lineNumber: 216,
+                columnNumber: 34
             }, this)
         }, void 0, false, {
             fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 69,
-            columnNumber: 10
+            lineNumber: 216,
+            columnNumber: 11
         }, this);
-        $[9] = t6;
+        $[22] = t15;
+        $[23] = t18;
+        $[24] = t19;
     } else {
-        t6 = $[9];
+        t19 = $[24];
     }
-    let t7;
-    if ($[10] !== children) {
-        t7 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex flex-1 overflow-hidden",
+    let t20;
+    if ($[25] !== children) {
+        t20 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
+            className: "flex-1 overflow-y-auto p-6",
+            children: children
+        }, void 0, false, {
+            fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
+            lineNumber: 225,
+            columnNumber: 11
+        }, this);
+        $[25] = children;
+        $[26] = t20;
+    } else {
+        t20 = $[26];
+    }
+    let t21;
+    if ($[27] !== t19 || $[28] !== t20) {
+        t21 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: t11,
             children: [
-                t6,
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
-                    className: "flex-1 overflow-y-auto p-6",
-                    children: children
-                }, void 0, false, {
-                    fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-                    lineNumber: 76,
-                    columnNumber: 59
-                }, this)
+                t19,
+                t20
             ]
         }, void 0, true, {
             fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 76,
-            columnNumber: 10
+            lineNumber: 233,
+            columnNumber: 11
         }, this);
-        $[10] = children;
-        $[11] = t7;
+        $[27] = t19;
+        $[28] = t20;
+        $[29] = t21;
     } else {
-        t7 = $[11];
+        t21 = $[29];
     }
-    let t8;
-    if ($[12] !== t5 || $[13] !== t7) {
-        t8 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex h-screen flex-col overflow-hidden bg-slate-50",
+    let t22;
+    if ($[30] !== t10 || $[31] !== t21) {
+        t22 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: t4,
             children: [
-                t5,
-                t7
+                t10,
+                t21
             ]
         }, void 0, true, {
             fileName: "[project]/webapps/frontend/admin/src/app/main/layout.tsx",
-            lineNumber: 84,
-            columnNumber: 10
+            lineNumber: 242,
+            columnNumber: 11
         }, this);
-        $[12] = t5;
-        $[13] = t7;
-        $[14] = t8;
+        $[30] = t10;
+        $[31] = t21;
+        $[32] = t22;
     } else {
-        t8 = $[14];
+        t22 = $[32];
     }
-    return t8;
+    return t22;
 }
-_s(MainLayout, "eKauZvdvUnKLMcXhIiocTsj2FZw=");
+_s(MainLayout, "lpyLdPgctlYfbzeYXptxtVRgkpQ=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$webapps$2f$frontend$2f$admin$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]
+    ];
+});
 _c = MainLayout;
+function _MainLayoutUseEffectAnonymous(c) {
+    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+}
 var _c;
 __turbopack_context__.k.register(_c, "MainLayout");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
