@@ -46,12 +46,16 @@ async function bootstrap() {
   fs.writeFileSync('./swagger.json', JSON.stringify(document));
 
 
-  const frontendPath = join(__dirname, '..', 'public');
-
-  console.log(`frontendPath => ${frontendPath}`);
-
+  const frontendPath = join(__dirname, '..', 'public'); 
   // Serve static assets
-  app.use(express.static(frontendPath));
+  app.use(express.static(frontendPath,
+    { extensions: ['html', 'htm'],
+      index: 'index.html',     // บังคับหา index.html
+      redirect: true           // ให้มัน Redirect ถ้าลืมใส่ / ท้าย URL
+    }));  
+  //console.log(`frontendPath => ${frontendPath}, {extensions: ['html', 'htm']} }`);
+
+  
 
   // ตั้งค่า CORS ให้อนุญาตเฉพาะจากแหล่งที่มาที่กำหนด (เช่น Frontend ของคุณ)
   app.enableCors({
@@ -75,8 +79,10 @@ async function bootstrap() {
   });
 
   await app.listen(PORT);
-  console.log(`🚀 API is running on: http://localhost:${PORT}`);
-  console.log(`📖 Swagger Docs: http://localhost:${PORT}/api`);
+  console.debug(`🚀 API is running on: http://localhost:${PORT}`);
+  console.debug(`📖 Swagger Docs: http://localhost:${PORT}/api`);
+  console.debug(`📖 admin: http://localhost:${PORT}/admin/login`);
+
 
 }
 

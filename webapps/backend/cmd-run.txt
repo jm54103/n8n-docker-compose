@@ -9,7 +9,7 @@ npm run start:dev
 npm run start:prod
 
 Stop-Process -Id (Get-NetTCPConnection -LocalPort 5000).OwningProcess -Force
-
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess -Force
 
 
 

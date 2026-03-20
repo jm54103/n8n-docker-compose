@@ -3,12 +3,12 @@
 # =========================
 FROM node:20-alpine AS frontend-builder
 
-WORKDIR /app/frontend
+WORKDIR /webs/frontend
 
-COPY frontend/package*.json ./
+COPY frontend/chart/package*.json ./
 RUN npm ci
 
-COPY frontend ./
+COPY frontend/chart/ ./
 RUN npm run build
 
 
@@ -17,7 +17,7 @@ RUN npm run build
 # =========================
 FROM node:20-alpine AS backend-builder
 
-WORKDIR /app/backend
+WORKDIR /webs/backend
 
 COPY backend/package*.json ./
 RUN npm ci
@@ -31,22 +31,22 @@ RUN npm run build
 # =========================
 FROM node:20-alpine AS production
 
-WORKDIR /app/backend
+WORKDIR /webs/backend
 
 # Copy backend build
-COPY --from=backend-builder /app/backend/dist ./dist
-COPY --from=backend-builder /app/backend/package*.json ./
+COPY --from=backend-builder /webs/backend/dist ./dist
+COPY --from=backend-builder /webs/backend/package*.json ./
 
 # Install only production deps
 RUN npm ci --omit=dev
 
 # Copy frontend build into public folder
-COPY --from=frontend-builder /app/frontend/dist ./public
+COPY --from=frontend-builder /webs/frontend/dist ./public
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["node", "dist/main.js"]
 

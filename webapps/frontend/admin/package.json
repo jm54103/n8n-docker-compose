@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "next build && powershell -Command \"Remove-Item -Recurse -Force ../../backend/public/admin/*; Copy-Item -Path ./out/* -Destination ../../backend/public/admin/ -Recurse -Force\"",
     "start": "next start",
     "lint": "eslint"
   },
