@@ -24,6 +24,7 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       - TZ=Asia/Bangkok
+
     volumes:
       - n8n_data:/home/node/.n8n     
 
@@ -73,7 +74,7 @@ services:
     build:
         context: ./webapps
         target: production
-    container_name: n8n_node-app-nestjs
+    container_name: n8n_node-webapps
     depends_on:
        - postgres
        - redis
@@ -85,10 +86,13 @@ services:
        - DB_PORT=5432
        - DB_USERNAME=n8n
        - DB_PASSWORD=n8npass
-       - DB_NAME=set100
+       - DB_NAME=auth
        - REDIS_HOST=redis
-       - REDIS_PORT=6379
-    #restart: always   
+       - REDIS_PORT=6379      
+       - JWT_SECRET=secretkey_production # JWT Secret key for production.
+       - JWT_EXPIRES_IN=15 # Access Token หมดอายุใน 15 นาที
+       - JWT_REFRESH_EXPIRES_IN=7 # Refresh Token หมดอายุใน 7 วัน
+    restart: always   
   
   browserless:
     image: browserless/chrome:latest
@@ -98,7 +102,7 @@ services:
       - MAX_CONCURRENT_SESSIONS=10
       - ENABLE_DEBUGGER=true  # เพิ่มบรรทัดนี้เพื่อเปิดหน้า Dashboard
     shm_size: '2gb'
-    restart: always
+    #restart: always
   
   ldap:
     image: osixia/openldap:latest
