@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000", // เปลี่ยนเป็น URL ของ NestJS คุณ
+  baseURL: "/api", // เปลี่ยนเป็น URL ของ NestJS คุณ
 });
 
 // Interceptor: ถ้ามี Token ใน LocalStorage ให้ใส่ไปใน Header ทุกครั้ง

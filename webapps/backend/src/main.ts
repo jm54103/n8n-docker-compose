@@ -11,6 +11,10 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  // --- เพิ่มบรรทัดนี้ ---
+  app.setGlobalPrefix('api'); 
+  // --------------------
+
   // 1.ใช้ Winston เป็น Logger หลักของระบบ
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   
@@ -40,7 +44,7 @@ async function bootstrap() {
   .build();
     
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);  
+  SwaggerModule.setup('swagger', app, document);  
   
   // เขียนไฟล์ swagger.json ลงเครื่องเพื่อใช้กับ Generator
   fs.writeFileSync('./swagger.json', JSON.stringify(document));
@@ -79,8 +83,8 @@ async function bootstrap() {
   });
 
   await app.listen(PORT);
-  console.debug(`🚀 API is running on: http://localhost:${PORT}`);
-  console.debug(`📖 Swagger Docs: http://localhost:${PORT}/api`);
+  console.debug(`🚀 API is running on: http://localhost:${PORT}/api`);
+  console.debug(`📖 Swagger Docs: http://localhost:${PORT}/swagger`);
   console.debug(`📖 admin: http://localhost:${PORT}/admin/login`);
 
 

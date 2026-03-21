@@ -10,7 +10,6 @@
 ทำ Auth ให้ระดับ enterprise
 architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
 
-
 [BACKEND]
 - User Access Log 
 - User Activity Log
@@ -21,3 +20,7 @@ architecture แบบ production-scale ให้ครบทั้ง security 
 [FRONTEND]
 -Dynamic form schema
 -Static form 
+
+[SECERITY]
+- LDAP
+- OAUTH

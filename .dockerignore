@@ -1,0 +1,14 @@
+
+# ไม่ว่า node_modules จะอยู่ที่ไหน ไม่ต้องเอาไป
+**/node_modules
+
+# เจาะจงโฟลเดอร์
+frontend/admin/node_modules
+backend/node_modules
+node_modules
+
+# ไฟล์ขยะอื่นๆ
+.git
+.next
+dist
+out

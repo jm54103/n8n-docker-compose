@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[20795,["/admin/_next/static/chunks/f9f6a44ffc15e306.js","/admin/_next/static/chunks/7f9d798296908574.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"buildId":"bZV9rf4XOsMKGExqC8tqp","rsc":["$","$1","c",{"children":[["$","div",null,{"children":[["$","h1",null,{"className":"text-2xl font-bold mb-4","children":"CalendarPage"}],["$","p",null,{"children":"เนื้อหาของหน้าสัญญาณตลาดจะแสดงตรงนี้..."}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
-4:null
