@@ -1,23 +1,24 @@
 "use client"
 
-
 import { Button } from "@/components/ui/button";
-import { logoutApi } from "@/lib/api";
-import { Database,Table, Globe, Icon, Loader2, LogOut, ShieldCheck, Users, Cog } from "lucide-react";
-import { ReactNode, useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   LineChart, 
   CandlestickChart, 
   CalendarDays, 
   Star, 
-  Wallet, 
-  Settings 
+  Wallet,  
 } from "lucide-react";
+import { Database,Table, Globe, Icon, Loader2, LogOut, ShieldCheck, Users, Cog } from "lucide-react";
+
+
+import { logoutApi } from "@/lib/api";
+import { getSafeDecodedToken } from "@/lib/jwt.util"; // ฟังก์ชันสำหรับดึงข้อมูลจาก JWT
+import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // ใช้สำหรับเช็คว่าอยู่หน้าไหน
 import { useRouter } from "next/navigation";
-
+import { useIdleLogout } from "@/lib/useIdleLogout";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname(); // ดึง Path ปัจจุบัน เพื่อใช้ในการเช็คว่าเมนูไหน active อยู่"  
@@ -56,7 +57,13 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       { label: "Parameter", href: "/main/settings/parameters", icon: Cog},
     ]
   }
-];
+  ];
+
+  // เรียกใช้ Hook โดยส่ง Callback เมื่อครบเวลา
+  useIdleLogout(async () => {
+    await logoutApi(); // ล้าง Token และยิง API Logout
+    router.push("/login"); // ดีดกลับไปหน้า Login
+  });
 
   // useState 
   const [isLoggingOut, setIsLoggingOut] = useState(false); 
@@ -74,8 +81,16 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             .split('')
             .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
             .join('')
-        );        
-        setUserPayload(JSON.parse(jsonPayload));
+        );    
+        setUserPayload(JSON.parse(jsonPayload)); // เก็บข้อมูลที่แปลงแล้วลงใน State            
+        const decodedToken = getSafeDecodedToken(); // เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลจาก JWT และแปลงเวลาให้เป็น GMT+7
+        if (decodedToken) {
+          console.log(`JWT Payload:`);         
+          console.log(`sub: ${decodedToken.sub}`); // แสดงชื่อผู้ใช้หรือ sub จาก payload
+          console.log(`iat Time: ${decodedToken.loginTime}`);
+          console.log(`exp Time: ${decodedToken.expiryTime}`);
+        }
+
       } catch (error) {
         console.error("Failed to parse JWT:", error);
       }

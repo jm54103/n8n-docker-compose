@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
 import { useState } from "react"
-import api from "@/lib/api"
+import api, { setupSilentRefresh } from "@/lib/api"
 
 
 // 1. กำหนด Schema ตาม LoginDto ใน Swagger
@@ -45,6 +45,9 @@ export default function LoginPage() {
       localStorage.setItem("refreshToken", response.data.refreshToken);
       
       console.log("Login Success!");
+
+      setupSilentRefresh();
+
       // ส่งไปที่หน้า /main
       router.push("/main");
     }

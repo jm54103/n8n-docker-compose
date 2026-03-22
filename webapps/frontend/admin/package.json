@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",    
-    "deploy": "next build && powershell -Command \"Remove-Item -Recurse -Force ../../backend/public/admin/*; Copy-Item -Path ./dist/* -Destination ../../backend/public/admin/ -Recurse -Force\"",    
+    "build": "next build",
+    "deploy": "next build && powershell -Command \"Remove-Item -Recurse -Force ../../backend/public/admin/*; Copy-Item -Path ./dist/* -Destination ../../backend/public/admin/ -Recurse -Force\"",
     "start": "next start",
     "lint": "eslint"
   },
@@ -14,6 +14,7 @@
     "axios": "^1.13.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.577.0",
     "next": "16.1.7",
     "radix-ui": "^1.4.3",
