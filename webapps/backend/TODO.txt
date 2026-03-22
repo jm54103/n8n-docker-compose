@@ -1,9 +1,11 @@
 
 ขั้นถัดไปที่แนะนำ:
 🔐 Token Blacklist
-🔐 Refresh Token Rotation
-🔐 Key Rotation (JWT versioning)
+    - User Logout:
+    - Refresh Token Rotation
+    - Security Breach
 🔐 RBAC Guard
+🔐 Key Rotation (JWT versioning)
 🔐 Device Fingerprint
 🔐 2FA
 
@@ -18,8 +20,11 @@ architecture แบบ production-scale ให้ครบทั้ง security 
 - Master Referrence Data 
 
 [FRONTEND]
--Dynamic form schema
 -Static form 
+    - GRID
+    - FORM
+    - SUBFORM
+-Dynamic form schema
 
 [SECERITY]
 - LDAP

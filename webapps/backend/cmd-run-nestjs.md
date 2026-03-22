@@ -1,4 +1,4 @@
-
+# Generate Module
 nest g controller /modules/module-name 
 nest g service /modules/module-name  
 nest g module /modules/module-name 

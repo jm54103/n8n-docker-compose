@@ -1,7 +1,10 @@
 ทดสอบ AuthController
 
-🔐 Repo/Redis session store
 OK 1.login
 OK 2.logout
 OK 3.logout-all
 OK 4.refresh
+
+OK 🔐 Repo/Redis session store
+OK 🔐 Refresh Token Rotation
+OK 🔐 IDLE TIME OUT

@@ -1,0 +1,15 @@
+# ทดสอบไฟล์ *.spec.ts (jest)
+npm test 
+npm test -- user-activity-logs 
+npm run test:watch
+
+npx jest user-activity-logs --watch
+
+# สร้าง /api/client.ts เพื่อเขียน script ทดสอบ
+npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/api-json -g typescript-axios -o ./src/api-client
+
+# ใช้ npx รันแบบไม่ต้องลงโปรแกรมเพิ่ม
+npx ts-node src/api/client.ts
+
+
+
