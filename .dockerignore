@@ -1,6 +1,9 @@
 
 # ไม่ว่า node_modules จะอยู่ที่ไหน ไม่ต้องเอาไป
 **/node_modules
+**/dist
+**/.git
+**/.env
 
 # เจาะจงโฟลเดอร์
 webapps/frontend/admin/node_modules
@@ -8,6 +11,9 @@ webapps/backend/node_modules
 node_modules
 
 # ไฟล์ขยะอื่นๆ
+Dockerfile
+.dockerignore
+.git
 .git
 .next
 dist

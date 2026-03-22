@@ -1,0 +1,23 @@
+
+# ไม่ว่า node_modules จะอยู่ที่ไหน ไม่ต้องเอาไป
+**/node_modules
+
+# ระบุเจาะจงตามโครงสร้างของคุณ
+frontend/admin/node_modules
+frontend/chart/node_modules
+backend/node_modules
+
+# ignore พวก log และ build folder ในเครื่อง local ด้วย
+npm-debug.log
+frontend/admin/dist
+frontend/chart/dist
+backend/dist
+
+# ไฟล์ขยะอื่นๆ
+Dockerfile
+.dockerignore
+.git
+.git
+.next
+dist
+out
