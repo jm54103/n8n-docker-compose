@@ -1,5 +1,6 @@
 "use client"
 
+
 import { Button } from "@/components/ui/button";
 import { logoutApi } from "@/lib/api";
 import { Database,Table, Globe, Icon, Loader2, LogOut, ShieldCheck, Users, Cog } from "lucide-react";
@@ -15,9 +16,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // ใช้สำหรับเช็คว่าอยู่หน้าไหน
+import { useRouter } from "next/navigation";
+
 
 export default function MainLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname(); // ดึง Path ปัจจุบัน เพื่อใช้ในการเช็คว่าเมนูไหน active อยู่"
+  const pathname = usePathname(); // ดึง Path ปัจจุบัน เพื่อใช้ในการเช็คว่าเมนูไหน active อยู่"  
+  const router = useRouter(); // เปลี่ยนจาก useNavigate() เป็น useRouter()
+
   const menuGroups = [
   {
     groupLabel: "Main Operations",
@@ -77,10 +82,11 @@ export default function MainLayout({ children }: { children: ReactNode }) {
     }
   }, []); 
 
-  const handleLogout = async () => {
+  const handleLogout = async () => {    
     if (confirm("คุณต้องการออกจากระบบใช่หรือไม่?")) {
       setIsLoggingOut(true);
-      await logoutApi();
+      await logoutApi();     
+      router.push("/login"); // เปลี่ยนเส้นทางไปยังหน้า Login หลังจาก Logout
       setIsLoggingOut(false);
     }
   };

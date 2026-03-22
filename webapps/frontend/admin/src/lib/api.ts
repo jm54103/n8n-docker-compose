@@ -1,7 +1,13 @@
 import axios from "axios";
 
+// ใน Next.js ใช้ process.env และต้องมี NEXT_PUBLIC_ นำหน้า
+const BASE_URL_API = process.env.NEXT_PUBLIC_BASE_API_URL; // กำหนดค่าเริ่มต้นถ้าไม่มี env variable
+
+console.log("NEXT NODE_ENV", process.env.NODE_ENV);
+console.log("Current API URL:", BASE_URL_API);
+
 const api = axios.create({
-  baseURL: "/api", // เปลี่ยนเป็น URL ของ NestJS คุณ
+  baseURL: BASE_URL_API,
 });
 
 // Interceptor: ถ้ามี Token ใน LocalStorage ให้ใส่ไปใน Header ทุกครั้ง
@@ -21,8 +27,7 @@ export const logoutApi = async () => {
   } finally {
     // ไม่ว่า API จะสำเร็จหรือ Error เราควรล้างเครื่องผู้ใช้เสมอ
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    window.location.href = "/login"; // เด้งกลับหน้า Login
+    localStorage.removeItem("refreshToken");   
   }
 };
 
