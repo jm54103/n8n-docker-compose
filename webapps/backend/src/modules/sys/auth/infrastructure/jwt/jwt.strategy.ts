@@ -27,14 +27,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // ใน JwtStrategy (ถ้าใช้ @nestjs/passport)
   async validate(payload: any) {
+    const isBlacklisted = await this.isBlacklisted(payload.jti);
+    if (isBlacklisted) {
+      throw new UnauthorizedException('Token has been revoked');
+    }
     return this.validateRedis(payload);
-  }
+  } 
 
   async validateByRepo(payload: any) {
 
-    console.debug('call validate()');
-    
+    console.debug('call validate()');    
     //console.debug('1. JWT Payload:', payload);
     // ถ้ารหัสผ่าน (Secret) ถูกต้อง มันจะเข้ามาทำงานในนี้
     const session = await this.sessionRepo.findOne({
@@ -50,12 +54,25 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return payload; // ข้อมูลนี้จะไปอยู่ที่ req.user
   }
 
-  async validateRedis(payload: any) {
+  /**
+  * ตรวจสอบว่า JTI นี้ติด Blacklist หรือไม่
+  */
+  public async isBlacklisted(jti: string): Promise<boolean> {
+    const result = await this.redis.exists(`blacklist:${jti}`);
+    return result === 1;
+  }
+
+  async validateRedis(payload: any) 
+  {  
     const { sessionId } = payload;
+
+    const isBlacklisted = await this.isBlacklisted(payload.jti);
+    if (isBlacklisted) {
+      throw new UnauthorizedException(`jti: ${payload.jti}, session: ${payload.sessionId} Token has been revoked`); 
+    }
   
     // 1. ลองดึงข้อมูลจาก Redis ก่อน
-    const cachedSession = await this.redis.get(`session:${sessionId}`);
-  
+    const cachedSession = await this.redis.get(`session:${sessionId}`);  
     if (cachedSession) {
       console.debug('--- Cache Hit: Session found in Redis ---');
       // ถ้าใน Redis เก็บสถานะไว้ หรือเก็บเป็น String "true"/"false"

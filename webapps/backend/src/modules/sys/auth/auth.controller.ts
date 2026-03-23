@@ -31,7 +31,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)     
   @Post('logout')
   async logout(@Req() req: Request & { user: JwtPayload }) {
-    console.debug('Logging out session:', req.user.sessionId);    
+    //console.debug('Logging out session:', req.user.sessionId);    
     return this.authService.logout(req.user.sub, req.user.sessionId);
   }
 
@@ -39,7 +39,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)  
   @Post('logout-all')
   async logoutAll(@Req() req: Request & { user: JwtPayload }) {
-    console.debug('Logging out all sessions for user:', req.user.sub);    
+    //console.debug('Logging out all sessions for user:', req.user.sub);    
     return this.authService.logoutAll(req.user.sub);
   }
   

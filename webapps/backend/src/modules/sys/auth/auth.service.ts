@@ -59,7 +59,7 @@ export class AuthService {
       return value;
     } catch (error) {
       // Fallback: ถ้า Redis ล่ม ให้ดึงจาก DB ตรงๆ เพื่อไม่ให้ระบบ Login พัง
-      console.error('Redis Error:', error);
+      console.error('🔥 Redis Error:', error);
       const param = await this.paramRepo.findOne({ where: { paramKey: key } });
       return param ? (param.getTypedValue() as number) : null;
     }
@@ -70,24 +70,24 @@ export class AuthService {
   }
 
   public async login(LoginDto: LoginDto, deviceInfo: string) {
-    const user = await this.checkPassword(LoginDto);
-    if (user) {
-      return await this.loginRedisWithLogging(LoginDto, deviceInfo)
+    const user = await this.verify(LoginDto);
+    if (user) {      
+      return await this.loginRedis(LoginDto, deviceInfo)
     }
   }
 
   public async refresh(refreshToken: string) {
-    return await this.refreshRedisWithLogging(refreshToken);
+    return await this.refreshRedis(refreshToken);
   }
 
   public async logout(userId: string, sessionId: string) {
-    return await this.logoutRedisWithLogging(userId, sessionId);
+    return await this.logoutRedis(userId, sessionId);
   }
   public async logoutAll(userId: string) {
-    return await this.logoutAllRedisWithLogging(userId);  
+    return await this.logoutAllRedis(userId);  
   } 
 
-  private async checkPassword(LoginDto: LoginDto): Promise<User> {
+  private async verify(LoginDto: LoginDto): Promise<User> {
     
     const username = LoginDto.username.trim().toLowerCase(); // Normalize username
     const password = LoginDto.password;
@@ -100,7 +100,7 @@ export class AuthService {
       });
 
     if (!user) {
-      throw new UnauthorizedException('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+      throw new UnauthorizedException('🚫 ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
     }
 
     const now = new Date();
@@ -113,15 +113,15 @@ export class AuthService {
     // 3. ตรวจสอบการโดนล็อก (lock_until)
     if (user.lockUntil && user.lockUntil > now) {
       const remainingMinutes = Math.ceil((user.lockUntil.getTime() - now.getTime()) / 60000);
-      throw new ForbiddenException(`บัญชีถูกล็อกชั่วคราว กรุณาลองใหม่ในอีก ${remainingMinutes} นาที`);
+      throw new ForbiddenException(`📵 บัญชีถูกล็อกชั่วคราว กรุณาลองใหม่ในอีก ${remainingMinutes} นาที`);
     }
 
     if (!password || !user.passwordHash) {
-    throw new UnauthorizedException('ข้อมูลไม่ครบถ้วน');
-}
+      throw new UnauthorizedException(`❌ ข้อมูลไม่ครบถ้วน`);
+    }
 
     // Debug log 
-    console.debug(`User ${username} found. Proceeding to password check...`); 
+    console.debug(`👤 User ${username} found. Proceeding to password check...`); 
     
     // 4. ตรวจสอบรหัสผ่านด้วย bcrypt
     const isMatch = await bcrypt.compare(password, user.passwordHash);
@@ -150,10 +150,10 @@ export class AuthService {
       await this.userRepo.save(user);
 
       if (user.loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-        throw new ForbiddenException('รหัสผ่านผิดเกินกำหนด บัญชีของคุณถูกล็อก 30 นาที');
+        throw new ForbiddenException('📵 รหัสผ่านผิดเกินกำหนด บัญชีของคุณถูกล็อก 30 นาที');
       }
       
-      throw new UnauthorizedException('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+      throw new UnauthorizedException('🚫 ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
     }
   }
 
@@ -196,16 +196,93 @@ export class AuthService {
     };
   }
 
-  
+  private async refreshRedis(refreshToken: string) {
+  try {
+    // 1. Verify และถอด Payload (ตรวจสอบ Signature และ Expiry อัตโนมัติ)
+    const payload = this.jwtService.verify(refreshToken);
+    const sessionKey = `session:${payload.sessionId}`;
 
-  private async loginRedisWithLogging(user: LoginDto, deviceInfo: string) {
-    try 
-    {
-      const sessionId = uuidv4();      
+    // 2. ดึงข้อมูลจาก Redis
+    const cachedSession = await this.redis.get(sessionKey);
+    if (!cachedSession) {
+      throw new UnauthorizedException('⌛ Session expired or not found');
+    }
+
+    const sessionData = JSON.parse(cachedSession);
+
+    // 3. ตรวจสอบ Refresh Token Hash (ป้องกัน Token Reuse)
+    const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
+    if (!isValid) {
+      // ⚠️ หาก Hash ไม่ตรง อาจหมายถึง Token ถูกขโมยและพยายามใช้ซ้ำ
+      // ควรพิจารณาลบ Session ทิ้งเพื่อความปลอดภัยสูงสุด
+      await this.logoutRedis(payload.sub, payload.sessionId);
+      throw new UnauthorizedException('🚫 Invalid refresh token - potentially compromised');
+    }
+
+    // --- เริ่มขั้นตอน Rotation ---
+
+    // 4. สร้าง JTI ใหม่สำหรับ Access Token ใบใหม่
+    const newJti = uuidv4();
+    const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+    const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+
+    const mins = parseInt(accessTokenExpiresIn, 10);
+    const days = parseInt(refreshTokenExpiresIn, 10);
+
+    // 5. เตรียม Payload ใหม่ (รักษา sessionId เดิมไว้)
+    const new_payload = { 
+      sub: payload.sub, 
+      sessionId: payload.sessionId,
+      jti: newJti 
+    };
+
+    const new_accessToken = this.jwtService.sign(new_payload, { expiresIn: `${mins}min` });
+    const new_refreshToken = this.jwtService.sign(new_payload, { expiresIn: `${days}d` });
+
+    // 6. แบน JTI ตัวเก่า (ถ้ามีอยู่ใน Payload เดิม) เพื่อไม่ให้ Access Token ใบเก่าใช้ได้อีก
+    if (payload.jti) {
+      await this.revoke(payload.jti, mins * 60); // แบนตามอายุขัยของมัน
+    }
+
+    // 7. อัปเดตข้อมูล Session ใน Redis
+    sessionData.refreshTokenHash = await bcrypt.hash(new_refreshToken, 10);
+    sessionData.jti = newJti; // เก็บ JTI ตัวปัจจุบันไว้ใน Session
+    sessionData.lastRefreshedAt = new Date().toISOString();
+
+    const refreshTokenTTL = days * 24 * 60 * 60;
+    
+    // อัปเดต Redis และต่ออายุ TTL
+    await this.redis.set(
+      sessionKey,
+      JSON.stringify(sessionData),
+      'EX',
+      refreshTokenTTL
+    );
+
+    this.logger.warn(`🔄 Token rotated: User ${payload.sub}, Session ${payload.sessionId}`, 'AuthService');
+
+    return { 
+      accessToken: new_accessToken, 
+      refreshToken: new_refreshToken 
+    };
+
+  } catch (error) {
+    if (error instanceof UnauthorizedException) throw error;
+    this.logger.error('❌🔄 Refresh token process failed', error.stack, 'AuthService');
+    throw new UnauthorizedException('❌🔄 Token verification failed');
+  }
+}
+
+
+  private async loginRedis  (user: LoginDto, deviceInfo: string) {
+    try {
+      const sessionId = uuidv4();
+      const jti = uuidv4(); 
       const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
       const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
 
-      const payload = { sub: user.username, sessionId };
+      const payload = { sub: user.username, sessionId, jti };
+
       const mins = parseInt(accessTokenExpiresIn, 10);
       const days = parseInt(refreshTokenExpiresIn, 10);
 
@@ -217,180 +294,125 @@ export class AuthService {
         userId: user.username,
         deviceInfo,
         refreshTokenHash,
+        jti, // เก็บ jti ไว้ใน session data ด้วย เพื่อใช้ทำ blacklist ตอนสั่ง logout all
         isActive: true,
       };
 
-      // บันทึกลง Redis
-      const refreshTokenTTL = days * 24 * 60 * 60; // แปลง '7d' เป็นวินาที
-      await this.redis.set(
-        `session:${sessionId}`,
-        JSON.stringify(sessionData),
-        'EX',
-        refreshTokenTTL
-      );      
-      this.auth_logger.log(`User ${user.username} logged in from device: ${deviceInfo}`, 'AuthService');
+      const refreshTokenTTL = days * 24 * 60 * 60;
+      const sessionKey = `session:${sessionId}`;
+      const userIndexKey = `user_sessions:${user.username}`; // Index สำหรับเก็บทุก sessionId ของ user นี้
+
+      // ใช้ Pipeline หรือ Promise.all เพื่อความเร็ว
+      await Promise.all([
+        // 1. เก็บข้อมูล Session หลัก
+        this.redis.set(sessionKey, JSON.stringify(sessionData), 'EX', refreshTokenTTL),
+        
+        // 2. เก็บ Index ว่า User นี้มี Session ID อะไรบ้าง (ใช้ Set)
+        this.redis.sadd(userIndexKey, sessionId),
+        
+        // 3. ตั้งเวลาตายให้ Index เท่ากับ Refresh Token
+        this.redis.expire(userIndexKey, refreshTokenTTL)
+      ]);
+
+      this.logger.warn(`🔒 User ${user.username} logged in. JTI: ${jti}`, 'AuthService');
       return { accessToken, refreshToken };
 
     } catch (error) {
-      this.logger.error(`Login error for user ${user.username}`, error.stack, 'AuthService');
-      throw new InternalServerErrorException('Login failed due to server error');
+      this.logger.error(`❌🔒 Login error for user ${user.username}`, error.stack, 'AuthService');
+      throw new InternalServerErrorException('❌🔒 Login failed');
     }
   }
 
-  private async refreshRepo(refreshToken: string) {
 
-    const payload = this.jwtService.verify(refreshToken);
+  private async logoutRedis(userId: string, sessionId: string) {
+  try {
+    const sessionKey = `session:${sessionId}`;
+    const userSessionsKey = `user:${userId}:sessions`;
 
-    // 1. ดึงข้อมูลจาก Repository โดยใช้ sessionId จาก Payload
-    const session = await this.sessionRepo.findOne({
-      where: { sessionId: payload.sessionId, isActive: true },
-    });
-
-    if (!session) throw new UnauthorizedException();    
-
-    // 2. ตรวจสอบ Refresh Token Hash
-    const isValid = await bcrypt.compare(refreshToken, session.refreshTokenHash,);
-    if (!isValid) throw new UnauthorizedException();
-
-
-    // 3. สร้าง Token ใหม่ (Rotation)    
-    const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');    
-    const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
-    const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-
-    const mins=parseInt(accessTokenExpiresIn, 10);
-    const days=parseInt(refreshTokenExpiresIn, 10);
-
-    const accessTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${mins}min` };    
-    const newAccess = this.jwtService.sign(payload,accessTokenJwtSignOptions);
-
-    const refreshTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${days}d` };    
-    const newRefresh = this.jwtService.sign(payload,refreshTokenJwtSignOptions);  
-
-    // 4. อัปเดต Hash ใหม่กลับลง Repository
-    session.refreshTokenHash = await bcrypt.hash(newRefresh, 10);
-    await this.sessionRepo.save(session);  
+    // 1. ดึงข้อมูล Session มาก่อนเพื่อเอา jti (เอาไว้ทำ Blacklist Access Token)
+    const sessionDataRaw = await this.redis.get(sessionKey);
     
-    return { accessToken: newAccess, refreshToken: newRefresh };
-  }
-
-  private async refreshRedisWithLogging(refreshToken: string) {
-    
-    try
-    {               
-
-      const payload = this.jwtService.verify(refreshToken);
-      const sessionKey = `session:${payload.sessionId}`;
-            
-      // 1. ดึงข้อมูลจาก Redis
-      const cachedSession = await this.redis.get(sessionKey);
-      if (!cachedSession) {
-        console.debug(`No session found in Redis for sessionId ${payload.sessionId}`); 
-        throw new UnauthorizedException('Session expired');
-      }
-      console.debug(`Token refreshed for session ${payload.sessionId}, user ${payload.sub}`); 
-
-      const sessionData = JSON.parse(cachedSession);
-
-      // 2. ตรวจสอบ Refresh Token Hash
-      const isValid = await bcrypt.compare(refreshToken, sessionData.refreshTokenHash);
-      if (!isValid) throw new UnauthorizedException('Invalid refresh token');
-      console.debug(`Refresh token valid for session ${payload.sessionId}, user ${payload.sub}`); 
-
-      // 3. สร้าง Token ใหม่ (Rotation)        
-      const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');
-      const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
-      const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-
-      const new_payload = { sub: payload.sub, sessionId: payload.sessionId };
-      const mins = parseInt(accessTokenExpiresIn, 10);
-      const days = parseInt(refreshTokenExpiresIn, 10);
-
-      const new_accessToken = this.jwtService.sign(new_payload, { expiresIn: `${mins}min` });
-      const new_refreshToken = this.jwtService.sign(new_payload, { expiresIn: `${days}d` });      
-
-      console.debug(`New tokens generated for session ${payload.sessionId}, user ${payload.sub}`); 
+    if (sessionDataRaw) {
+      const sessionData = JSON.parse(sessionDataRaw);
+      
+      // 2. ถ้ามี jti ให้ส่งเข้า Blacklist ตามเวลาที่เหลือของ Access Token
+      if (sessionData.jti) {
+        const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+        const ttl = parseInt(accessTokenExpiresIn, 10) * 60; // แปลงนาทีเป็นวินาที
         
-      // 4. อัปเดต Hash ใหม่กลับลง Redis      
-      sessionData.refreshTokenHash = await bcrypt.hash(new_refreshToken, 10);
-      sessionData.lastRefreshedAt = new Date().toISOString(); // เพิ่ม log เวลาที่ refresh ล่าสุด
-      // ใช้ค่า TTL (Time To Live) ที่สัมพันธ์กับ Refresh Token
-      const refreshTokenTTL = days * 24 * 60 * 60; // แปลง '7d' เป็นวินาที
-      
-      await this.redis.set(
-        sessionKey,
-        JSON.stringify(sessionData),
-        'EX',        
-        refreshTokenTTL // ใช้เวลาของ Refresh Token เป็นตัวตัดสินอายุของ Session ใน Redis
-      );
-
-      this.logger.warn(`Token rotated for user ${payload.sub}`, 'AuthService');
-      
-      return { accessToken: new_accessToken, refreshToken: new_refreshToken };    
-
-    } catch (error) {
-      if (error instanceof UnauthorizedException) throw error;    
-      this.logger.error('Refresh token process failed', error.stack, 'AuthService');
-      throw new UnauthorizedException('Token verification failed');
-    } 
-       
-  }
-
-  private async logoutRepo(sessionId: string) {
-      let session=await this.sessionRepo.update(
-        { sessionId },
-        { isActive: false },
-      );
-      return (session==null) ? { success: false } : { success: true };
-  }
-
-  private async logoutRedisWithLogging(userId: string, sessionId: string) {
-    try{
-      // สั่งลบ key จาก Redis โดยตรง
-      // คืนค่าเป็นจำนวน key ที่ถูกลบ (1 = สำเร็จ, 0 = ไม่เจอ key)
-      const result = await this.redis.del(`session:${sessionId}`);  
-      this.auth_logger.log(`User ${userId} session ${sessionId} logout`, 'AuthService');           
-      return result > 0 ? { success: true } : { success: false } ;
-    } catch (error) {
-      this.logger.error(`Logout failed for user ${userId} session ${sessionId}`, error.stack, 'AuthService');
-      throw new InternalServerErrorException('Logout all failed');
+        await this.redis.set(`blacklist:${sessionData.jti}`, 'revoked', 'EX', ttl);
+      }
     }
+
+    // 3. ลบ Session และลบ ID ออกจาก Index Set ของ User
+    const [deletedCount] = await Promise.all([
+      this.redis.del(sessionKey),
+      this.redis.srem(userSessionsKey, sessionId)
+    ]);
+
+    this.logger.warn(`🚪 User ${userId} session ${sessionId} logout & jti blacklisted`, 'AuthService');
+    
+    return deletedCount > 0 ? { success: true } : { success: false };
+  } catch (error) {
+    this.logger.error(`❌🚪 Logout failed for user ${userId} session ${sessionId}`, error.stack, 'AuthService');
+    throw new InternalServerErrorException('❌🚪 Logout failed');
   }
+}
 
-  private async logoutAllRepo(userId: string) {
-      let session=await this.sessionRepo.update(
-        { userId },
-        { isActive: false },
-      );
-      return (session==null) ? { success: false } : { success: true };
-  }
+  private async logoutAllRedis(userId: string) {
+    try {
+      const userIndexKey = `user_sessions:${userId}`;
+      
+      // 1. ดึง sessionId ทั้งหมดที่ User นี้มีอยู่
+      const sessionIds = await this.redis.smembers(userIndexKey);
+      if (sessionIds.length === 0) return { success: true };
 
-  private async logoutAllRedisWithLogging(userId: string) {
-    try{
-      // ค้นหา key ทั้งหมดที่ข้อมูลข้างในมี userId ตรงกัน (หรือใช้ naming convention)
-      // หมายเหตุ: ใน Production ที่มี data เยอะๆ แนะนำให้เก็บ key แบบ 'user:{userId}:sessions' เป็น Set จะเร็วขึ้น
-      const keys = await this.redis.keys('session:*');
-      let deletedCount = 0;
+      const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
+      const blacklistTTL = parseInt(accessTokenExpiresIn, 10) * 60; // แปลงนาทีเป็นวินาที
 
-      for (const key of keys) {
-        const data = await this.redis.get(key);
+      for (const sessionId of sessionIds) {
+        const sessionKey = `session:${sessionId}`;
+        const data = await this.redis.get(sessionKey);
+        
         if (data) {
           const session = JSON.parse(data);
-          if (session.userId === userId) {
-            await this.redis.del(key);
-            deletedCount++;
+          // 2. ถ้ามี jti ให้ส่งเข้า Blacklist (ฆ่า Access Token ทันที)
+          if (session.jti) {
+            await this.redis.set(`blacklist:${session.jti}`, 'revoked', 'EX', blacklistTTL);
           }
+          // 3. ลบ Session data
+          await this.redis.del(sessionKey);
         }
-      }      
-      this.auth_logger.log(`User ${userId} forced logout from ${deletedCount} sessions`, 'AuthService');
-      return deletedCount > 0 ? { success: true } : { success: false };
+      }
+
+      // 4. ลบตัว Index ทิ้ง
+      await this.redis.del(userIndexKey);
+
+      this.logger.warn(`🚪 User ${userId} logged out from all devices.`, 'AuthService');      
+      return { success: true };
     } catch (error) {
-      this.logger.error(`LogoutAll failed for user ${userId}`, error.stack, 'AuthService');
-      throw new InternalServerErrorException('Logout all failed');
+      this.logger.error(`❌🚪 LogoutAll error for ${userId}`, error.stack, 'AuthService');
+      throw new InternalServerErrorException('❌🚪 Logout failed');
     }
   }
-  
-  
 
+  /**
+  * เพิ่ม Token (JTI) เข้า Blacklist ใน Redis
+  * @param jti Unique ID ของ Token
+  * @param exp เวลาหมดอายุของ Token (Unix Timestamp)
+  */
+  public async revoke(jti: string, exp: number): Promise<void> {
+    const now = Math.floor(Date.now() / 1000);
+    const ttl = exp - now;
+
+    // ถ้า Token ยังไม่หมดอายุ ให้เก็บเข้า Blacklist ตามเวลาที่เหลือ
+    if (ttl > 0) {
+      // แก้ไข: ลบ } ที่เกินมา และใช้ prefix ที่ชัดเจน
+      await this.redis.set(`blacklist:${jti}`, '1', 'EX', ttl);
+      this.auth_logger.log(`🗑️ Token JTI: ${jti} has been blacklisted for ${ttl}s`, 'AuthService');
+    }
+  }
+ 
+  
 }
 

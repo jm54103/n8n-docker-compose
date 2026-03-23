@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  // --- เพิ่มบรรทัดนี้ ---
+  // --- ตั้งค่า prefix ให้กับ API ทั้งหมด ---
   app.setGlobalPrefix('api'); 
   // --------------------
 
@@ -84,8 +84,8 @@ async function bootstrap() {
 
   await app.listen(PORT);
   console.debug(`🚀 API is running on: http://localhost:${PORT}/api`);
-  console.debug(`📖 Swagger Docs: http://localhost:${PORT}/swagger`);
-  console.debug(`📖 admin: http://localhost:${PORT}/admin/login`);
+  console.debug(`🔗 Swagger Docs: http://localhost:${PORT}/swagger`);
+  console.debug(`📝 admin: http://localhost:${PORT}/admin/login`);
 
 
 }
