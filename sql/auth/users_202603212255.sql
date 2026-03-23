@@ -1,2 +1,0 @@
-INSERT INTO public.users (user_id,username,email,password_hash,group_id,is_active,status,is_logged_in,session_key,login_attempts,lock_until,last_login,created_at,created_by,updated_at,updated_by) VALUES
-	 ('a801ccc6-578e-438b-a263-e45355dff662'::uuid,'tester01','tester01@example.com','$2b$10$XU/Z8i0LFnQZDNI2QqM.b.2WxVtVtFL4tI8kDt4R3HlzxLG2SuVEK',1,true,'ACTIVE',true,NULL,0,NULL,'2026-03-21 22:46:51.284+07','2026-03-15 02:22:31.94807+07',NULL,'2026-03-21 22:46:51.350277+07',NULL);
