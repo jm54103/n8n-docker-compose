@@ -1,10 +1,14 @@
 ทดสอบ AuthController
 
-OK 1.login
-OK 2.logout
-OK 3.logout-all
-OK 4.refresh
+✅ 1.login
+✅ 2.logout
+✅ 3.logout-all
+✅ 4.refresh
 
-OK 🔐 Repo/Redis session store
-OK 🔐 Refresh Token Rotation
-OK 🔐 IDLE TIME OUT
+✅OK 🔐 Repo/Redis session store
+✅OK 🔐 Refresh Token Rotation
+✅OK 🔐 IDLE TIME OUT
+🔐 Token Blacklist
+    ✅- User Logout:
+    ✅- Refresh Token Rotation
+    ❌- Security Breach

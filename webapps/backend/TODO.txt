@@ -1,9 +1,5 @@
 
 ขั้นถัดไปที่แนะนำ:
-🔐 Token Blacklist
-    - User Logout:
-    - Refresh Token Rotation
-    - Security Breach
 🔐 RBAC Guard
 🔐 Key Rotation (JWT versioning)
 🔐 Device Fingerprint
