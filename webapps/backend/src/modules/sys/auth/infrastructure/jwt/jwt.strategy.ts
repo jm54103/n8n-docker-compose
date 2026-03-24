@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-
 import { UserSession } from '../../entities/user-session.entity';
 import { ConfigService } from '@nestjs/config';
 
@@ -57,11 +56,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // ถ้าใน Redis เก็บสถานะไว้ หรือเก็บเป็น String "true"/"false"
       if (cachedSession === 'inactive') {
         throw new UnauthorizedException('Session is no longer active');
-      }    
+      }            
       return cachedSession;  
     }
+  }        
+}
 
-    /*
+/*
     // 2. ถ้าใน Redis ไม่มี (Cache Miss) ให้เช็คจาก Database
     console.debug('--- Cache Miss: Checking Database ---');
     const session = await this.sessionRepo.findOne({
@@ -73,10 +74,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       await this.redis.set(`session:${sessionId}`, 'inactive', 300); // 5 min
       throw new UnauthorizedException('Session is no longer active');
     }
-
     // 3. ถ้าเจอใน DB ให้เก็บลง Redis (ตั้งเวลา TTL ให้เท่ากับหรือน้อยกว่าอายุ JWT)
     await this.redis.set(`session:${sessionId}`, 'active', 3600); // 1 hour
-    */
-    
-  }
-}
+*/

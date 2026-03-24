@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { SystemPermission } from '../../system-permissions/entities/system-permission.entity';
+import { UserGroupPermission } from './user-group-permission.entity';
 
 @Entity('user_groups')
 export class UserGroup {
@@ -19,5 +19,7 @@ export class UserGroup {
   @OneToMany(() => User, (user) => user.group)
   users: User[];
 
-  permissions: SystemPermission[];
+  // ✅ ต้องระบุชื่อฟิลด์ฝั่งลูก (ugp => ugp.userGroup) ให้ตรงเป๊ะ
+  @OneToMany(() => UserGroupPermission, (ugp) => ugp.userGroup) 
+  userGroupPermissions: UserGroupPermission[];
 }

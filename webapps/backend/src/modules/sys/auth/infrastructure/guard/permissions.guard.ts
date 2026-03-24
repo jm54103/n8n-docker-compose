@@ -6,54 +6,68 @@ import {
   UnauthorizedException 
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { InjectRedis } from '@nestjs-modules/ioredis';
+import Redis from 'ioredis';
 import { PERMISSIONS_KEY } from './permissions.decorator';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    @InjectRedis() private readonly redis: Redis,
+  ) {}
 
-  canActivate(context: ExecutionContext): boolean {
-
-    // 1. ดึง Required Permissions
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    // 1. ดึง Required Permissions จาก Metadata
     const requiredPermissions = this.reflector.getAllAndOverride<string[]>(PERMISSIONS_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    // ถ้าไม่ได้ระบุสิทธิ์ (Public) ให้ผ่านได้เลย
     if (!requiredPermissions || requiredPermissions.length === 0) {
       return true;
     }
 
-    // 2. ดึง User จาก Request
+    // 2. ดึง User/Session Info จาก Request
     const request = context.switchToHttp().getRequest();
-    const user = request.user; // ปกติ Passport จะยัดไว้ที่ request.user
+    const user = request.user; 
 
-    //console.log('Full Request User:', request.user); // ดูว่ามีค่าไหม
-    //console.log('Auth Header:', request.headers.authorization); // ดูว่า Token ส่งมาจริงไหม
+    const userData = JSON.stringify(user, null, 2);
+    console.debug(`👤 User Data: ${userData}`);
 
-    const pretty = JSON.stringify(user, null, 2);
-    console.debug(`PermissionsGuard : ${pretty}`);   
-
-    if (!user) {
-      throw new UnauthorizedException('🚫 PermissionsGuard กรุณาเข้าสู่ระบบก่อนทำรายการ');
+    // ตรวจสอบว่าใน Payload มี sessionId หรือไม่
+    if (!user || !user.sessionId) {
+      throw new UnauthorizedException('🚫 ไม่พบ Session ID ในการยืนยันตัวตน');
     }
 
-    // เช็กว่ามีก้อน group และ permissions หรือไม่
-    if (!user.group || !Array.isArray(user.group.permissions)) {
-      throw new ForbiddenException('🚫 PermissionsGuard บัญชีของคุณยังไม่มีการกำหนดกลุ่มสิทธิ์');
+    // 3. ดึงข้อมูลจาก Redis โดยใช้ sessionId
+    const sessionKey = `session:${user.sessionId}`;
+    const cachedData = await this.redis.get(sessionKey);
+
+    if (!cachedData) {
+      throw new UnauthorizedException('🚫 เซสชันหมดอายุ หรือถูกยกเลิกแล้ว');
     }
 
-    // 3. ตรวจสอบสิทธิ์ (เช็กตรงๆ เพราะใน Payload เป็น Array ของ String อยู่แล้ว)
-    const hasPermission = requiredPermissions.every((permission) =>
-      user.group.permissions.includes(permission),
+    // Parse ข้อมูลจาก Redis
+    const sessionStore = JSON.parse(cachedData);
+    console.debug(`🔑 Session Store Data: ${JSON.stringify(sessionStore, null, 2)}`) ;
+    const userPermissions: string[] = sessionStore.group?.permissions;
+
+    // กรณีข้อมูลใน Redis โครงสร้างไม่ถูกต้อง หรือไม่มี permissions
+    if (!Array.isArray(userPermissions)) {
+      console.error(`❌ Permissions data missing in Redis for session: ${user.sessionId}`, 'PermissionsGuard');
+      throw new ForbiddenException('🚫 ข้อมูลสิทธิ์ในระบบไม่สมบูรณ์ กรุณาติดต่อผู้ดูแลระบบ');
+    }
+
+    // 4. ตรวจสอบสิทธิ์ (Logic: .every คือต้องมีครบทุกตัว)
+    const missingPermissions = requiredPermissions.filter(
+      (per) => !userPermissions.includes(per),
     );
 
-    if (!hasPermission) {
-      throw new ForbiddenException(`🚫 คุณไม่มีสิทธิ์เข้าถึงฟังก์ชันนี้ (ต้องการ: ${requiredPermissions.join(', ')})`);
-    }
-
+    if (missingPermissions.length > 0) {
+      console.warn(`🚫 User ${user.sub} denied. Missing: ${missingPermissions.join(', ')}`,'PermissionsGuard');
+      throw new ForbiddenException(`🚫 คุณไม่มีสิทธิ์เข้าถึง (ขาดสิทธิ์: ${missingPermissions.join(', ')})`,);
+    }        
     return true;
-        
   }
 }

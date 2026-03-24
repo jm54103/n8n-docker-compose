@@ -8,12 +8,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from "typeorm";
 import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
+import { AuthLogger } from './auth.logger';
+import { UserGroupsService } from '../user-groups/user-groups.service';
+
+
 // สำหรับ Redis
 import Redis from 'ioredis';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import { v4 as uuidv4 } from 'uuid'; // แนะนำให้ใช้ uuid สำหรับ sessionId
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston/dist/winston.constants';
-import { AuthLogger } from './auth.logger';
+import { SystemPermission } from '../system-permissions/entities/system-permission.entity';
+
 
 @Injectable()
 export class AuthService {
@@ -22,15 +27,16 @@ export class AuthService {
     private readonly logger: LoggerService,
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
-    @InjectRepository(UserSession)
-    private readonly sessionRepo: Repository<UserSession>,
     @InjectRepository(SystemParameter)
     private readonly paramRepo: Repository<SystemParameter>,
+    @InjectRepository(SystemPermission)
+    private readonly systemPermissionRepo: Repository<SystemPermission>,
     @InjectRedis() 
     private readonly redis: Redis, // Inject Redis เข้ามาใช้งาน    
     private readonly configService: ConfigService, // Inject ConfigService เข้ามา    
     private readonly jwtService: JwtService,
-    private readonly auth_logger: AuthLogger
+    private readonly auth_logger: AuthLogger,
+    private readonly userGroupsService: UserGroupsService,
   ) {}
 
 
@@ -72,7 +78,7 @@ export class AuthService {
   public async login(LoginDto: LoginDto, deviceInfo: string) {
     const user = await this.verify(LoginDto);
     if (user) {      
-      return await this.loginRedis(LoginDto, deviceInfo)
+      return await this.loginRedis(user, deviceInfo)
     }
   }
 
@@ -92,11 +98,10 @@ export class AuthService {
     const username = LoginDto.username.trim().toLowerCase(); // Normalize username
     const password = LoginDto.password;
 
-
     // 1. ค้นหา User (รวมถึงฟิลด์ที่จำเป็นต้องใช้เช็คเงื่อนไข)
     const user = await this.userRepo.findOne(
       { where: { username },
-        select: ['userId', 'username', 'passwordHash', 'isActive', 'status', 'loginAttempts', 'lockUntil'] 
+        select: ['userId', 'username', 'groupId', 'passwordHash', 'isActive', 'status', 'loginAttempts', 'lockUntil'] 
       });
 
     if (!user) {
@@ -157,44 +162,6 @@ export class AuthService {
     }
   }
 
-
-  private async loginRepo(user: LoginDto, deviceInfo: string) {
-
-    const sessionTimeout = await this.getSystemParameter('SESSION_TIMEOUT_SEC');    
-    const accessTokenExpiresIn   = await this.getConfig('JWT_EXPIRES_IN');
-    const refreshTokenExpiresIn =  await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-   
-    const session = this.sessionRepo.create({
-      userId: user.username,
-      expiresAt: new Date(Date.now() + sessionTimeout * 1000),
-      deviceInfo,
-    });
-
-    await this.sessionRepo.save(session);
-
-    const payload = {
-      sub: user.username,
-      sessionId: session.sessionId,
-    };
-
-    const mins=parseInt(accessTokenExpiresIn, 10);
-    const days=parseInt(refreshTokenExpiresIn, 10);
-
-    const accessTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${mins}min` };    
-    const refreshTokenJwtSignOptions: JwtSignOptions = { expiresIn: `${days}d` };
-
-   
-    const accessToken = this.jwtService.sign(payload, accessTokenJwtSignOptions);
-    const refreshToken = this.jwtService.sign(payload, refreshTokenJwtSignOptions);
-
-    session.refreshTokenHash = await bcrypt.hash(refreshToken, 10);
-    await this.sessionRepo.save(session);
-
-    return {
-      accessToken,
-      refreshToken,
-    };
-  }
 
   private async refreshRedis(refreshToken: string) {
   try {
@@ -274,19 +241,17 @@ export class AuthService {
 }
 
 
-  private async loginRedis  (user: LoginDto, deviceInfo: string) {
+  private async loginRedis  (user: User, deviceInfo: string) {
     try {
       const sessionId = uuidv4();
       const jti = uuidv4(); 
       const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
-      const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
-      const permissions = ['USER_MANAGEMENT','SETTING'];
+      const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');     
 
       const payload = { 
             sub: user.username
            , sessionId
-           , jti 
-           , group: { permissions }
+           , jti            
           };
 
       const mins = parseInt(accessTokenExpiresIn, 10);
@@ -295,14 +260,45 @@ export class AuthService {
       const accessToken = this.jwtService.sign(payload, { expiresIn: `${mins}min` });
       const refreshToken = this.jwtService.sign(payload, { expiresIn: `${days}d` });
       const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
-     
+
+      console.debug(`🚀 Creating session for user ${user.username} with payload: ${JSON.stringify(payload, null, 2)}`);     
+       
+      console.log('--- CHECK POINT ---');
+      console.log('User Group ID:', user.groupId);
+      console.log('Is Service Defined?:', !!this.userGroupsService); // ต้องขึ้น true
+
+      // 1. ดึงข้อมูล Group พร้อม Permissions จาก Database
+      const userGroups = await this.userGroupsService.findOne(user.groupId);
+      console.debug(`🚀 User Group Data: ${JSON.stringify(userGroups, null, 2)}`);
+
+      let permissions = [];//ใส่ permissionKey ลงไปใน array นี้
+
+      if (userGroups && Array.isArray(userGroups.userGroupPermissions)) {
+        permissions = userGroups.userGroupPermissions
+          .map(p => p.systemPermission) // ดึงก้อน systemPermissions ออกมา
+          .flat()                        // แผ่ Array ที่ซ้อนกันออกมา
+          .filter(p => p && p.permissionKey) // 🛡️ กันเหนียว: กรองตัวที่เป็น null หรือไม่มี key ออก
+          .map(p => p.permissionKey.trim().toUpperCase()); // ✨ ทำให้เป็นมาตรฐานเดียวกัน
+          
+        // 💡 แถม: ถ้ามีสิทธิ์ซ้ำกัน ให้เหลือแค่ตัวเดียว (Unique)
+        permissions = [...new Set(permissions)];
+      }
+
+      // 2. ตรวจสอบว่า userGroups และ permissions มีอยู่จริง      
+      console.debug(`🚀 User ${user.username} has permissions: ${JSON.stringify(permissions)}`);
+      
+
+      // 3. นำใส่ sessionData
       const sessionData = {
         userId: user.username,
         deviceInfo,
         refreshTokenHash,
-        jti, // เก็บ jti ไว้ใน session data ด้วย เพื่อใช้ทำ blacklist ตอนสั่ง logout all
+        jti,
         isActive: true,
+        group: { permissions } // ตอนนี้ permissions จะเป็น ['USER_MANAGEMENT', 'SETTINGS']
       };
+
+      console.debug(`🚀 Creating session for user ${user.username} with session data: ${JSON.stringify(sessionData)}`);
 
       const refreshTokenTTL = days * 24 * 60 * 60;
       const sessionKey = `session:${sessionId}`;
@@ -360,6 +356,8 @@ export class AuthService {
     
     return deletedCount > 0 ? { success: true } : { success: false };
   } catch (error) {
+    console.log('Raw Error Object:', error); // ดูโครงสร้างทั้งหมด
+    console.log('Stack Trace Only:', error.stack); // ดูเฉพาะ stack
     this.logger.error(`❌🚪 Logout failed for user ${userId} session ${sessionId}`, error.stack, 'AuthService');
     throw new InternalServerErrorException('❌🚪 Logout failed');
   }

@@ -3,6 +3,7 @@ import { DataSource } from "typeorm"
 // เปลี่ยนเป็นชื่อ Entity ของคุณ
 import { User } from "./modules/sys/users/entities/user.entity" 
 import { UserGroup } from "./modules/sys/user-groups/entities/user-group.entity";
+import { UserGroupPermission } from "./modules/sys/user-groups/entities/user-group-permission.entity";
 import { UserSession } from "./modules/sys/auth/entities/user-session.entity"; 
 import { UserAccessLog } from "./modules/sys/user-access-logs/entities/user-access-log.entity";
 import { UserActivityLog } from "./modules/sys/user-activity-logs/entities/user-activity-log.entity";
@@ -18,7 +19,7 @@ export const AppDataSource = new DataSource({
     database: "auth",
     synchronize: true, // ปิดไว้เพื่อให้ Migration ทำงานแทน
     logging: true,
-    entities: [User,UserGroup,UserSession,UserAccessLog,UserActivityLog,SystemParameter,SystemPermission], // หรือใช้ path ["src/entity/*.ts"]
+    entities: [User,UserGroup,UserGroupPermission,UserSession,UserAccessLog,UserActivityLog,SystemParameter,SystemPermission], // หรือใช้ path ["src/entity/*.ts"]
     migrations: ["src/migrations/*.ts"],
     subscribers: [],
 })

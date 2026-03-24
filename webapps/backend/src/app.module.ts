@@ -183,7 +183,7 @@ import { PermissionsGuard } from './modules/sys/auth/infrastructure/guard/permis
         UserGroup,
         UserSession,
       ],
-      synchronize: false, // production = false
+      synchronize: true, // production = false
     }),
     /* Modules */
     //MarketSignalsModule,
@@ -191,7 +191,7 @@ import { PermissionsGuard } from './modules/sys/auth/infrastructure/guard/permis
     //SystemParametersModule,
     //SystemPermissionsModule,
     UsersModule,
-    //UserGroupsModule,
+    UserGroupsModule,
     RedisModule,
     AuthModule,
   ],
