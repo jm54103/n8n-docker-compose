@@ -28,31 +28,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   // ใน JwtStrategy (ถ้าใช้ @nestjs/passport)
-  async validate(payload: any) {
+  async validate(payload: any) {       
+    //const pretty=JSON.stringify(payload, null, 2);
+    //console.debug(`validate(payload) payload : ${pretty}`);   
     const isBlacklisted = await this.isBlacklisted(payload.jti);
-    if (isBlacklisted) {
-      throw new UnauthorizedException('Token has been revoked');
-    }
-    return this.validateRedis(payload);
+    if (isBlacklisted) {      
+      throw new UnauthorizedException(`jti: ${payload.jti}, session: ${payload.sessionId} Token has been revoked`); 
+    }    
+    await this.validateRedis(payload); 
+    return payload;
   } 
-
-  async validateByRepo(payload: any) {
-
-    console.debug('call validate()');    
-    //console.debug('1. JWT Payload:', payload);
-    // ถ้ารหัสผ่าน (Secret) ถูกต้อง มันจะเข้ามาทำงานในนี้
-    const session = await this.sessionRepo.findOne({
-      where: { sessionId: payload.sessionId, isActive: true },
-    });
-    
-    //console.debug('2. Session from DB:', session);
-    
-    if (!session) {
-      //console.debug('3. Validate Failed: Session not found or inactive');
-      throw new UnauthorizedException('Session is no longer active');
-    }
-    return payload; // ข้อมูลนี้จะไปอยู่ที่ req.user
-  }
 
   /**
   * ตรวจสอบว่า JTI นี้ติด Blacklist หรือไม่
@@ -64,13 +49,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validateRedis(payload: any) 
   {  
-    const { sessionId } = payload;
-
-    const isBlacklisted = await this.isBlacklisted(payload.jti);
-    if (isBlacklisted) {
-      throw new UnauthorizedException(`jti: ${payload.jti}, session: ${payload.sessionId} Token has been revoked`); 
-    }
-  
+    const { sessionId } = payload;  
     // 1. ลองดึงข้อมูลจาก Redis ก่อน
     const cachedSession = await this.redis.get(`session:${sessionId}`);  
     if (cachedSession) {
@@ -78,8 +57,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // ถ้าใน Redis เก็บสถานะไว้ หรือเก็บเป็น String "true"/"false"
       if (cachedSession === 'inactive') {
         throw new UnauthorizedException('Session is no longer active');
-      }
-      return payload; 
+      }    
+      return cachedSession;  
     }
 
     /*
@@ -98,7 +77,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // 3. ถ้าเจอใน DB ให้เก็บลง Redis (ตั้งเวลา TTL ให้เท่ากับหรือน้อยกว่าอายุ JWT)
     await this.redis.set(`session:${sessionId}`, 'active', 3600); // 1 hour
     */
-
-    return payload;
+    
   }
 }

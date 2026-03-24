@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core'; 
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -31,6 +32,8 @@ import { UserSession } from './modules/sys/auth/entities/user-session.entity';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด้วย
+import { JwtAuthGuard } from './modules/sys/auth/infrastructure/guard/jwt-auth.guard';
+import { PermissionsGuard } from './modules/sys/auth/infrastructure/guard/permissions.guard';
 /*--Logger--*/
 
 @Module({
@@ -182,8 +185,6 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
       ],
       synchronize: false, // production = false
     }),
-
-
     /* Modules */
     //MarketSignalsModule,
     //CandleSticksModule,
@@ -193,6 +194,16 @@ import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด
     //UserGroupsModule,
     RedisModule,
     AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard, // รันก่อนเพื่อเอา User ใส่ Request
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionsGuard, // รันทีหลังเพื่อเช็กสิทธิ์
+    },
   ],
 })
 export class AppModule {}

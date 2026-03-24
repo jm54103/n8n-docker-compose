@@ -280,8 +280,14 @@ export class AuthService {
       const jti = uuidv4(); 
       const accessTokenExpiresIn = await this.getConfig('JWT_EXPIRES_IN');
       const refreshTokenExpiresIn = await this.getConfig('JWT_REFRESH_EXPIRES_IN');
+      const permissions = ['USER_MANAGEMENT','SETTING'];
 
-      const payload = { sub: user.username, sessionId, jti };
+      const payload = { 
+            sub: user.username
+           , sessionId
+           , jti 
+           , group: { permissions }
+          };
 
       const mins = parseInt(accessTokenExpiresIn, 10);
       const days = parseInt(refreshTokenExpiresIn, 10);
@@ -289,7 +295,7 @@ export class AuthService {
       const accessToken = this.jwtService.sign(payload, { expiresIn: `${mins}min` });
       const refreshToken = this.jwtService.sign(payload, { expiresIn: `${days}d` });
       const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
-
+     
       const sessionData = {
         userId: user.username,
         deviceInfo,
