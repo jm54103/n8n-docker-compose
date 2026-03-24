@@ -5,7 +5,7 @@ export const useIdleLogout = (onLogout: () => void) => {
   const IDLE_TIMEOUT_MS = process.env.NEXT_IDLE_TIMEOUT_SECONDS
     ? parseInt(process.env.NEXT_IDLE_TIMEOUT_SECONDS) * 1000
     : 600 * 1000; // ค่าเริ่มต้นเป็น 600 วินาที
-  console.log(`IDLE_TIMEOUT_MS : ${IDLE_TIMEOUT_MS / 1000}s`);
+  //console.log(`IDLE_TIMEOUT_MS : ${IDLE_TIMEOUT_MS / 1000}s`);
   const resetTimer = () => {
     // ถ้ามีการขยับเมาส์/กดคีย์บอร์ด ให้ล้างตัวนับเวลาเก่าแล้วเริ่มนับใหม่
     if (timerRef.current) clearTimeout(timerRef.current);
