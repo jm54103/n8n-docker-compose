@@ -168,6 +168,7 @@ export class AuthService {
     // 1. Verify และถอด Payload (ตรวจสอบ Signature และ Expiry อัตโนมัติ)
     const payload = this.jwtService.verify(refreshToken);
     const sessionKey = `session:${payload.sessionId}`;
+    console.debug('🔄 Refresh token process ');
 
     // 2. ดึงข้อมูลจาก Redis
     const cachedSession = await this.redis.get(sessionKey);
@@ -263,13 +264,13 @@ export class AuthService {
 
       console.debug(`🚀 Creating session for user ${user.username} with payload: ${JSON.stringify(payload, null, 2)}`);     
        
-      console.log('--- CHECK POINT ---');
-      console.log('User Group ID:', user.groupId);
-      console.log('Is Service Defined?:', !!this.userGroupsService); // ต้องขึ้น true
+      //console.log('--- CHECK POINT ---');
+      //console.log('User Group ID:', user.groupId);
+      //console.log('Is Service Defined?:', !!this.userGroupsService); // ต้องขึ้น true
 
       // 1. ดึงข้อมูล Group พร้อม Permissions จาก Database
       const userGroups = await this.userGroupsService.findOne(user.groupId);
-      console.debug(`🚀 User Group Data: ${JSON.stringify(userGroups, null, 2)}`);
+      //console.debug(`🚀 User Group Data: ${JSON.stringify(userGroups, null, 2)}`);
 
       let permissions = [];//ใส่ permissionKey ลงไปใน array นี้
 
@@ -285,7 +286,7 @@ export class AuthService {
       }
 
       // 2. ตรวจสอบว่า userGroups และ permissions มีอยู่จริง      
-      console.debug(`🚀 User ${user.username} has permissions: ${JSON.stringify(permissions)}`);
+      //console.debug(`🚀 User ${user.username} has permissions: ${JSON.stringify(permissions)}`);
       
 
       // 3. นำใส่ sessionData

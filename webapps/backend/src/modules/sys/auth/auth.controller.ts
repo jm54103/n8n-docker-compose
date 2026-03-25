@@ -15,17 +15,18 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
   
   @ApiBody({ type: LoginDto })
-  @Public() // <--- เติมตรงนี้
+  @Public() 
   @Post('login')
   async login(@Body() dto: LoginDto, @Req() req: Request) {        
-    console.debug('Logging in user:', dto.username);
+    //console.debug('Logging in user:', dto.username);
     return this.authService.login(dto, req.headers['user-agent'] as string);
   }
   
   @Post('refresh')
+  @Public() 
   @ApiBody({ type: RefreshDto })
   async refresh(@Body() dto: RefreshDto) {
-    //console.debug('Refreshing token with refreshToken:', dto.refreshToken);
+    //console.debug('Refreshing with refreshToken:', dto.refreshToken);
     return this.authService.refresh(dto.refreshToken);
   }
 

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { UserGroupPermission } from './user-group-permission.entity';
+import { ApiHideProperty } from '@nestjs/swagger';
 
 @Entity('user_groups')
 export class UserGroup {
@@ -16,10 +17,12 @@ export class UserGroup {
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
 
-  @OneToMany(() => User, (user) => user.group)
+  @ApiHideProperty()
+  @OneToMany(() => User, (user) => user.group) 
   users: User[];
 
   // ✅ ต้องระบุชื่อฟิลด์ฝั่งลูก (ugp => ugp.userGroup) ให้ตรงเป๊ะ
+  @ApiHideProperty()
   @OneToMany(() => UserGroupPermission, (ugp) => ugp.userGroup) 
   userGroupPermissions: UserGroupPermission[];
 }

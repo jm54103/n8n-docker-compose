@@ -5,12 +5,16 @@ npm run api:generate
 npm run api:test
 # เหมือนคำสั่งบน แต่จะส่งออกไฟล์ Report เป็น HTML (เหมาะสำหรับใช้ใน Jenkins/GitHub Actions)
 npm run api:test:ci
+# generate & report
+npm run api:full-check
 
 
 "scripts": {
-    "api:generate": "portman -u http://localhost:5000/api-json -b http://localhost:5000 -o ./postman/market-signal.json -c ./portman-config.json",
-    "api:test": "portman -u http://localhost:5000/api-json --runNewman --c ./portman-config.json",
-    "api:test:ci": "portman -u http://localhost:5000/api-json --runNewman --reporter-htmlextra-export ./results/report.html -c ./portman-config.json",
-    "api:report": "newman run ./postman/market-signal.json --reporters cli,htmlextra --reporter-htmlextra-export ./results/report.html",
+    "api:generate": "portman -u http://localhost:5000/swagger-json -b http://localhost:5000 -o ./postman/market-signal.json -c ./portman-config.json",
+    "api:test": "portman -u http://localhost:5000/swagger-json --runNewman --c ./portman-config.json",    
+    "api:report": "newman run ./postman/market-signal.json --reporters cli,htmlextra --reporter-htmlextra-export ./postman/report.html",
     "api:full-check": "npm run api:generate && npm run api:report"
 }
+
+# ทดสอบการสร้างตาม postman flow-collection.json ภายใต้ flow-env.json
+npx -p newman -p newman-reporter-htmlextra newman run ./flows/auth/auth-flow-collection.json -e ./flows/auth/auth-flow-env.json -r cli,htmlextra

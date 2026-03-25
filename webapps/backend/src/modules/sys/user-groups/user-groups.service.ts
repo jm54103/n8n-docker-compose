@@ -4,6 +4,7 @@ import { Repository, In } from 'typeorm';
 import { UserGroup } from './entities/user-group.entity';
 import { CreateUserGroupDto, UpdateUserGroupDto } from './dto';
 import { UserGroupPermission } from './entities/user-group-permission.entity';
+import { ResponseUserGroupDto } from './dto/response-user-group.dto';
 
 @Injectable()
 export class UserGroupsService {
@@ -27,24 +28,49 @@ export class UserGroupsService {
     return await this.groupRepo.save(group);
   }
 
+  async findAll_dto() {
+    const groups = await this.findAll();
+    return groups.map(group => this.toResponseDto(group));
+  }
+
   async findAll() {
     return await this.groupRepo.find({ relations: ['permissions'] });
   }
 
-  async findOne(id: number) {
-  try {
-    return await this.groupRepo.findOne({
-      where: { groupId : id },
-      relations: [
-        'userGroupPermissions', 
-        'userGroupPermissions.systemPermission' // 👈 ต้องโหลดตัวนี้ด้วยเพื่อให้ได้ permissionKey
-      ],
-    });
-  } catch (dbErr) {
-    console.error('DB Error in Service:', dbErr);
-    throw dbErr;
+  async findOne_dto(id: number){    
+      const userGroup = await this.findOne(id);
+      return this.toResponseDto(userGroup);
   }
-}
+  
+  async findOne(id: number) {
+    try {
+      const userGroup = await this.groupRepo.findOne({
+        where: { groupId: id },
+        relations: [
+          'userGroupPermissions',
+          'userGroupPermissions.systemPermission',
+        ],
+      });      
+      return userGroup;
+    } catch (dbErr) {
+      console.error('DB Error in Service:', dbErr);
+      throw dbErr;
+    }
+  }
+
+  private toResponseDto(entity: UserGroup): ResponseUserGroupDto {
+    return {
+      groupId: entity.groupId,
+      groupName: entity.groupName,
+      description: entity.description,
+      createdAt: entity.createdAt,
+      // map permissions
+      permissions: entity.userGroupPermissions?.map(p => ({
+        permissionKey: p.systemPermission?.permissionKey,
+        permissionName: p.systemPermission?.permissionName,
+      })) || [],
+    };
+  }
 
   async update(id: number, dto: UpdateUserGroupDto) {
     const group = await this.findOne(id);
@@ -63,4 +89,5 @@ export class UserGroupsService {
     const group = await this.findOne(id);
     return await this.groupRepo.remove(group);
   }
+
 }

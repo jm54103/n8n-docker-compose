@@ -8,6 +8,7 @@ import {
     JoinColumn,
   } from 'typeorm';
   import { UserGroup } from '../../user-groups/entities/user-group.entity';
+import { ApiHideProperty } from '@nestjs/swagger';
   
   @Entity('users')
   export class User {
@@ -23,6 +24,7 @@ import {
     @Column({ name: 'password_hash', select: false }) // select: false เพื่อไม่ให้ดึง hash ออกมาตอน query ปกติ (Security)
     passwordHash: string;
   
+    @ApiHideProperty()
     @ManyToOne(() => UserGroup, (group) => group.users, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'group_id' })
     group: UserGroup;

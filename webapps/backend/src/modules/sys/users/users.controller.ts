@@ -20,12 +20,12 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('USER_MANAGEMENT')
   findAll() {
-    return this.usersService.findAll();
+    return this.usersService.findAll_dto();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.usersService.findOne(id);
+    return this.usersService.findOne_dto(id);
   }
 
   @Patch(':id')

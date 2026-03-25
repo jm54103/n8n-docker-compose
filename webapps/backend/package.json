@@ -16,10 +16,9 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "nest build && cross-env NODE_ENV=production node dist/main",
-    "api:generate": "portman -u http://localhost:5000/api-json -b http://localhost:5000 -o ./postman/market-signal.json -c ./portman-config.json",
-    "api:test": "portman -u http://localhost:5000/api-json --runNewman --c ./portman-config.json",
-    "api:test:ci": "portman -u http://localhost:5000/api-json --runNewman --reporter-htmlextra-export ./results/report.html -c ./portman-config.json",
-    "api:report": "newman run ./postman/market-signal.json --reporters cli,htmlextra --reporter-htmlextra-export ./results/report.html",
+    "api:generate": "portman -u http://localhost:5000/swagger-json -b http://localhost:5000 -o ./postman/market-signal.json -c ./portman-config.json",
+    "api:test": "portman -u http://localhost:5000/swagger-json --runNewman --c ./portman-config.json",    
+    "api:report": "newman run ./postman/market-signal.json --reporters cli,htmlextra --reporter-htmlextra-export ./postman/report.html",
     "api:full-check": "npm run api:generate && npm run api:report"
   },
   "dependencies": {

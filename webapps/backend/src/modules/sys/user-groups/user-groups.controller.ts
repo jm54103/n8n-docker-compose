@@ -13,12 +13,12 @@ export class UserGroupsController {
 
   @Get()
   findAll() {
-    return this.groupService.findAll();
+    return this.groupService.findAll_dto();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.groupService.findOne(id);
+    return this.groupService.findOne_dto(id);
   }
 
   @Patch(':id')

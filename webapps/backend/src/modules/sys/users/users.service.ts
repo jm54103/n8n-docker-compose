@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { ResponseUserDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -34,6 +35,11 @@ export class UsersService {
     });
   }
 
+  async findAll_dto(){
+    const users = await this.findAll()
+    return users.map(user => this.toResponseUserDto(user));
+  }
+
   // 3. อ่านข้อมูลรายบุคคล (Read One)
   async findOne(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
@@ -42,6 +48,11 @@ export class UsersService {
     });
     if (!user) throw new NotFoundException('User not found');
     return user;
+  }
+
+  async findOne_dto(id: string) {
+    const user = await this.findOne(id);
+    return this.toResponseUserDto(user);
   }
 
   // 4. แก้ไขข้อมูล (Update)
@@ -62,5 +73,22 @@ export class UsersService {
   async remove(id: string): Promise<void> {
     const user = await this.findOne(id);
     await this.userRepository.remove(user);
+  }
+
+  private toResponseUserDto(entity: User): ResponseUserDto {
+    return {
+      userId: entity.userId,
+      username: entity.username,
+      email: entity.email,
+      groupId: entity.groupId,
+      isActive: entity.isActive,
+      status: entity.status,
+      isLoggedIn: entity.isLoggedIn,
+      lastLogin: entity.lastLogin,
+      createdAt: entity.createdAt,
+      createdBy: entity.createdBy,
+      updatedAt: entity.updatedAt,
+      updatedBy: entity.updatedBy,
+    };
   }
 }
