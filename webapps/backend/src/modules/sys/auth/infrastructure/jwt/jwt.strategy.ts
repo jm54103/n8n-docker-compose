@@ -52,7 +52,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // 1. ลองดึงข้อมูลจาก Redis ก่อน
     const cachedSession = await this.redis.get(`session:${sessionId}`);  
     if (cachedSession) {
-      console.debug('--- Cache Hit: Session found in Redis ---');
+      //console.debug('--- Cache Hit: Session found in Redis ---');
       // ถ้าใน Redis เก็บสถานะไว้ หรือเก็บเป็น String "true"/"false"
       if (cachedSession === 'inactive') {
         throw new UnauthorizedException('Session is no longer active');

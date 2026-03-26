@@ -18,3 +18,5 @@ npm run api:full-check
 
 # ทดสอบการสร้างตาม postman flow-collection.json ภายใต้ flow-env.json
 npx -p newman -p newman-reporter-htmlextra newman run ./flows/auth/auth-flow-collection.json -e ./flows/auth/auth-flow-env.json -r cli,htmlextra
+
+npx -p newman -p newman-reporter-htmlextra newman run ./flows/auth/ts2-user-flow-collection.json -e ./flows/auth/auth-flow-env.json -r cli,htmlextra

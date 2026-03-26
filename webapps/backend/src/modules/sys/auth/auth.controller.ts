@@ -20,26 +20,27 @@ export class AuthController {
   async login(@Body() dto: LoginDto, @Req() req: Request) {        
     //console.debug('Logging in user:', dto.username);
     return this.authService.login(dto, req.headers['user-agent'] as string);
-  }
+  }   
   
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard)       
   @Post('refresh')
-  @Public() 
   @ApiBody({ type: RefreshDto })
   async refresh(@Body() dto: RefreshDto) {
     //console.debug('Refreshing with refreshToken:', dto.refreshToken);
     return this.authService.refresh(dto.refreshToken);
   }
-
+  
   @ApiBearerAuth('accessToken')
-  @UseGuards(JwtAuthGuard)     
+  @UseGuards(JwtAuthGuard)   
   @Post('logout')
   async logout(@Req() req: Request & { user: JwtPayload }) {
     //console.debug('Logging out session:', req.user.sessionId);    
     return this.authService.logout(req.user.sub, req.user.sessionId);
   }
 
-  @ApiBearerAuth('accessToken')  
-  @UseGuards(JwtAuthGuard)  
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard)   
   @Post('logout-all')
   async logoutAll(@Req() req: Request & { user: JwtPayload }) {
     //console.debug('Logging out all sessions for user:', req.user.sub);    

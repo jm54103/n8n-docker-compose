@@ -1,0 +1,191 @@
+{
+  "info": {
+    "name": "Auth Flow Automation",
+    "_postman_id": "auto-flow-1234-abcd",
+    "description": "Login -> Refresh -> Logout -> Logout-all (Automated Flow)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"username\":\"tester01\",\"password\":\"SecretPassword123\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Login success - status 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Access token exists\", function () {",
+              "    pm.expect(jsonData.accessToken).to.be.a(\"string\").and.not.empty;",
+              "});",
+              "",
+              "pm.test(\"Refresh token exists\", function () {",
+              "    pm.expect(jsonData.refreshToken).to.be.a(\"string\").and.not.empty;",
+              "});",
+              "",
+              "pm.environment.set(\"accessToken\", jsonData.accessToken);",
+              "pm.environment.set(\"refreshToken\", jsonData.refreshToken);",
+              "",
+              "// Flow → Refresh",
+              "if (pm.response.code === 201) {",
+              "    postman.setNextRequest(\"Refresh\");",
+              "} else {",
+              "    postman.setNextRequest(null);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Refresh",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/refresh",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "refresh"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Refresh success - status 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"New access token exists\", function () {",
+              "    pm.expect(jsonData.accessToken).to.be.a(\"string\").and.not.empty;",
+              "});",
+              "",
+              "pm.test(\"New refresh token exists\", function () {",
+              "    pm.expect(jsonData.refreshToken).to.be.a(\"string\").and.not.empty;",
+              "});",
+              "",
+              "pm.environment.set(\"accessToken\", jsonData.accessToken);",
+              "pm.environment.set(\"refreshToken\", jsonData.refreshToken);",
+              "",
+              "// Flow → Logout",
+              "if (pm.response.code === 201) {",
+              "    postman.setNextRequest(\"Logout\");",
+              "} else {",
+              "    postman.setNextRequest(null);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Logout success - status 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Logout success should be true\", function () {",
+              "    pm.expect(jsonData).to.have.property(\"success\");",
+              "    pm.expect(jsonData.success).to.be.true;",
+              "});",
+              "",
+              "// Flow → Logout-all",
+              "if (pm.response.code === 201) {",
+              "    postman.setNextRequest(\"Logout-all\");",
+              "} else {",
+              "    postman.setNextRequest(null);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Logout-all",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout-all",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout-all"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "",
+              "pm.test(\"Logout-all Unauthorized, - status 401\", function () {",
+              "    pm.response.to.have.status(401);",
+              "});",
+              "",
+              "pm.test(\"Logout-all success should be error\", function () {",
+              "    pm.expect(jsonData).to.have.property(\"message\");",              
+              "    pm.expect(jsonData.message.toLowerCase()).to.include(\"revoke\");",
+              "});",
+              "",
+              "// End Flow",
+              "postman.setNextRequest(null);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}

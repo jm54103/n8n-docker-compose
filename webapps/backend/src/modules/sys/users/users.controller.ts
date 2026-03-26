@@ -11,6 +11,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)     
+  @Permissions('USER_MANAGEMENT') 
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -24,19 +27,25 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)     
+  @Permissions('USER_MANAGEMENT') 
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.findOne_dto(id);
   }
 
   @Patch(':id')
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)     
+  @Permissions('USER_MANAGEMENT') 
   update(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   @ApiBearerAuth('accessToken')
-  @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions('USER_MANAGEMENT')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)     
+  @Permissions('USER_MANAGEMENT') 
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.remove(id);
   }

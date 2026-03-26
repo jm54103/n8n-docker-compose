@@ -126,7 +126,7 @@ export class AuthService {
     }
 
     // Debug log 
-    console.debug(`👤 User ${username} found. Proceeding to password check...`); 
+    //console.debug(`👤 User ${username} found. Proceeding to password check...`); 
     
     // 4. ตรวจสอบรหัสผ่านด้วย bcrypt
     const isMatch = await bcrypt.compare(password, user.passwordHash);
@@ -262,7 +262,7 @@ export class AuthService {
       const refreshToken = this.jwtService.sign(payload, { expiresIn: `${days}d` });
       const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
 
-      console.debug(`🚀 Creating session for user ${user.username} with payload: ${JSON.stringify(payload, null, 2)}`);     
+      //console.debug(`🚀 Creating session for user ${user.username} with payload: ${JSON.stringify(payload, null, 2)}`);     
        
       //console.log('--- CHECK POINT ---');
       //console.log('User Group ID:', user.groupId);
@@ -299,7 +299,7 @@ export class AuthService {
         group: { permissions } // ตอนนี้ permissions จะเป็น ['USER_MANAGEMENT', 'SETTINGS']
       };
 
-      console.debug(`🚀 Creating session for user ${user.username} with session data: ${JSON.stringify(sessionData)}`);
+      //console.debug(`🚀 Creating session for user ${user.username} with session data: ${JSON.stringify(sessionData)}`);
 
       const refreshTokenTTL = days * 24 * 60 * 60;
       const sessionKey = `session:${sessionId}`;
