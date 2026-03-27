@@ -33,7 +33,7 @@ export class PermissionsGuard implements CanActivate {
     const user = request.user; 
 
     const userData = JSON.stringify(user, null, 2);
-    console.debug(`👤 User Data: ${userData}`);
+    //console.debug(`👤 User Data: ${userData}`);
 
     // ตรวจสอบว่าใน Payload มี sessionId หรือไม่
     if (!user || !user.sessionId) {
@@ -50,7 +50,7 @@ export class PermissionsGuard implements CanActivate {
 
     // Parse ข้อมูลจาก Redis
     const sessionStore = JSON.parse(cachedData);
-    console.debug(`🔑 Session Store Data: ${JSON.stringify(sessionStore, null, 2)}`) ;
+    //console.debug(`🔑 Session Store Data: ${JSON.stringify(sessionStore, null, 2)}`) ;
     const userPermissions: string[] = sessionStore.group?.permissions;
 
     // กรณีข้อมูลใน Redis โครงสร้างไม่ถูกต้อง หรือไม่มี permissions

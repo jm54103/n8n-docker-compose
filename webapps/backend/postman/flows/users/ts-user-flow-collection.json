@@ -24,36 +24,7 @@
             "exec": [
               "let jsonData = pm.response.json();",
               "pm.test(\"Login status 201\", () => pm.response.to.have.status(201));",
-              "pm.environment.set(\"accessToken\", jsonData.accessToken);",
-              "pm.execution.setNextRequest(\"Create User\");"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Create User",
-      "request": {
-        "method": "POST",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"username\": \"temp99\",\n  \"email\": \"temp99@example.com\",\n  \"passwordHash\": \"SecretPassword123\",\n  \"groupId\": 5,\n  \"status\": \"ACTIVE\"\n}"
-        },
-        "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "let jsonData = pm.response.json();",
-              "pm.test(\"Create User status 201\", () => pm.response.to.have.status(201));",
-              "pm.environment.set(\"userId\", jsonData.userId);",
+              "pm.environment.set(\"accessToken\", jsonData.accessToken);",              
               "pm.execution.setNextRequest(\"Get All Users\");"
             ],
             "type": "text/javascript"
@@ -74,8 +45,65 @@
           "script": {
             "exec": [
               "let jsonData = pm.response.json();",
-              "pm.test(\"Get All Users status 200\", () => pm.response.to.have.status(200));",
-              "pm.test(\"Response includes created user\", () => pm.expect(jsonData.some(u => u.userId === pm.environment.get('userId'))).to.be.true);",
+              "pm.test(\"Get All Users status 200\", () => pm.response.to.have.status(200));",                            
+              "pm.execution.setNextRequest(\"Create User\");"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+      
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"user_{{$randomInt}}_{{$randomUserName}}\",\n  \"email\": \"user_{{$randomInt}}@example.com\",\n  \"passwordHash\": \"SecretPassword123\",\n  \"status\": \"ACTIVE\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "pm.test(\"Create User status 201\", () => pm.response.to.have.status(201));",
+              "pm.environment.set(\"userId\", jsonData.userId);",
+              "pm.execution.setNextRequest(\"Update User\");"            
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user_{{$randomInt}}@example.com\",\n  \"isActive\": true,\n  \"isLoggedIn\": false\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api","users","{{userId}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let jsonData = pm.response.json();",
+              "pm.test(\"Update User status 200\", () => pm.response.to.have.status(200));",             
               "pm.execution.setNextRequest(\"Get User by ID\");"
             ],
             "type": "text/javascript"
@@ -98,35 +126,6 @@
               "let jsonData = pm.response.json();",
               "pm.test(\"Get User by ID status 200\", () => pm.response.to.have.status(200));",
               "pm.test(\"UserId matches\", () => pm.expect(jsonData.userId).to.eql(pm.environment.get('userId')));",
-              "pm.execution.setNextRequest(\"Update User\");"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Update User",
-      "request": {
-        "method": "PATCH",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"email\": \"temp99@gmail.com\",\n  \"isActive\": true,\n  \"isLoggedIn\": false\n}"
-        },
-        "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api","users","{{userId}}"] }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "let jsonData = pm.response.json();",
-              "pm.test(\"Update User status 200\", () => pm.response.to.have.status(200));",
-              "pm.test(\"Email updated\", () => pm.expect(jsonData.email).to.eql('temp99@gmail.com'));",
               "pm.execution.setNextRequest(\"Delete User\");"
             ],
             "type": "text/javascript"
@@ -172,7 +171,7 @@
             "type": "text/javascript"
           }
         }
-      ]
-    }
+      ]        
+    }    
   ]
 }

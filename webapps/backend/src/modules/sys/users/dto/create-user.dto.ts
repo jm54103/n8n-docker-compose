@@ -24,20 +24,12 @@ export class CreateUserDto {
   })
   @IsString()
   @MinLength(8, { message: 'Password must be at least 8 characters long' })
-  passwordHash: string;
-  
-  @ApiProperty({
-    description: 'group of the user.',
-    example: '5',
-  })
-  @IsInt()
-  @IsNotEmpty()
-  groupId: number;
+  passwordHash: string;  
   
   @ApiProperty({
     description: 'user is active.',
     example: 'ACTIVE',
-  })
+  })  
   @IsOptional()
   @IsEnum(['ACTIVE', 'DISABLED'])
   status?: string;

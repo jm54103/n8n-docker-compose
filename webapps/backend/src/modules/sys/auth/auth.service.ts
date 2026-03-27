@@ -10,6 +10,7 @@ import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
 import { AuthLogger } from './auth.logger';
 import { UserGroupsService } from '../user-groups/user-groups.service';
+import { UsersService } from '../users/users.service';
 
 
 // สำหรับ Redis
@@ -37,6 +38,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly auth_logger: AuthLogger,
     private readonly userGroupsService: UserGroupsService,
+    private readonly usersService: UsersService,
   ) {}
 
 
@@ -101,7 +103,7 @@ export class AuthService {
     // 1. ค้นหา User (รวมถึงฟิลด์ที่จำเป็นต้องใช้เช็คเงื่อนไข)
     const user = await this.userRepo.findOne(
       { where: { username },
-        select: ['userId', 'username', 'groupId', 'passwordHash', 'isActive', 'status', 'loginAttempts', 'lockUntil'] 
+        select: ['userId', 'username', 'passwordHash', 'isActive', 'status', 'loginAttempts', 'lockUntil'] 
       });
 
     if (!user) {
@@ -269,25 +271,24 @@ export class AuthService {
       //console.log('Is Service Defined?:', !!this.userGroupsService); // ต้องขึ้น true
 
       // 1. ดึงข้อมูล Group พร้อม Permissions จาก Database
-      const userGroups = await this.userGroupsService.findOne(user.groupId);
-      //console.debug(`🚀 User Group Data: ${JSON.stringify(userGroups, null, 2)}`);
-
       let permissions = [];//ใส่ permissionKey ลงไปใน array นี้
+      const userToUserGroupPermissions = await this.usersService.findOne(user.userId);
+      userToUserGroupPermissions.groups.flatMap(group=>{                                 
+          const userGroupPermissions = group.userGroupPermissions
+                        .map(p=>p.systemPermission)
+                        .flat()
+                        .filter(p => p && p.permissionKey) // 🛡️ กันเหนียว: กรองตัวที่เป็น null หรือไม่มี key ออก
+                        .map(p => p.permissionKey.trim().toUpperCase()); // ✨ ทำให้เป็นมาตรฐานเดียวกัน
 
-      if (userGroups && Array.isArray(userGroups.userGroupPermissions)) {
-        permissions = userGroups.userGroupPermissions
-          .map(p => p.systemPermission) // ดึงก้อน systemPermissions ออกมา
-          .flat()                        // แผ่ Array ที่ซ้อนกันออกมา
-          .filter(p => p && p.permissionKey) // 🛡️ กันเหนียว: กรองตัวที่เป็น null หรือไม่มี key ออก
-          .map(p => p.permissionKey.trim().toUpperCase()); // ✨ ทำให้เป็นมาตรฐานเดียวกัน
-          
-        // 💡 แถม: ถ้ามีสิทธิ์ซ้ำกัน ให้เหลือแค่ตัวเดียว (Unique)
-        permissions = [...new Set(permissions)];
-      }
-
+           // 💡 ถ้ามีสิทธิ์ซ้ำกัน ให้เหลือแค่ตัวเดียว (Unique)            
+           console.debug(`${group.groupName} => ${userGroupPermissions}`);    
+           permissions = [...permissions, ...userGroupPermissions];   
+        }                        
+      );      
+      permissions = [... new Set(permissions)];    
+      //console.debug(`${JSON.stringify(permissions,null,2)}`);     
       // 2. ตรวจสอบว่า userGroups และ permissions มีอยู่จริง      
-      //console.debug(`🚀 User ${user.username} has permissions: ${JSON.stringify(permissions)}`);
-      
+      console.debug(`🚀 User ${user.username} has permissions: ${JSON.stringify(permissions)}`);      
 
       // 3. นำใส่ sessionData
       const sessionData = {
@@ -298,7 +299,6 @@ export class AuthService {
         isActive: true,
         group: { permissions } // ตอนนี้ permissions จะเป็น ['USER_MANAGEMENT', 'SETTINGS']
       };
-
       //console.debug(`🚀 Creating session for user ${user.username} with session data: ${JSON.stringify(sessionData)}`);
 
       const refreshTokenTTL = days * 24 * 60 * 60;

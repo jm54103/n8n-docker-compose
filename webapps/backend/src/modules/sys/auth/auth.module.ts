@@ -13,15 +13,18 @@ import { SystemParameter } from './../system-parameters/entities/system-paramete
 import { ConfigService } from '@nestjs/config/dist/config.service';
 import { AuthLogger } from './auth.logger';
 import 'winston-daily-rotate-file';
+import { UsersModule } from '../users/users.module';
 import { UserGroupsModule } from '../user-groups/user-groups.module';
 import { SystemPermission } from '../system-permissions/entities/system-permission.entity';
+import { UserGroup } from '../user-groups/entities/user-group.entity';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService, AuthLogger, JwtStrategy],
   imports: [   
+    UsersModule,
     UserGroupsModule, 
-    TypeOrmModule.forFeature([User,UserSession,SystemParameter,SystemPermission]),            
+    TypeOrmModule.forFeature([User,UserGroup,UserSession,SystemParameter,SystemPermission]),            
     PassportModule,    
     RedisModule, // <--- ต้องใส่ตัวนี้ (เพื่อให้ Inject @InjectRedis() ได้)
     ConfigModule, // <--- ต้องใส่ตัวนี้ (เพื่อให้ Inject ConfigService ได้)

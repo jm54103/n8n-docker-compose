@@ -18,7 +18,7 @@ export class UserGroup {
   createdAt: Date;
 
   @ApiHideProperty()
-  @OneToMany(() => User, (user) => user.group) 
+  @OneToMany(() => User, (user) => user.groups) 
   users: User[];
 
   // ✅ ต้องระบุชื่อฟิลด์ฝั่งลูก (ugp => ugp.userGroup) ให้ตรงเป๊ะ

@@ -31,7 +31,7 @@ export class UsersService {
   // 2. อ่านข้อมูลทั้งหมด (Read All)
   async findAll(): Promise<User[]> {
     return await this.userRepository.find({
-      relations: ['group'], // ดึงข้อมูลกลุ่มมาด้วย
+      relations: ['groups'], // ดึงข้อมูลกลุ่มมาด้วย
     });
   }
 
@@ -40,15 +40,25 @@ export class UsersService {
     return users.map(user => this.toResponseUserDto(user));
   }
 
+
+
   // 3. อ่านข้อมูลรายบุคคล (Read One)
-  async findOne(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({
-      where: { userId: id },
-      relations: ['group', 'group.permissions'],
-    });
-    if (!user) throw new NotFoundException('User not found');
-    return user;
-  }
+  async findOne(id: string): Promise<User> {    
+      const user = await this.userRepository.findOne({
+          where: { userId: id },
+          relations: {
+            // 1. ดึงข้อมูลจากตารางเชื่อม (Junction Table)
+            groups: {
+              // 2. จากตารางเชื่อม ดึงข้อมูลกลุ่ม (UserGroup)
+              userGroupPermissions:{
+                systemPermission: true
+              }
+            }              
+          },
+      });          
+      if (!user) throw new NotFoundException('User not found');
+      return user;
+   }
 
   async findOne_dto(id: string) {
     const user = await this.findOne(id);
@@ -75,12 +85,12 @@ export class UsersService {
     await this.userRepository.remove(user);
   }
 
-  private toResponseUserDto(entity: User): ResponseUserDto {
+  private toResponseUserDto(entity: User): ResponseUserDto { 
+    const groupNames = [...new Set(entity.groups?.map(group => group.groupName) || [])];
     return {
       userId: entity.userId,
       username: entity.username,
-      email: entity.email,
-      groupId: entity.groupId,
+      email: entity.email,     
       isActive: entity.isActive,
       status: entity.status,
       isLoggedIn: entity.isLoggedIn,
@@ -88,7 +98,8 @@ export class UsersService {
       createdAt: entity.createdAt,
       createdBy: entity.createdBy,
       updatedAt: entity.updatedAt,
-      updatedBy: entity.updatedBy,
+      updatedBy: entity.updatedBy,  
+      groups:groupNames
     };
   }
 }

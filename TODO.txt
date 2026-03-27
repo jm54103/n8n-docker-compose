@@ -23,3 +23,12 @@
 
 ทำ Auth ให้ระดับ enterprise
 architecture แบบ production-scale ให้ครบทั้ง security hardening + performance + scalability 🚀
+
+อธิบายภาพรวมการพัฒนาระบบแบบ Open Source 
+- Database (Postgres):
+- Cached (Redis):
+- Backend (NestJS + TypeORM + Zod): 
+- Messaging (Queue,Topic,Websocket):
+- Contract: แปลง OpenAPI:
+- Frontend (Next.js + RJSF): 
+- Testing (Postman,Portman,Newman): 

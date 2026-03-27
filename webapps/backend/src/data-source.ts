@@ -9,6 +9,7 @@ import { UserAccessLog } from "./modules/sys/user-access-logs/entities/user-acce
 import { UserActivityLog } from "./modules/sys/user-activity-logs/entities/user-activity-log.entity";
 import { SystemParameter } from "./modules/sys/system-parameters/entities/system-parameter.entity";
 import { SystemPermission } from "./modules/sys/system-permissions/entities/system-permission.entity";
+import { UserToGroup } from "./modules/sys/users/entities/user-to-groups.entity";
 
 export const AppDataSource = new DataSource({
     type: "postgres", // หรือ mysql, mariadb, sqlite ตามที่ใช้จริง
@@ -17,9 +18,9 @@ export const AppDataSource = new DataSource({
     username: "n8n",
     password: "n8npass",
     database: "auth",
-    synchronize: true, // ปิดไว้เพื่อให้ Migration ทำงานแทน
+    synchronize: true, // false สำหรับ production
     logging: true,
-    entities: [User,UserGroup,UserGroupPermission,UserSession,UserAccessLog,UserActivityLog,SystemParameter,SystemPermission], // หรือใช้ path ["src/entity/*.ts"]
+    entities: [User,UserToGroup,UserGroup,UserGroupPermission,UserSession,UserAccessLog,UserActivityLog,SystemParameter,SystemPermission], // หรือใช้ path ["src/entity/*.ts"]
     migrations: ["src/migrations/*.ts"],
     subscribers: [],
 })

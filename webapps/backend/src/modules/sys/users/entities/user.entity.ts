@@ -6,6 +6,8 @@ import {
     UpdateDateColumn,
     ManyToOne,
     JoinColumn,
+    ManyToMany,
+    JoinTable,
   } from 'typeorm';
   import { UserGroup } from '../../user-groups/entities/user-group.entity';
 import { ApiHideProperty } from '@nestjs/swagger';
@@ -22,15 +24,24 @@ import { ApiHideProperty } from '@nestjs/swagger';
     email: string;
   
     @Column({ name: 'password_hash', select: false }) // select: false เพื่อไม่ให้ดึง hash ออกมาตอน query ปกติ (Security)
-    passwordHash: string;
-  
+    passwordHash: string;  
+
+
     @ApiHideProperty()
-    @ManyToOne(() => UserGroup, (group) => group.users, { onDelete: 'SET NULL' })
-    @JoinColumn({ name: 'group_id' })
-    group: UserGroup;
-  
-    @Column({ name: 'group_id', nullable: true })
-    groupId: number;
+    @ManyToMany(() => UserGroup, (group) => group.users, { cascade: true })
+    @JoinTable({
+      name: 'user_to_groups', // ชื่อ Table กลาง
+      joinColumn: {
+        name: 'user_id',
+        referencedColumnName: 'userId',
+      },
+      inverseJoinColumn: {
+        name: 'group_id',
+        referencedColumnName: 'groupId',
+      },
+    })
+    groups: UserGroup[];
+
   
     @Column({ name: 'is_active', default: true })
     isActive: boolean;

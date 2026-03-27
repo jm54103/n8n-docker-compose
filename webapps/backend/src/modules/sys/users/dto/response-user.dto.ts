@@ -8,10 +8,7 @@ export class ResponseUserDto {
   username: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty({ nullable: true })
-  groupId: number;
+  email: string; 
 
   @ApiProperty()
   isActive: boolean;
@@ -36,4 +33,8 @@ export class ResponseUserDto {
 
   @ApiProperty({ nullable: true })
   updatedBy: string;
+
+  @ApiProperty({ nullable: true })
+  groups: string[];
+
 }

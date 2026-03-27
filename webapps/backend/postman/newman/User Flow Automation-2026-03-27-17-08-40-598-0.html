@@ -472,7 +472,7 @@ body.theme-light code {
                 <a class="nav-link text-white" id="pills-requests-tab" data-toggle="pill" href="#pills-requests" role="tab" aria-controls="pills-requests" aria-selected="false">Total Requests <span class="badge badge-light">7</span></a>
             </li>
             <li class="nav-item bg-danger" data-toggle="tooltip" title="Click to view the Failed Tests">
-                <a class="nav-link text-white" id="pills-failed-tab" data-toggle="pill" href="#pills-failed" role="tab" aria-controls="pills-failed" aria-selected="false">Failed Tests <span class="badge badge-light">7</span></a>
+                <a class="nav-link text-white" id="pills-failed-tab" data-toggle="pill" href="#pills-failed" role="tab" aria-controls="pills-failed" aria-selected="false">Failed Tests <span class="badge badge-light">0</span></a>
             </li>
             <li class="nav-item bg-warning" data-toggle="tooltip" title="Click to view the Skipped Tests">
                 <a class="nav-link text-white" id="pills-skipped-tab" data-toggle="pill" href="#pills-skipped" role="tab" aria-controls="pills-skipped" aria-selected="false">Skipped Tests <span class="badge badge-light">0</span></a>
@@ -483,11 +483,11 @@ body.theme-light code {
 <div class="row">
   <div class="col-md-9 col-lg-12 main">
    <h1 class="display-2 text-center">Newman Run Dashboard</h1>
-   <h5 class="text-center">Friday, 27 March 2026 00:45:42</h5>
+   <h5 class="text-center">Saturday, 28 March 2026 00:08:40</h5>
    <div class="row">
     <div class="col-lg-3 col-md-6">
      <div class="card text-white card-success">
-      <div class="card-body bg-danger">
+      <div class="card-body bg-success">
        <div class="rotate">
         <i class="fa fa-retweet fa-5x"></i>
        </div>
@@ -503,18 +503,18 @@ body.theme-light code {
         <i class="fa fa-list fa-4x"></i>
        </div>
        <h6 class="text-uppercase">Total Assertions</h6>
-       <h1 class="display-1">10</h1>
+       <h1 class="display-1">8</h1>
       </div>
      </div>
     </div>
     <div class="col-lg-3 col-md-6">
      <div class="card text-white card-info">
-      <div class="card-body bg-danger">
+      <div class="card-body bg-success">
        <div class="rotate">
         <i class="fa fa-plus-circle fa-5x"></i>
        </div>
        <h6 class="text-uppercase">Total Failed Tests</h6>
-       <h1 class="display-1">7</h1>
+       <h1 class="display-1">0</h1>
       </div>
      </div>
     </div>
@@ -562,9 +562,9 @@ body.theme-light code {
             <div class="card border-info">
                 <div class="card-body">
                 <h5 class="card-title text-uppercase text-white text-center bg-info">Timings and Data</h5>
-                <span><i class="fas fa-stopwatch"></i></span><strong> Total run duration:</strong> 1109ms<br>
-                <span><i class="fas fa-database"></i></span><strong> Total data received:</strong> 5.26KB<br>
-                <span><i class="fas fa-stopwatch"></i></span><strong> Average response time:</strong> 63ms<br>
+                <span><i class="fas fa-stopwatch"></i></span><strong> Total run duration:</strong> 1084ms<br>
+                <span><i class="fas fa-database"></i></span><strong> Total data received:</strong> 8.17KB<br>
+                <span><i class="fas fa-stopwatch"></i></span><strong> Average response time:</strong> 65ms<br>
                 </div>
             </div>
         </div>
@@ -596,10 +596,10 @@ body.theme-light code {
                         <td class="text-center">7</td>
                         <td class="text-center">0</td>
                     </tr>
-                    <tr class="table-danger">
+                    <tr class="">
                         <td>Assertions</td>
-                        <td class="text-center">10</td>
-                        <td class="text-center">7</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">0</td>
                     </tr>
                     <tr class="">
                         <td>Skipped Tests</td>
@@ -620,162 +620,9 @@ body.theme-light code {
             <div class="tab-pane fade" id="pills-failed" role="tabcard" aria-labelledby="pills-failed-tab">
                 <button id="topOfFailuresScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
 
-                    <div class="btn-group float-right" role="group" aria-label="Button Group">
-                        <button id="openAllFailed" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 185px;">Expand All Failed Tests</button>
-                    </div>
-                    <br>
-                    <br>
-
-                    <div class="alert alert-danger text-uppercase text-center">
-                        <h4>Showing 7 Failures</h4>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-45d863c3-620b-4651-bb42-4bb933716648" aria-expanded="false" aria-controls="collapse" id="fails-45d863c3-620b-4651-bb42-4bb933716648" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Create User <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-45d863c3-620b-4651-bb42-4bb933716648" class="collapse" aria-labelledby="fails-45d863c3-620b-4651-bb42-4bb933716648">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> Create User status 201</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected response to have status code 201 but got 500</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7" aria-expanded="false" aria-controls="collapse" id="fails-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Get All Users <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7" class="collapse" aria-labelledby="fails-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> Response includes created user</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected false to be true</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d" aria-expanded="false" aria-controls="collapse" id="fails-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Get User by ID <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d" class="collapse" aria-labelledby="fails-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> Get User by ID status 200</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected response to have status code 200 but got 400</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-cd3df4c0-89f4-481d-ba54-0b644da08422" aria-expanded="false" aria-controls="collapse" id="fails-cd3df4c0-89f4-481d-ba54-0b644da08422" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Get User by ID <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-cd3df4c0-89f4-481d-ba54-0b644da08422" class="collapse" aria-labelledby="fails-cd3df4c0-89f4-481d-ba54-0b644da08422">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> UserId matches</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected undefined to deeply equal null</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-d3218f66-63bf-4add-9c9e-56105be4f90f" aria-expanded="false" aria-controls="collapse" id="fails-d3218f66-63bf-4add-9c9e-56105be4f90f" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Update User <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-d3218f66-63bf-4add-9c9e-56105be4f90f" class="collapse" aria-labelledby="fails-d3218f66-63bf-4add-9c9e-56105be4f90f">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> Update User status 200</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected response to have status code 200 but got 400</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-0f052159-ae8f-4fd9-b563-62af92d6cb81" aria-expanded="false" aria-controls="collapse" id="fails-0f052159-ae8f-4fd9-b563-62af92d6cb81" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Update User <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-0f052159-ae8f-4fd9-b563-62af92d6cb81" class="collapse" aria-labelledby="fails-0f052159-ae8f-4fd9-b563-62af92d6cb81">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> Email updated</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected undefined to deeply equal &#x27;temp99@gmail.com&#x27;</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                    <div class="card-deck">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger">
-                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-4f65c8be-7e93-47f4-8082-acd762d6d09d" aria-expanded="false" aria-controls="collapse" id="fails-4f65c8be-7e93-47f4-8082-acd762d6d09d" class="collapsed text-white z-block">
-                                    Iteration 1 - AssertionError - User Flow Automation - Delete User <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
-                                </a>
-                            </div>
-                            <div id="fails-collapse-4f65c8be-7e93-47f4-8082-acd762d6d09d" class="collapse" aria-labelledby="fails-4f65c8be-7e93-47f4-8082-acd762d6d09d">
-                            <div class="card-body">
-                                <h5 ><strong>Failed Test:</strong> Delete User status 200</h5>
-                            <hr>
-                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
-                            <div>
-                                <pre><code >expected response to have status code 200 but got 400</code></pre>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+                <div class="alert alert-success text-uppercase text-center">
+                     <br><br><h1 class="text-center">There are no failed tests <span><i class="far fa-thumbs-up"></i></span></h1><br><br>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="pills-skipped" role="tabcard" aria-labelledby="pills-skipped-tab">
@@ -790,7 +637,6 @@ body.theme-light code {
             <button id="topOfRequestsScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
 
             <div class="btn-group float-right" role="group" aria-label="Button Group">
-                <button id="showOnlyFailures" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width:160px;">Show Failed Iterations</button>
                 <button id="openAll" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 140px;">Expand Folders</button>
                 <button id="openAllRequests" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 140px;">Expand Requests</button>
             </div>
@@ -805,16 +651,16 @@ body.theme-light code {
     </div>
     <h6 class="text-uppercase text-muted" id="iterationSelected" style="padding-top: 10px;"></h6>
 	<div class="tab-content" id="execution-data">
-            <div id="folder-9ae7661b-7a9a-46b0-97ab-d2449c45823b" class="card-deck iteration-0">
+            <div id="folder-598329b6-5025-48ca-af8d-ef7a749d38c4" class="card-deck iteration-0">
             <div class="row iteration-0">
                 <div class="col-sm-12 mb-3 iteration-0">
                 <div class="card iteration-0">
                     <div class="card-header  bg-success iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b" aria-expanded="false" aria-controls="collapse" id="requests-9ae7661b-7a9a-46b0-97ab-d2449c45823b" class="collapsed text-white z-block">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-598329b6-5025-48ca-af8d-ef7a749d38c4" aria-expanded="false" aria-controls="collapse" id="requests-598329b6-5025-48ca-af8d-ef7a749d38c4" class="collapsed text-white z-block">
                     Iteration: 1 - Login <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
                 </a>
                     </div>
-                    <div id="collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b" class="collapse" aria-labelledby="requests-9ae7661b-7a9a-46b0-97ab-d2449c45823b">
+                    <div id="collapse-598329b6-5025-48ca-af8d-ef7a749d38c4" class="collapse" aria-labelledby="requests-598329b6-5025-48ca-af8d-ef7a749d38c4">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 mb-3">
@@ -830,7 +676,7 @@ body.theme-light code {
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
                                     <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 201 - Created</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 234ms</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 206ms</span><br>
                                     <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 594B</span><br>
                                     <hr>
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
@@ -874,7 +720,7 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">b0226914-0ac7-40f3-922c-6ee9fe778a77</td>
+                                                        <td class="text-wrap">09042aa5-7ce5-4cab-a1e8-df04ec03a572</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Host</td>
@@ -953,11 +799,11 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">ETag</td>
-                                                    <td class="text-wrap">W/&quot;252-iDO4nh3ICGHsSU/bjuc2746bZBI&quot;</td>
+                                                    <td class="text-wrap">W/&quot;252-J687n0Y8zOsG0ggHnKv7Li6azQc&quot;</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:39 GMT</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Connection</td>
@@ -982,10 +828,10 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
                                         <div class="dyn-height">
-                                                <pre><code id="copyText-91754c85-9545-4c9a-87df-31125671359b" class="prettyPrint">{&quot;accessToken&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ&quot;,&quot;refreshToken&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NjMzNTQxfQ.56UjFJ-Oz37Af0YR-xXKzgeSId1e235QtHuExVQHpBo&quot;}</code></pre>
+                                                <pre><code id="copyText-ee274d68-0ccd-42c8-bbb9-3907bbbafecc" class="prettyPrint">{&quot;accessToken&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag&quot;,&quot;refreshToken&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NzE3NzE5fQ.iz3DhVc6_nIK9o-DuuajfoFlr_BZK4lPz4RkA9isIWA&quot;}</code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-91754c85-9545-4c9a-87df-31125671359b">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-ee274d68-0ccd-42c8-bbb9-3907bbbafecc">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -1044,269 +890,16 @@ body.theme-light code {
                 </div>
             </div>
             </div>
-            <div id="folder-14e4964a-602f-485e-ab66-fb420682dbf4" class="card-deck iteration-0">
+            <div id="folder-c2917cf1-68ff-4269-a57e-cadcd19c1208" class="card-deck iteration-0">
             <div class="row iteration-0">
                 <div class="col-sm-12 mb-3 iteration-0">
                 <div class="card iteration-0">
-                    <div class="card-header  bg-danger iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-14e4964a-602f-485e-ab66-fb420682dbf4" aria-expanded="false" aria-controls="collapse" id="requests-14e4964a-602f-485e-ab66-fb420682dbf4" class="collapsed text-white z-block">
-                    Iteration: 1 - Create User <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
-                </a>
-                    </div>
-                    <div id="collapse-14e4964a-602f-485e-ab66-fb420682dbf4" class="collapse" aria-labelledby="requests-14e4964a-602f-485e-ab66-fb420682dbf4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12 mb-3">
-                                <div class="card-deck">
-                                <div class="card border-info" style="width: 50rem;">
-                                    <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Request Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> POST</span><br>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users" target="_blank">http://localhost:5000/api/users</a><br>
-                                    </div>
-                                </div>
-                                <div class="card border-info" style="width: 50rem;">
-                                    <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 500 - Internal Server Error</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 103ms</span><br>
-                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 52B</span><br>
-                                    <hr>
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
-                                    <div>
-                                        <div class="progress" style="height: 40px;">
-                                            <div class="progress-bar  bg-danger" style="width: 100%" role="progressbar">
-                                            <h5 style="padding-top:5px;"><strong>0 %</strong></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 mb-3">
-                                <div class="card-deck">
-                                <div class="card border-info" style="width: 50rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase text-white text-center bg-info">Request Headers</h5>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                            <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-nowrap">Authorization</td>
-                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Content-Type</td>
-                                                        <td class="text-wrap">application/json</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">User-Agent</td>
-                                                        <td class="text-wrap">PostmanRuntime/7.39.1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Accept</td>
-                                                        <td class="text-wrap">*/*</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Cache-Control</td>
-                                                        <td class="text-wrap">no-cache</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">72b74f76-17d5-4735-8c41-9f212510db63</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Host</td>
-                                                        <td class="text-wrap">localhost:5000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Accept-Encoding</td>
-                                                        <td class="text-wrap">gzip, deflate, br</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Connection</td>
-                                                        <td class="text-wrap">keep-alive</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Content-Length</td>
-                                                        <td class="text-wrap">136</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-12 mb-3">
-                            <div class="card-deck">
-                            <div class="card border-info" style="width: 50rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Request Body</h5>
-                                        <div class="dyn-height">
-                                            <pre><code id="copyReqText-1" class="prettyPrint">{
-          &quot;username&quot;: &quot;temp99&quot;,
-          &quot;email&quot;: &quot;temp99@example.com&quot;,
-          &quot;passwordHash&quot;: &quot;SecretPassword123&quot;,
-          &quot;groupId&quot;: 5,
-          &quot;status&quot;: &quot;ACTIVE&quot;
-        }</code></pre>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyReqText-1">Copy to Clipboard</button>
-                                        </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-12 mb-3">
-                            <div class="card-deck">
-                            <div class="card border-info" style="width: 50rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Headers</h5>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                        <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-nowrap">X-Powered-By</td>
-                                                    <td class="text-wrap">Express</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Access-Control-Allow-Origin</td>
-                                                    <td class="text-wrap">http://localhost:3000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Vary</td>
-                                                    <td class="text-wrap">Origin</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Access-Control-Allow-Credentials</td>
-                                                    <td class="text-wrap">true</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Content-Type</td>
-                                                    <td class="text-wrap">application/json; charset&#x3D;utf-8</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Content-Length</td>
-                                                    <td class="text-wrap">52</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">ETag</td>
-                                                    <td class="text-wrap">W/&quot;34-rlKccw1E+/fV8niQk4oFitDfPro&quot;</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Connection</td>
-                                                    <td class="text-wrap">keep-alive</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Keep-Alive</td>
-                                                    <td class="text-wrap">timeout&#x3D;5</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-12 mb-3">
-                            <div class="card-deck">
-                            <div class="card border-info" style="width: 50rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
-                                        <div class="dyn-height">
-                                                <pre><code id="copyText-11cf04a5-8120-4c24-a0c4-485df5f37ae6" class="prettyPrint">{&quot;statusCode&quot;:500,&quot;message&quot;:&quot;Internal server error&quot;}</code></pre>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-11cf04a5-8120-4c24-a0c4-485df5f37ae6">Copy to Clipboard</button>
-                                        </div>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="card border-info">
-                                <div class="card-body">
-                                <h5 class="card-title text-uppercase text-white text-center bg-info">Test Information</h5>
-                                    <div class="table-responsive text-nowrap">
-                                        <table class="datatable table table-hover">
-                                        <thead><tr class="text-center"><th>Name</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr></thead>
-                                            <tbody>
-                                                <tr >
-                                                    <td >Create User status 201</td>
-                                                    <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
-                                                    <td class="text-center ">0</td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr class="bg-light">
-                                                    <td><strong>Total</strong></td>
-                                                    <td class="text-center">0</td>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">0</td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <div class="row ">
-                                    <div class="col-sm-12 mb-3">
-                                        <div class="card-deck">
-                                        <div class="card border-danger" style="width: 50rem;">
-                                            <div class="card-body">
-                                                <h5 class="card-title text-uppercase text-white text-center bg-danger">Test Failure</h5>
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                    <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">Create User status 201</td>
-                                                                <td class="w-55"><pre><code >expected response to have status code 201 but got 500</code></pre></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div id="folder-a7c0d8f6-cf89-44e9-ac26-6f82e1242946" class="card-deck iteration-0">
-            <div class="row iteration-0">
-                <div class="col-sm-12 mb-3 iteration-0">
-                <div class="card iteration-0">
-                    <div class="card-header  bg-danger iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946" aria-expanded="false" aria-controls="collapse" id="requests-a7c0d8f6-cf89-44e9-ac26-6f82e1242946" class="collapsed text-white z-block">
+                    <div class="card-header  bg-success iteration-0">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208" aria-expanded="false" aria-controls="collapse" id="requests-c2917cf1-68ff-4269-a57e-cadcd19c1208" class="collapsed text-white z-block">
                     Iteration: 1 - Get All Users <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
                 </a>
                     </div>
-                    <div id="collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946" class="collapse" aria-labelledby="requests-a7c0d8f6-cf89-44e9-ac26-6f82e1242946">
+                    <div id="collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208" class="collapse" aria-labelledby="requests-c2917cf1-68ff-4269-a57e-cadcd19c1208">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 mb-3">
@@ -1322,14 +915,14 @@ body.theme-light code {
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
                                     <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 200 - OK</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 21ms</span><br>
-                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 4.35KB</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 20ms</span><br>
+                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 6.51KB</span><br>
                                     <hr>
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
                                     <div>
                                         <div class="progress" style="height: 40px;">
-                                            <div class="progress-bar  bg-danger" style="width: 100%" role="progressbar">
-                                            <h5 style="padding-top:5px;"><strong>50 %</strong></h5>
+                                            <div class="progress-bar  bg-success" style="width: 100%" role="progressbar">
+                                            <h5 style="padding-top:5px;"><strong>100 %</strong></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -1350,7 +943,7 @@ body.theme-light code {
                                                 <tbody>
                                                     <tr>
                                                         <td class="text-nowrap">Authorization</td>
-                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ</td>
+                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">User-Agent</td>
@@ -1366,7 +959,7 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">37b829ff-ef3d-440e-9b88-513b12350e29</td>
+                                                        <td class="text-wrap">441b51a6-668b-4eae-9c84-a90834396422</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Host</td>
@@ -1420,15 +1013,15 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Content-Length</td>
-                                                    <td class="text-wrap">4455</td>
+                                                    <td class="text-wrap">6666</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">ETag</td>
-                                                    <td class="text-wrap">W/&quot;1167-nv9J9r8eRPYPjRDD4RbyNEF31oA&quot;</td>
+                                                    <td class="text-wrap">W/&quot;1a0a-EmQKkL6wEFmyh5Q5gBoTvGX65V4&quot;</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:39 GMT</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Connection</td>
@@ -1453,10 +1046,10 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
                                         <div class="dyn-height">
-                                                <pre><code id="copyText-34c34deb-b6cb-4feb-b3fb-e2e9904d200b" class="prettyPrint">[{&quot;userId&quot;:&quot;b3dacedd-01b5-4c75-bc9a-9642b6348084&quot;,&quot;username&quot;:&quot;root&quot;,&quot;email&quot;:&quot;root@example.com&quot;,&quot;groupId&quot;:1,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:19:25.394Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:19:25.394Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;211a8ac4-2506-4e9b-a0a9-55901a41bc76&quot;,&quot;username&quot;:&quot;temp99&quot;,&quot;email&quot;:&quot;temp99@example.com&quot;,&quot;groupId&quot;:5,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-26T17:29:44.083Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-26T17:29:44.083Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;0a21cd44-ac85-46a3-a5dc-e0d9fb03a650&quot;,&quot;username&quot;:&quot;user04&quot;,&quot;email&quot;:&quot;user04@example.com&quot;,&quot;groupId&quot;:5,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:23:18.775Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:23:18.775Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;4a8dd42a-88be-4994-a845-f70285984251&quot;,&quot;username&quot;:&quot;user03&quot;,&quot;email&quot;:&quot;user03@example.com&quot;,&quot;groupId&quot;:5,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:23:07.811Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:23:07.811Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;793897a4-8de2-4c37-9f56-12b40ef407e5&quot;,&quot;username&quot;:&quot;user02&quot;,&quot;email&quot;:&quot;user02@example.com&quot;,&quot;groupId&quot;:5,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:22:57.287Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:22:57.287Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;95c31841-d039-4999-bbe5-8808e66bb74a&quot;,&quot;username&quot;:&quot;user01&quot;,&quot;email&quot;:&quot;user01@example.com&quot;,&quot;groupId&quot;:5,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:22:42.059Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:22:42.059Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;187f39d7-b29d-49ce-be50-e94fa247ac47&quot;,&quot;username&quot;:&quot;admin&quot;,&quot;email&quot;:&quot;administrator@example.com&quot;,&quot;groupId&quot;:2,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:20:30.555Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:20:30.555Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;a801ccc6-578e-438b-a263-e45355dff662&quot;,&quot;username&quot;:&quot;tester01&quot;,&quot;email&quot;:&quot;tester01@example.com&quot;,&quot;groupId&quot;:6,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:true,&quot;lastLogin&quot;:&quot;2026-03-26T17:45:41.002Z&quot;,&quot;createdAt&quot;:&quot;2026-03-14T19:22:31.948Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-26T17:45:41.073Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;9a2f987b-c1d2-45e1-ad9d-00c5d7369a1a&quot;,&quot;username&quot;:&quot;tester02&quot;,&quot;email&quot;:&quot;tester02@example.com&quot;,&quot;groupId&quot;:6,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:24:43.974Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:24:43.974Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;40e4c9e9-a606-4122-b084-ee2fdc28fe82&quot;,&quot;username&quot;:&quot;control02&quot;,&quot;email&quot;:&quot;control02@example.com&quot;,&quot;groupId&quot;:8,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:27:42.336Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:27:42.336Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;7cf173dd-f9bf-492a-a2ec-2406d89fd95f&quot;,&quot;username&quot;:&quot;control01&quot;,&quot;email&quot;:&quot;control01@example.com&quot;,&quot;groupId&quot;:8,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:27:31.738Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:27:31.738Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;702e054d-e0fd-4dc5-9919-34eef9a2bdbe&quot;,&quot;username&quot;:&quot;security02&quot;,&quot;email&quot;:&quot;security02@example.com&quot;,&quot;groupId&quot;:3,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:26:01.100Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:26:01.100Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;f2b5e56d-ba83-4993-925e-b60a791b2f16&quot;,&quot;username&quot;:&quot;security01&quot;,&quot;email&quot;:&quot;security01@example.com&quot;,&quot;groupId&quot;:3,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:25:52.593Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:25:52.593Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;458cb69c-48ac-4672-ba99-95ab08037f8f&quot;,&quot;username&quot;:&quot;oper02&quot;,&quot;email&quot;:&quot;oper02@example.com&quot;,&quot;groupId&quot;:4,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:24:08.035Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:24:08.035Z&quot;,&quot;updatedBy&quot;:null},{&quot;userId&quot;:&quot;b1408d9c-03ff-4ab0-9461-f2e666a7980e&quot;,&quot;username&quot;:&quot;oper01&quot;,&quot;email&quot;:&quot;oper01@example.com&quot;,&quot;groupId&quot;:4,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:23:59.394Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:23:59.394Z&quot;,&quot;updatedBy&quot;:null}]</code></pre>
+                                                <pre><code id="copyText-af40f3f9-66a1-41ec-96f3-c9a223b404f0" class="prettyPrint">[{&quot;userId&quot;:&quot;a801ccc6-578e-438b-a263-e45355dff662&quot;,&quot;username&quot;:&quot;tester01&quot;,&quot;email&quot;:&quot;tester01@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:true,&quot;lastLogin&quot;:&quot;2026-03-27T17:08:39.415Z&quot;,&quot;createdAt&quot;:&quot;2026-03-14T19:22:31.948Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:08:39.483Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[&quot;TESTER&quot;,&quot;ROOT&quot;,&quot;ADMINISTRATOR&quot;]},{&quot;userId&quot;:&quot;40e4c9e9-a606-4122-b084-ee2fdc28fe82&quot;,&quot;username&quot;:&quot;control02&quot;,&quot;email&quot;:&quot;control02@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:27:42.336Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:27:42.336Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;793897a4-8de2-4c37-9f56-12b40ef407e5&quot;,&quot;username&quot;:&quot;user02&quot;,&quot;email&quot;:&quot;user02@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:22:57.287Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:22:57.287Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;b3dacedd-01b5-4c75-bc9a-9642b6348084&quot;,&quot;username&quot;:&quot;root&quot;,&quot;email&quot;:&quot;root@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:19:25.394Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:19:25.394Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;95c31841-d039-4999-bbe5-8808e66bb74a&quot;,&quot;username&quot;:&quot;user01&quot;,&quot;email&quot;:&quot;user01@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:22:42.059Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:22:42.059Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;b1408d9c-03ff-4ab0-9461-f2e666a7980e&quot;,&quot;username&quot;:&quot;oper01&quot;,&quot;email&quot;:&quot;oper01@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:23:59.394Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:23:59.394Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;187f39d7-b29d-49ce-be50-e94fa247ac47&quot;,&quot;username&quot;:&quot;admin&quot;,&quot;email&quot;:&quot;administrator@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:20:30.555Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:20:30.555Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;7cf173dd-f9bf-492a-a2ec-2406d89fd95f&quot;,&quot;username&quot;:&quot;control01&quot;,&quot;email&quot;:&quot;control01@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:27:31.738Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:27:31.738Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;59098fcc-6940-415f-a21c-2ea2c52a8bda&quot;,&quot;username&quot;:&quot;user_231_Aidan_Block47&quot;,&quot;email&quot;:&quot;user_572@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T16:55:14.114Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T16:55:14.114Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;207a425d-324b-48fc-9d01-2c6406560b30&quot;,&quot;username&quot;:&quot;user_858_Lew12&quot;,&quot;email&quot;:&quot;user_847@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:03:50.909Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:03:50.909Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;40f179cc-2002-44e3-93b4-63cc36b3881e&quot;,&quot;username&quot;:&quot;user_514_Gunner_Dickinson39&quot;,&quot;email&quot;:&quot;user_703@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T16:55:04.815Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T16:55:04.815Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;458cb69c-48ac-4672-ba99-95ab08037f8f&quot;,&quot;username&quot;:&quot;oper02&quot;,&quot;email&quot;:&quot;oper02@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:24:08.035Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:24:08.035Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;f2b5e56d-ba83-4993-925e-b60a791b2f16&quot;,&quot;username&quot;:&quot;security01&quot;,&quot;email&quot;:&quot;security01@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:25:52.593Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:25:52.593Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;702e054d-e0fd-4dc5-9919-34eef9a2bdbe&quot;,&quot;username&quot;:&quot;security02&quot;,&quot;email&quot;:&quot;security02@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:26:01.100Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:26:01.100Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;edd40aa1-900d-4180-bc5d-6baf638f9062&quot;,&quot;username&quot;:&quot;user_665_Hershel_Donnelly41&quot;,&quot;email&quot;:&quot;temp99@gmail.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T16:59:05.790Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T16:59:05.923Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;a281c5ec-b78b-47d4-a770-394e601c03a3&quot;,&quot;username&quot;:&quot;user_147_Mitchell33&quot;,&quot;email&quot;:&quot;user_617@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:05:18.875Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:05:18.992Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;4a8dd42a-88be-4994-a845-f70285984251&quot;,&quot;username&quot;:&quot;user03&quot;,&quot;email&quot;:&quot;user03@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:23:07.811Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:23:07.811Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;0a21cd44-ac85-46a3-a5dc-e0d9fb03a650&quot;,&quot;username&quot;:&quot;user04&quot;,&quot;email&quot;:&quot;user04@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:23:18.775Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:23:18.775Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;0d2f73a9-cbe3-419a-ac39-1c3328d4e60c&quot;,&quot;username&quot;:&quot;user_109_Aryanna19&quot;,&quot;email&quot;:&quot;user_929@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:05:38.440Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:05:38.542Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;b061c92d-1c42-4331-baed-8cf906e22f98&quot;,&quot;username&quot;:&quot;user_589_Erik77&quot;,&quot;email&quot;:&quot;user_423@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:00:58.813Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:00:58.813Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;9a2f987b-c1d2-45e1-ad9d-00c5d7369a1a&quot;,&quot;username&quot;:&quot;tester02&quot;,&quot;email&quot;:&quot;tester02@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-23T12:24:43.974Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-23T12:24:43.974Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]},{&quot;userId&quot;:&quot;e6fbd7ed-3bb4-4c59-bd44-bfd8c8bc627f&quot;,&quot;username&quot;:&quot;user_714_Favian_Johns44&quot;,&quot;email&quot;:&quot;user_214@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:00:31.897Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:00:31.897Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]}]</code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-34c34deb-b6cb-4feb-b3fb-e2e9904d200b">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-af40f3f9-66a1-41ec-96f3-c9a223b404f0">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -1477,24 +1070,18 @@ body.theme-light code {
                                                     <td class="text-center ">0</td>
                                                     <td class="text-center ">0</td>
                                                 </tr>
-                                                <tr >
-                                                    <td >Response includes created user</td>
-                                                    <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
-                                                    <td class="text-center ">0</td>
-                                                </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr class="bg-light">
                                                     <td><strong>Total</strong></td>
                                                     <td class="text-center">1</td>
-                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">0</td>
                                                     <td class="text-center">0</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
-                                    <div class="row ">
+                                    <div class="row d-none">
                                     <div class="col-sm-12 mb-3">
                                         <div class="card-deck">
                                         <div class="card border-danger" style="width: 50rem;">
@@ -1504,10 +1091,6 @@ body.theme-light code {
                                                     <table class="table table-hover">
                                                     <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">Response includes created user</td>
-                                                                <td class="w-55"><pre><code >expected false to be true</code></pre></td>
-                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -1525,16 +1108,16 @@ body.theme-light code {
                 </div>
             </div>
             </div>
-            <div id="folder-c077f9cd-3ef1-4623-ad4e-7f4286f9b611" class="card-deck iteration-0">
+            <div id="folder-d3bd36d0-e4a3-4607-aebc-859cb924f56a" class="card-deck iteration-0">
             <div class="row iteration-0">
                 <div class="col-sm-12 mb-3 iteration-0">
                 <div class="card iteration-0">
-                    <div class="card-header  bg-danger iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611" aria-expanded="false" aria-controls="collapse" id="requests-c077f9cd-3ef1-4623-ad4e-7f4286f9b611" class="collapsed text-white z-block">
-                    Iteration: 1 - Get User by ID <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
+                    <div class="card-header  bg-success iteration-0">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a" aria-expanded="false" aria-controls="collapse" id="requests-d3bd36d0-e4a3-4607-aebc-859cb924f56a" class="collapsed text-white z-block">
+                    Iteration: 1 - Create User <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
                 </a>
                     </div>
-                    <div id="collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611" class="collapse" aria-labelledby="requests-c077f9cd-3ef1-4623-ad4e-7f4286f9b611">
+                    <div id="collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a" class="collapse" aria-labelledby="requests-d3bd36d0-e4a3-4607-aebc-859cb924f56a">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 mb-3">
@@ -1542,22 +1125,22 @@ body.theme-light code {
                                 <div class="card border-info" style="width: 50rem;">
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Request Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> GET</span><br>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users/null" target="_blank">http://localhost:5000/api/users/null</a><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> POST</span><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users" target="_blank">http://localhost:5000/api/users</a><br>
                                     </div>
                                 </div>
                                 <div class="card border-info" style="width: 50rem;">
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 400 - Bad Request</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 20ms</span><br>
-                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 89B</span><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 201 - Created</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 109ms</span><br>
+                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 424B</span><br>
                                     <hr>
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
                                     <div>
                                         <div class="progress" style="height: 40px;">
-                                            <div class="progress-bar  bg-danger" style="width: 100%" role="progressbar">
-                                            <h5 style="padding-top:5px;"><strong>0 %</strong></h5>
+                                            <div class="progress-bar  bg-success" style="width: 100%" role="progressbar">
+                                            <h5 style="padding-top:5px;"><strong>100 %</strong></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -1578,239 +1161,7 @@ body.theme-light code {
                                                 <tbody>
                                                     <tr>
                                                         <td class="text-nowrap">Authorization</td>
-                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">User-Agent</td>
-                                                        <td class="text-wrap">PostmanRuntime/7.39.1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Accept</td>
-                                                        <td class="text-wrap">*/*</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Cache-Control</td>
-                                                        <td class="text-wrap">no-cache</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">13d36b31-9d1e-4fa3-95dc-195c1663ed8b</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Host</td>
-                                                        <td class="text-wrap">localhost:5000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Accept-Encoding</td>
-                                                        <td class="text-wrap">gzip, deflate, br</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-nowrap">Connection</td>
-                                                        <td class="text-wrap">keep-alive</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-12 mb-3">
-                            <div class="card-deck">
-                            <div class="card border-info" style="width: 50rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Headers</h5>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                        <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-nowrap">X-Powered-By</td>
-                                                    <td class="text-wrap">Express</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Access-Control-Allow-Origin</td>
-                                                    <td class="text-wrap">http://localhost:3000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Vary</td>
-                                                    <td class="text-wrap">Origin</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Access-Control-Allow-Credentials</td>
-                                                    <td class="text-wrap">true</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Content-Type</td>
-                                                    <td class="text-wrap">application/json; charset&#x3D;utf-8</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Content-Length</td>
-                                                    <td class="text-wrap">89</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">ETag</td>
-                                                    <td class="text-wrap">W/&quot;59-kArN5xCcYXjUJs5yv8pQBq+GJsU&quot;</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Connection</td>
-                                                    <td class="text-wrap">keep-alive</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-nowrap">Keep-Alive</td>
-                                                    <td class="text-wrap">timeout&#x3D;5</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-12 mb-3">
-                            <div class="card-deck">
-                            <div class="card border-info" style="width: 50rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
-                                        <div class="dyn-height">
-                                                <pre><code id="copyText-0cceed76-03d1-4e3f-9fe2-daaff770978f" class="prettyPrint">{&quot;message&quot;:&quot;Validation failed (uuid is expected)&quot;,&quot;error&quot;:&quot;Bad Request&quot;,&quot;statusCode&quot;:400}</code></pre>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-0cceed76-03d1-4e3f-9fe2-daaff770978f">Copy to Clipboard</button>
-                                        </div>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="card border-info">
-                                <div class="card-body">
-                                <h5 class="card-title text-uppercase text-white text-center bg-info">Test Information</h5>
-                                    <div class="table-responsive text-nowrap">
-                                        <table class="datatable table table-hover">
-                                        <thead><tr class="text-center"><th>Name</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr></thead>
-                                            <tbody>
-                                                <tr >
-                                                    <td >Get User by ID status 200</td>
-                                                    <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
-                                                    <td class="text-center ">0</td>
-                                                </tr>
-                                                <tr >
-                                                    <td >UserId matches</td>
-                                                    <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
-                                                    <td class="text-center ">0</td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr class="bg-light">
-                                                    <td><strong>Total</strong></td>
-                                                    <td class="text-center">0</td>
-                                                    <td class="text-center">2</td>
-                                                    <td class="text-center">0</td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <div class="row ">
-                                    <div class="col-sm-12 mb-3">
-                                        <div class="card-deck">
-                                        <div class="card border-danger" style="width: 50rem;">
-                                            <div class="card-body">
-                                                <h5 class="card-title text-uppercase text-white text-center bg-danger">Test Failures</h5>
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                    <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">Get User by ID status 200</td>
-                                                                <td class="w-55"><pre><code >expected response to have status code 200 but got 400</code></pre></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">UserId matches</td>
-                                                                <td class="w-55"><pre><code >expected undefined to deeply equal null</code></pre></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div id="folder-5d7980c3-f9ab-4a50-8d9e-2691169e7906" class="card-deck iteration-0">
-            <div class="row iteration-0">
-                <div class="col-sm-12 mb-3 iteration-0">
-                <div class="card iteration-0">
-                    <div class="card-header  bg-danger iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906" aria-expanded="false" aria-controls="collapse" id="requests-5d7980c3-f9ab-4a50-8d9e-2691169e7906" class="collapsed text-white z-block">
-                    Iteration: 1 - Update User <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
-                </a>
-                    </div>
-                    <div id="collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906" class="collapse" aria-labelledby="requests-5d7980c3-f9ab-4a50-8d9e-2691169e7906">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12 mb-3">
-                                <div class="card-deck">
-                                <div class="card border-info" style="width: 50rem;">
-                                    <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Request Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> PATCH</span><br>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users/null" target="_blank">http://localhost:5000/api/users/null</a><br>
-                                    </div>
-                                </div>
-                                <div class="card border-info" style="width: 50rem;">
-                                    <div class="card-body">
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 400 - Bad Request</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 17ms</span><br>
-                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 89B</span><br>
-                                    <hr>
-                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
-                                    <div>
-                                        <div class="progress" style="height: 40px;">
-                                            <div class="progress-bar  bg-danger" style="width: 100%" role="progressbar">
-                                            <h5 style="padding-top:5px;"><strong>0 %</strong></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 mb-3">
-                                <div class="card-deck">
-                                <div class="card border-info" style="width: 50rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase text-white text-center bg-info">Request Headers</h5>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                            <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-nowrap">Authorization</td>
-                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ</td>
+                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Content-Type</td>
@@ -1830,7 +1181,7 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">4667e959-ba2b-4c01-afce-9e2761f242ec</td>
+                                                        <td class="text-wrap">9097f59d-8077-44fb-9802-b71b83579e90</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Host</td>
@@ -1846,7 +1197,7 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Content-Length</td>
-                                                        <td class="text-wrap">76</td>
+                                                        <td class="text-wrap">133</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -1863,14 +1214,15 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Request Body</h5>
                                         <div class="dyn-height">
-                                            <pre><code id="copyReqText-4" class="prettyPrint">{
-          &quot;email&quot;: &quot;temp99@gmail.com&quot;,
-          &quot;isActive&quot;: true,
-          &quot;isLoggedIn&quot;: false
+                                            <pre><code id="copyReqText-2" class="prettyPrint">{
+          &quot;username&quot;: &quot;user_292_Clovis39&quot;,
+          &quot;email&quot;: &quot;user_833@example.com&quot;,
+          &quot;passwordHash&quot;: &quot;SecretPassword123&quot;,
+          &quot;status&quot;: &quot;ACTIVE&quot;
         }</code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyReqText-4">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyReqText-2">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -1909,15 +1261,15 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Content-Length</td>
-                                                    <td class="text-wrap">89</td>
+                                                    <td class="text-wrap">424</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">ETag</td>
-                                                    <td class="text-wrap">W/&quot;59-kArN5xCcYXjUJs5yv8pQBq+GJsU&quot;</td>
+                                                    <td class="text-wrap">W/&quot;1a8-EeUVAZv3O5Tp5Jox4431kSyuJWw&quot;</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:39 GMT</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Connection</td>
@@ -1942,10 +1294,10 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
                                         <div class="dyn-height">
-                                                <pre><code id="copyText-ed4e95df-6441-43c3-b9b4-6a29010ac9a3" class="prettyPrint">{&quot;message&quot;:&quot;Validation failed (uuid is expected)&quot;,&quot;error&quot;:&quot;Bad Request&quot;,&quot;statusCode&quot;:400}</code></pre>
+                                                <pre><code id="copyText-0fa84fd9-587f-4cac-916d-db28a726205e" class="prettyPrint">{&quot;username&quot;:&quot;user_292_Clovis39&quot;,&quot;email&quot;:&quot;user_833@example.com&quot;,&quot;passwordHash&quot;:&quot;$2b$10$1Ii/0q5Q6iu/aMWq1z2C9ekjW1qxsGwlb3vKkIihVRu/7LXhdBUm6&quot;,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;sessionKey&quot;:null,&quot;lockUntil&quot;:null,&quot;lastLogin&quot;:null,&quot;createdBy&quot;:null,&quot;updatedBy&quot;:null,&quot;userId&quot;:&quot;e1295975-06af-4fac-934c-3a3d0622c230&quot;,&quot;isActive&quot;:true,&quot;isLoggedIn&quot;:false,&quot;loginAttempts&quot;:0,&quot;createdAt&quot;:&quot;2026-03-27T17:08:39.883Z&quot;,&quot;updatedAt&quot;:&quot;2026-03-27T17:08:39.883Z&quot;}</code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-ed4e95df-6441-43c3-b9b4-6a29010ac9a3">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-0fa84fd9-587f-4cac-916d-db28a726205e">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -1961,46 +1313,32 @@ body.theme-light code {
                                         <thead><tr class="text-center"><th>Name</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr></thead>
                                             <tbody>
                                                 <tr >
-                                                    <td >Update User status 200</td>
+                                                    <td >Create User status 201</td>
+                                                    <td class="text-center bg-success">1</td>
                                                     <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
-                                                    <td class="text-center ">0</td>
-                                                </tr>
-                                                <tr >
-                                                    <td >Email updated</td>
-                                                    <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
                                                     <td class="text-center ">0</td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr class="bg-light">
                                                     <td><strong>Total</strong></td>
+                                                    <td class="text-center">1</td>
                                                     <td class="text-center">0</td>
-                                                    <td class="text-center">2</td>
                                                     <td class="text-center">0</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
-                                    <div class="row ">
+                                    <div class="row d-none">
                                     <div class="col-sm-12 mb-3">
                                         <div class="card-deck">
                                         <div class="card border-danger" style="width: 50rem;">
                                             <div class="card-body">
-                                                <h5 class="card-title text-uppercase text-white text-center bg-danger">Test Failures</h5>
+                                                <h5 class="card-title text-uppercase text-white text-center bg-danger">Test Failure</h5>
                                                 <div class="table-responsive">
                                                     <table class="table table-hover">
                                                     <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">Update User status 200</td>
-                                                                <td class="w-55"><pre><code >expected response to have status code 200 but got 400</code></pre></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">Email updated</td>
-                                                                <td class="w-55"><pre><code >expected undefined to deeply equal &#x27;temp99@gmail.com&#x27;</code></pre></td>
-                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -2018,16 +1356,16 @@ body.theme-light code {
                 </div>
             </div>
             </div>
-            <div id="folder-4e5f3c15-c135-40c4-a6f3-7c94607f43e5" class="card-deck iteration-0">
+            <div id="folder-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc" class="card-deck iteration-0">
             <div class="row iteration-0">
                 <div class="col-sm-12 mb-3 iteration-0">
                 <div class="card iteration-0">
-                    <div class="card-header  bg-danger iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5" aria-expanded="false" aria-controls="collapse" id="requests-4e5f3c15-c135-40c4-a6f3-7c94607f43e5" class="collapsed text-white z-block">
-                    Iteration: 1 - Delete User <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
+                    <div class="card-header  bg-success iteration-0">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc" aria-expanded="false" aria-controls="collapse" id="requests-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc" class="collapsed text-white z-block">
+                    Iteration: 1 - Update User <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
                 </a>
                     </div>
-                    <div id="collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5" class="collapse" aria-labelledby="requests-4e5f3c15-c135-40c4-a6f3-7c94607f43e5">
+                    <div id="collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc" class="collapse" aria-labelledby="requests-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 mb-3">
@@ -2035,22 +1373,22 @@ body.theme-light code {
                                 <div class="card border-info" style="width: 50rem;">
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Request Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> DELETE</span><br>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users/null" target="_blank">http://localhost:5000/api/users/null</a><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> PATCH</span><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users/e1295975-06af-4fac-934c-3a3d0622c230" target="_blank">http://localhost:5000/api/users/e1295975-06af-4fac-934c-3a3d0622c230</a><br>
                                     </div>
                                 </div>
                                 <div class="card border-info" style="width: 50rem;">
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
-                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 400 - Bad Request</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 16ms</span><br>
-                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 89B</span><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 200 - OK</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 52ms</span><br>
+                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 358B</span><br>
                                     <hr>
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
                                     <div>
                                         <div class="progress" style="height: 40px;">
-                                            <div class="progress-bar  bg-danger" style="width: 100%" role="progressbar">
-                                            <h5 style="padding-top:5px;"><strong>0 %</strong></h5>
+                                            <div class="progress-bar  bg-success" style="width: 100%" role="progressbar">
+                                            <h5 style="padding-top:5px;"><strong>100 %</strong></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -2071,7 +1409,11 @@ body.theme-light code {
                                                 <tbody>
                                                     <tr>
                                                         <td class="text-nowrap">Authorization</td>
-                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ</td>
+                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Content-Type</td>
+                                                        <td class="text-wrap">application/json</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">User-Agent</td>
@@ -2087,7 +1429,250 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">0caee457-fc42-49b4-ab11-9151eca6e1e4</td>
+                                                        <td class="text-wrap">6c96fae4-d699-49ec-a16a-a6eb150a8a74</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Host</td>
+                                                        <td class="text-wrap">localhost:5000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Accept-Encoding</td>
+                                                        <td class="text-wrap">gzip, deflate, br</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Connection</td>
+                                                        <td class="text-wrap">keep-alive</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Content-Length</td>
+                                                        <td class="text-wrap">80</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-12 mb-3">
+                            <div class="card-deck">
+                            <div class="card border-info" style="width: 50rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Request Body</h5>
+                                        <div class="dyn-height">
+                                            <pre><code id="copyReqText-3" class="prettyPrint">{
+          &quot;email&quot;: &quot;user_339@example.com&quot;,
+          &quot;isActive&quot;: true,
+          &quot;isLoggedIn&quot;: false
+        }</code></pre>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyReqText-3">Copy to Clipboard</button>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-12 mb-3">
+                            <div class="card-deck">
+                            <div class="card border-info" style="width: 50rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Headers</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                        <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-nowrap">X-Powered-By</td>
+                                                    <td class="text-wrap">Express</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Access-Control-Allow-Origin</td>
+                                                    <td class="text-wrap">http://localhost:3000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Vary</td>
+                                                    <td class="text-wrap">Origin</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Access-Control-Allow-Credentials</td>
+                                                    <td class="text-wrap">true</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Content-Type</td>
+                                                    <td class="text-wrap">application/json; charset&#x3D;utf-8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Content-Length</td>
+                                                    <td class="text-wrap">358</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">ETag</td>
+                                                    <td class="text-wrap">W/&quot;166-cPBcoE/hMAhIeqNKB8jkXebXfgg&quot;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Date</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:40 GMT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Connection</td>
+                                                    <td class="text-wrap">keep-alive</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Keep-Alive</td>
+                                                    <td class="text-wrap">timeout&#x3D;5</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-12 mb-3">
+                            <div class="card-deck">
+                            <div class="card border-info" style="width: 50rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
+                                        <div class="dyn-height">
+                                                <pre><code id="copyText-b7dbb385-a0ea-4186-8957-1826fd179b2a" class="prettyPrint">{&quot;userId&quot;:&quot;e1295975-06af-4fac-934c-3a3d0622c230&quot;,&quot;username&quot;:&quot;user_292_Clovis39&quot;,&quot;email&quot;:&quot;user_339@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;sessionKey&quot;:null,&quot;loginAttempts&quot;:0,&quot;lockUntil&quot;:null,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:08:39.883Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:08:39.997Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]}</code></pre>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-b7dbb385-a0ea-4186-8957-1826fd179b2a">Copy to Clipboard</button>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="card border-info">
+                                <div class="card-body">
+                                <h5 class="card-title text-uppercase text-white text-center bg-info">Test Information</h5>
+                                    <div class="table-responsive text-nowrap">
+                                        <table class="datatable table table-hover">
+                                        <thead><tr class="text-center"><th>Name</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr></thead>
+                                            <tbody>
+                                                <tr >
+                                                    <td >Update User status 200</td>
+                                                    <td class="text-center bg-success">1</td>
+                                                    <td class="text-center ">0</td>
+                                                    <td class="text-center ">0</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="bg-light">
+                                                    <td><strong>Total</strong></td>
+                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">0</td>
+                                                    <td class="text-center">0</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div class="row d-none">
+                                    <div class="col-sm-12 mb-3">
+                                        <div class="card-deck">
+                                        <div class="card border-danger" style="width: 50rem;">
+                                            <div class="card-body">
+                                                <h5 class="card-title text-uppercase text-white text-center bg-danger">Test Failure</h5>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                    <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div id="folder-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d" class="card-deck iteration-0">
+            <div class="row iteration-0">
+                <div class="col-sm-12 mb-3 iteration-0">
+                <div class="card iteration-0">
+                    <div class="card-header  bg-success iteration-0">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d" aria-expanded="false" aria-controls="collapse" id="requests-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d" class="collapsed text-white z-block">
+                    Iteration: 1 - Get User by ID <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
+                </a>
+                    </div>
+                    <div id="collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d" class="collapse" aria-labelledby="requests-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <div class="card-deck">
+                                <div class="card border-info" style="width: 50rem;">
+                                    <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Request Information</h5>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> GET</span><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users/e1295975-06af-4fac-934c-3a3d0622c230" target="_blank">http://localhost:5000/api/users/e1295975-06af-4fac-934c-3a3d0622c230</a><br>
+                                    </div>
+                                </div>
+                                <div class="card border-info" style="width: 50rem;">
+                                    <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 200 - OK</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 35ms</span><br>
+                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 305B</span><br>
+                                    <hr>
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
+                                    <div>
+                                        <div class="progress" style="height: 40px;">
+                                            <div class="progress-bar  bg-success" style="width: 100%" role="progressbar">
+                                            <h5 style="padding-top:5px;"><strong>100 %</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <div class="card-deck">
+                                <div class="card border-info" style="width: 50rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-uppercase text-white text-center bg-info">Request Headers</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                            <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-nowrap">Authorization</td>
+                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">User-Agent</td>
+                                                        <td class="text-wrap">PostmanRuntime/7.39.1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Accept</td>
+                                                        <td class="text-wrap">*/*</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Cache-Control</td>
+                                                        <td class="text-wrap">no-cache</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Postman-Token</td>
+                                                        <td class="text-wrap">c0762b40-ca63-45f6-aec3-b0ae38c69d88</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Host</td>
@@ -2141,15 +1726,15 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Content-Length</td>
-                                                    <td class="text-wrap">89</td>
+                                                    <td class="text-wrap">305</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">ETag</td>
-                                                    <td class="text-wrap">W/&quot;59-kArN5xCcYXjUJs5yv8pQBq+GJsU&quot;</td>
+                                                    <td class="text-wrap">W/&quot;131-6py50KcZy+GPdXPsJx4TS2e40rU&quot;</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:40 GMT</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Connection</td>
@@ -2174,10 +1759,10 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
                                         <div class="dyn-height">
-                                                <pre><code id="copyText-3d364a05-2962-483a-b1fe-b2ab73fe9df0" class="prettyPrint">{&quot;message&quot;:&quot;Validation failed (uuid is expected)&quot;,&quot;error&quot;:&quot;Bad Request&quot;,&quot;statusCode&quot;:400}</code></pre>
+                                                <pre><code id="copyText-7361b6ab-fee7-48cd-a1b4-dcad65165ef3" class="prettyPrint">{&quot;userId&quot;:&quot;e1295975-06af-4fac-934c-3a3d0622c230&quot;,&quot;username&quot;:&quot;user_292_Clovis39&quot;,&quot;email&quot;:&quot;user_339@example.com&quot;,&quot;isActive&quot;:true,&quot;status&quot;:&quot;ACTIVE&quot;,&quot;isLoggedIn&quot;:false,&quot;lastLogin&quot;:null,&quot;createdAt&quot;:&quot;2026-03-27T17:08:39.883Z&quot;,&quot;createdBy&quot;:null,&quot;updatedAt&quot;:&quot;2026-03-27T17:08:39.997Z&quot;,&quot;updatedBy&quot;:null,&quot;groups&quot;:[]}</code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-3d364a05-2962-483a-b1fe-b2ab73fe9df0">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-7361b6ab-fee7-48cd-a1b4-dcad65165ef3">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -2193,23 +1778,29 @@ body.theme-light code {
                                         <thead><tr class="text-center"><th>Name</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr></thead>
                                             <tbody>
                                                 <tr >
-                                                    <td >Delete User status 200</td>
+                                                    <td >Get User by ID status 200</td>
+                                                    <td class="text-center bg-success">1</td>
                                                     <td class="text-center ">0</td>
-                                                    <td class="text-center bg-danger">1</td>
+                                                    <td class="text-center ">0</td>
+                                                </tr>
+                                                <tr >
+                                                    <td >UserId matches</td>
+                                                    <td class="text-center bg-success">1</td>
+                                                    <td class="text-center ">0</td>
                                                     <td class="text-center ">0</td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
                                                 <tr class="bg-light">
                                                     <td><strong>Total</strong></td>
+                                                    <td class="text-center">2</td>
                                                     <td class="text-center">0</td>
-                                                    <td class="text-center">1</td>
                                                     <td class="text-center">0</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
-                                    <div class="row ">
+                                    <div class="row d-none">
                                     <div class="col-sm-12 mb-3">
                                         <div class="card-deck">
                                         <div class="card border-danger" style="width: 50rem;">
@@ -2219,10 +1810,6 @@ body.theme-light code {
                                                     <table class="table table-hover">
                                                     <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="w-45 text-nowrap ">Delete User status 200</td>
-                                                                <td class="w-55"><pre><code >expected response to have status code 200 but got 400</code></pre></td>
-                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -2240,16 +1827,221 @@ body.theme-light code {
                 </div>
             </div>
             </div>
-            <div id="folder-241fb3c9-b416-4198-a0f7-a6c5a722e9db" class="card-deck iteration-0">
+            <div id="folder-e8a70e77-5631-41c6-aca5-064bea947195" class="card-deck iteration-0">
             <div class="row iteration-0">
                 <div class="col-sm-12 mb-3 iteration-0">
                 <div class="card iteration-0">
                     <div class="card-header  bg-success iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db" aria-expanded="false" aria-controls="collapse" id="requests-241fb3c9-b416-4198-a0f7-a6c5a722e9db" class="collapsed text-white z-block">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-e8a70e77-5631-41c6-aca5-064bea947195" aria-expanded="false" aria-controls="collapse" id="requests-e8a70e77-5631-41c6-aca5-064bea947195" class="collapsed text-white z-block">
+                    Iteration: 1 - Delete User <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
+                </a>
+                    </div>
+                    <div id="collapse-e8a70e77-5631-41c6-aca5-064bea947195" class="collapse" aria-labelledby="requests-e8a70e77-5631-41c6-aca5-064bea947195">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <div class="card-deck">
+                                <div class="card border-info" style="width: 50rem;">
+                                    <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Request Information</h5>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request Method:</strong> <span class="badge-outline-success badge badge-success"> DELETE</span><br>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Request URL:</strong> <a href="http://localhost:5000/api/users/e1295975-06af-4fac-934c-3a3d0622c230" target="_blank">http://localhost:5000/api/users/e1295975-06af-4fac-934c-3a3d0622c230</a><br>
+                                    </div>
+                                </div>
+                                <div class="card border-info" style="width: 50rem;">
+                                    <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
+                                    <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 200 - OK</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 26ms</span><br>
+                                    <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 0B</span><br>
+                                    <hr>
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
+                                    <div>
+                                        <div class="progress" style="height: 40px;">
+                                            <div class="progress-bar  bg-success" style="width: 100%" role="progressbar">
+                                            <h5 style="padding-top:5px;"><strong>100 %</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <div class="card-deck">
+                                <div class="card border-info" style="width: 50rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-uppercase text-white text-center bg-info">Request Headers</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                            <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-nowrap">Authorization</td>
+                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">User-Agent</td>
+                                                        <td class="text-wrap">PostmanRuntime/7.39.1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Accept</td>
+                                                        <td class="text-wrap">*/*</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Cache-Control</td>
+                                                        <td class="text-wrap">no-cache</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Postman-Token</td>
+                                                        <td class="text-wrap">770459fe-df55-47fe-bea9-f62d2961a943</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Host</td>
+                                                        <td class="text-wrap">localhost:5000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Accept-Encoding</td>
+                                                        <td class="text-wrap">gzip, deflate, br</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-nowrap">Connection</td>
+                                                        <td class="text-wrap">keep-alive</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-12 mb-3">
+                            <div class="card-deck">
+                            <div class="card border-info" style="width: 50rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Headers</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                        <thead class="thead-light text-center"><tr><th>Header Name</th><th>Header Value</th></tr></thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-nowrap">X-Powered-By</td>
+                                                    <td class="text-wrap">Express</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Access-Control-Allow-Origin</td>
+                                                    <td class="text-wrap">http://localhost:3000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Vary</td>
+                                                    <td class="text-wrap">Origin</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Access-Control-Allow-Credentials</td>
+                                                    <td class="text-wrap">true</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Date</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:40 GMT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Connection</td>
+                                                    <td class="text-wrap">keep-alive</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Keep-Alive</td>
+                                                    <td class="text-wrap">timeout&#x3D;5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-nowrap">Content-Length</td>
+                                                    <td class="text-wrap">0</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-12 mb-3">
+                            <div class="card-deck">
+                            <div class="card border-info" style="width: 50rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
+                                    <h5 class="alert alert-success text-uppercase text-center">No Response Body for this request</h5>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="card border-info">
+                                <div class="card-body">
+                                <h5 class="card-title text-uppercase text-white text-center bg-info">Test Information</h5>
+                                    <div class="table-responsive text-nowrap">
+                                        <table class="datatable table table-hover">
+                                        <thead><tr class="text-center"><th>Name</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr></thead>
+                                            <tbody>
+                                                <tr >
+                                                    <td >Delete User status 200</td>
+                                                    <td class="text-center bg-success">1</td>
+                                                    <td class="text-center ">0</td>
+                                                    <td class="text-center ">0</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="bg-light">
+                                                    <td><strong>Total</strong></td>
+                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">0</td>
+                                                    <td class="text-center">0</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div class="row d-none">
+                                    <div class="col-sm-12 mb-3">
+                                        <div class="card-deck">
+                                        <div class="card border-danger" style="width: 50rem;">
+                                            <div class="card-body">
+                                                <h5 class="card-title text-uppercase text-white text-center bg-danger">Test Failure</h5>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                    <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div id="folder-415b8c56-3b9f-410f-bfbd-882880e71849" class="card-deck iteration-0">
+            <div class="row iteration-0">
+                <div class="col-sm-12 mb-3 iteration-0">
+                <div class="card iteration-0">
+                    <div class="card-header  bg-success iteration-0">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-415b8c56-3b9f-410f-bfbd-882880e71849" aria-expanded="false" aria-controls="collapse" id="requests-415b8c56-3b9f-410f-bfbd-882880e71849" class="collapsed text-white z-block">
                     Iteration: 1 - Logout <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
                 </a>
                     </div>
-                    <div id="collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db" class="collapse" aria-labelledby="requests-241fb3c9-b416-4198-a0f7-a6c5a722e9db">
+                    <div id="collapse-415b8c56-3b9f-410f-bfbd-882880e71849" class="collapse" aria-labelledby="requests-415b8c56-3b9f-410f-bfbd-882880e71849">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 mb-3">
@@ -2265,7 +2057,7 @@ body.theme-light code {
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
                                     <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 201 - Created</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 36ms</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 13ms</span><br>
                                     <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 16B</span><br>
                                     <hr>
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
@@ -2293,7 +2085,7 @@ body.theme-light code {
                                                 <tbody>
                                                     <tr>
                                                         <td class="text-nowrap">Authorization</td>
-                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjZkNWRkODE5LTRhZWItNDY2NS1hN2JkLTBmMDI0MGIyODgzMiIsImp0aSI6ImRjMGY2OTcxLTY3MmItNDdlOC05N2EyLTU4ZmY1ZjdmY2QxZSIsImlhdCI6MTc3NDU0NzE0MSwiZXhwIjoxNzc0NTQ3MjAxfQ.An8gInsA1h-RE1xy39Mh8YHg_8bdvpZt_O1Xtlc3BBQ</td>
+                                                        <td class="text-wrap">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0ZXIwMSIsInNlc3Npb25JZCI6IjQxNzAyZDc4LTNiZjEtNDc4OS1iMTdjLWQ2NDZkYmM0MGM1NSIsImp0aSI6IjVkNzMyYzNmLTRmNDQtNGYyZS04NjRhLWZiNTMwOTMyYjMwOCIsImlhdCI6MTc3NDYzMTMxOSwiZXhwIjoxNzc0NjMxMzc5fQ.F3vicfqhP2Go9Gt0aL363x5uZfWJ8x48hci_-7Vyjag</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">User-Agent</td>
@@ -2309,7 +2101,7 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">a503c7d2-bb52-418c-97f6-224e761e7e24</td>
+                                                        <td class="text-wrap">d42f3a67-ea69-4232-8479-643dbc4743f8</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Host</td>
@@ -2375,7 +2167,7 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Thu, 26 Mar 2026 17:45:41 GMT</td>
+                                                    <td class="text-wrap">Fri, 27 Mar 2026 17:08:40 GMT</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Connection</td>
@@ -2400,10 +2192,10 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
                                         <div class="dyn-height">
-                                                <pre><code id="copyText-3d740b44-18d7-4227-9109-e5b4fee1702c" class="prettyPrint">{&quot;success&quot;:true}</code></pre>
+                                                <pre><code id="copyText-fda5f9cc-70fe-41d2-9323-7e9fb0a295aa" class="prettyPrint">{&quot;success&quot;:true}</code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-3d740b44-18d7-4227-9109-e5b4fee1702c">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-fda5f9cc-70fe-41d2-9323-7e9fb0a295aa">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -2550,65 +2342,65 @@ $('#openAllRequests').on('click', function(e) {
 let clickCount = $(this).data("clickCount") || 1
 switch (clickCount){
     case 1:
-            $('#requests-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('collapsed')
-            $('#collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('collapsed')
-            $('#requests-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('show')
-            $('#collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('show')
-            $('#requests-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('collapsed')
-            $('#collapse-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('collapsed')
-            $('#requests-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('show')
-            $('#collapse-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('show')
-            $('#requests-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('collapsed')
-            $('#collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('collapsed')
-            $('#requests-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('show')
-            $('#collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('show')
-            $('#requests-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('collapsed')
-            $('#collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('collapsed')
-            $('#requests-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('show')
-            $('#collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('show')
-            $('#requests-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('collapsed')
-            $('#collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('collapsed')
-            $('#requests-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('show')
-            $('#collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('show')
-            $('#requests-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('collapsed')
-            $('#collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('collapsed')
-            $('#requests-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('show')
-            $('#collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('show')
-            $('#requests-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('collapsed')
-            $('#collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('collapsed')
-            $('#requests-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('show')
-            $('#collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('show')
+            $('#requests-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('collapsed')
+            $('#collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('collapsed')
+            $('#requests-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('show')
+            $('#collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('show')
+            $('#requests-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('collapsed')
+            $('#collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('collapsed')
+            $('#requests-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('show')
+            $('#collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('show')
+            $('#requests-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('collapsed')
+            $('#collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('collapsed')
+            $('#requests-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('show')
+            $('#collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('show')
+            $('#requests-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('collapsed')
+            $('#collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('collapsed')
+            $('#requests-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('show')
+            $('#collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('show')
+            $('#requests-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('collapsed')
+            $('#collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('collapsed')
+            $('#requests-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('show')
+            $('#collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('show')
+            $('#requests-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('collapsed')
+            $('#collapse-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('collapsed')
+            $('#requests-e8a70e77-5631-41c6-aca5-064bea947195').addClass('show')
+            $('#collapse-e8a70e77-5631-41c6-aca5-064bea947195').addClass('show')
+            $('#requests-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('collapsed')
+            $('#collapse-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('collapsed')
+            $('#requests-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('show')
+            $('#collapse-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('show')
         $('#openAllRequests').html("Collapse Requests");
         break;
     case 2:
-            $('#requests-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('collapsed')
-            $('#collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('collapsed')
-            $('#requests-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('show')
-            $('#collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('show')
-            $('#requests-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('collapsed')
-            $('#collapse-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('collapsed')
-            $('#requests-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('show')
-            $('#collapse-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('show')
-            $('#requests-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('collapsed')
-            $('#collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('collapsed')
-            $('#requests-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('show')
-            $('#collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('show')
-            $('#requests-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('collapsed')
-            $('#collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('collapsed')
-            $('#requests-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('show')
-            $('#collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('show')
-            $('#requests-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('collapsed')
-            $('#collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('collapsed')
-            $('#requests-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('show')
-            $('#collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('show')
-            $('#requests-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('collapsed')
-            $('#collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('collapsed')
-            $('#requests-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('show')
-            $('#collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('show')
-            $('#requests-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('collapsed')
-            $('#collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('collapsed')
-            $('#requests-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('show')
-            $('#collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('show')
+            $('#requests-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('collapsed')
+            $('#collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('collapsed')
+            $('#requests-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('show')
+            $('#collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('show')
+            $('#requests-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('collapsed')
+            $('#collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('collapsed')
+            $('#requests-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('show')
+            $('#collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('show')
+            $('#requests-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('collapsed')
+            $('#collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('collapsed')
+            $('#requests-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('show')
+            $('#collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('show')
+            $('#requests-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('collapsed')
+            $('#collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('collapsed')
+            $('#requests-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('show')
+            $('#collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('show')
+            $('#requests-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('collapsed')
+            $('#collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('collapsed')
+            $('#requests-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('show')
+            $('#collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('show')
+            $('#requests-e8a70e77-5631-41c6-aca5-064bea947195').addClass('collapsed')
+            $('#collapse-e8a70e77-5631-41c6-aca5-064bea947195').addClass('collapsed')
+            $('#requests-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('show')
+            $('#collapse-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('show')
+            $('#requests-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('collapsed')
+            $('#collapse-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('collapsed')
+            $('#requests-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('show')
+            $('#collapse-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('show')
         $('#openAllRequests').html("Expand Requests");
         break;
 }
@@ -2624,65 +2416,65 @@ $('#openAllSkipped').on('click', function(e) {
 let clickCount = $(this).data("clickCount") || 1
 switch (clickCount){
     case 1:
-            $('#skipped-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('collapsed')
-            $('#skipped-collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('collapsed')
-            $('#skipped-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('show')
-            $('#skipped-collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('show')
-            $('#skipped-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('collapsed')
-            $('#skipped-collapse-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('collapsed')
-            $('#skipped-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('show')
-            $('#skipped-collapse-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('show')
-            $('#skipped-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('collapsed')
-            $('#skipped-collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('collapsed')
-            $('#skipped-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('show')
-            $('#skipped-collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('show')
-            $('#skipped-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('collapsed')
-            $('#skipped-collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('collapsed')
-            $('#skipped-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('show')
-            $('#skipped-collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('show')
-            $('#skipped-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('collapsed')
-            $('#skipped-collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('collapsed')
-            $('#skipped-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('show')
-            $('#skipped-collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('show')
-            $('#skipped-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('collapsed')
-            $('#skipped-collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('collapsed')
-            $('#skipped-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('show')
-            $('#skipped-collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('show')
-            $('#skipped-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('collapsed')
-            $('#skipped-collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('collapsed')
-            $('#skipped-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('show')
-            $('#skipped-collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('show')
+            $('#skipped-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('collapsed')
+            $('#skipped-collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('collapsed')
+            $('#skipped-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('show')
+            $('#skipped-collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('show')
+            $('#skipped-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('collapsed')
+            $('#skipped-collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('collapsed')
+            $('#skipped-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('show')
+            $('#skipped-collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('show')
+            $('#skipped-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('collapsed')
+            $('#skipped-collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('collapsed')
+            $('#skipped-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('show')
+            $('#skipped-collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('show')
+            $('#skipped-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('collapsed')
+            $('#skipped-collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('collapsed')
+            $('#skipped-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('show')
+            $('#skipped-collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('show')
+            $('#skipped-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('collapsed')
+            $('#skipped-collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('collapsed')
+            $('#skipped-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('show')
+            $('#skipped-collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('show')
+            $('#skipped-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('collapsed')
+            $('#skipped-collapse-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('collapsed')
+            $('#skipped-e8a70e77-5631-41c6-aca5-064bea947195').addClass('show')
+            $('#skipped-collapse-e8a70e77-5631-41c6-aca5-064bea947195').addClass('show')
+            $('#skipped-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('collapsed')
+            $('#skipped-collapse-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('collapsed')
+            $('#skipped-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('show')
+            $('#skipped-collapse-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('show')
         $('#openAllSkipped').html("Collapse All Skipped Tests");
         break;
     case 2:
-            $('#skipped-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('collapsed')
-            $('#skipped-collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').addClass('collapsed')
-            $('#skipped-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('show')
-            $('#skipped-collapse-9ae7661b-7a9a-46b0-97ab-d2449c45823b').removeClass('show')
-            $('#skipped-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('collapsed')
-            $('#skipped-collapse-14e4964a-602f-485e-ab66-fb420682dbf4').addClass('collapsed')
-            $('#skipped-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('show')
-            $('#skipped-collapse-14e4964a-602f-485e-ab66-fb420682dbf4').removeClass('show')
-            $('#skipped-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('collapsed')
-            $('#skipped-collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').addClass('collapsed')
-            $('#skipped-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('show')
-            $('#skipped-collapse-a7c0d8f6-cf89-44e9-ac26-6f82e1242946').removeClass('show')
-            $('#skipped-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('collapsed')
-            $('#skipped-collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').addClass('collapsed')
-            $('#skipped-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('show')
-            $('#skipped-collapse-c077f9cd-3ef1-4623-ad4e-7f4286f9b611').removeClass('show')
-            $('#skipped-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('collapsed')
-            $('#skipped-collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').addClass('collapsed')
-            $('#skipped-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('show')
-            $('#skipped-collapse-5d7980c3-f9ab-4a50-8d9e-2691169e7906').removeClass('show')
-            $('#skipped-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('collapsed')
-            $('#skipped-collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').addClass('collapsed')
-            $('#skipped-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('show')
-            $('#skipped-collapse-4e5f3c15-c135-40c4-a6f3-7c94607f43e5').removeClass('show')
-            $('#skipped-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('collapsed')
-            $('#skipped-collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').addClass('collapsed')
-            $('#skipped-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('show')
-            $('#skipped-collapse-241fb3c9-b416-4198-a0f7-a6c5a722e9db').removeClass('show')
+            $('#skipped-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('collapsed')
+            $('#skipped-collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').addClass('collapsed')
+            $('#skipped-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('show')
+            $('#skipped-collapse-598329b6-5025-48ca-af8d-ef7a749d38c4').removeClass('show')
+            $('#skipped-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('collapsed')
+            $('#skipped-collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').addClass('collapsed')
+            $('#skipped-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('show')
+            $('#skipped-collapse-c2917cf1-68ff-4269-a57e-cadcd19c1208').removeClass('show')
+            $('#skipped-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('collapsed')
+            $('#skipped-collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').addClass('collapsed')
+            $('#skipped-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('show')
+            $('#skipped-collapse-d3bd36d0-e4a3-4607-aebc-859cb924f56a').removeClass('show')
+            $('#skipped-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('collapsed')
+            $('#skipped-collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').addClass('collapsed')
+            $('#skipped-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('show')
+            $('#skipped-collapse-fdbe1001-11ae-4ce6-aa50-bb4a40d8cfdc').removeClass('show')
+            $('#skipped-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('collapsed')
+            $('#skipped-collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').addClass('collapsed')
+            $('#skipped-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('show')
+            $('#skipped-collapse-21e7dd7a-6d81-48d8-b0b7-b2eae71a454d').removeClass('show')
+            $('#skipped-e8a70e77-5631-41c6-aca5-064bea947195').addClass('collapsed')
+            $('#skipped-collapse-e8a70e77-5631-41c6-aca5-064bea947195').addClass('collapsed')
+            $('#skipped-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('show')
+            $('#skipped-collapse-e8a70e77-5631-41c6-aca5-064bea947195').removeClass('show')
+            $('#skipped-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('collapsed')
+            $('#skipped-collapse-415b8c56-3b9f-410f-bfbd-882880e71849').addClass('collapsed')
+            $('#skipped-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('show')
+            $('#skipped-collapse-415b8c56-3b9f-410f-bfbd-882880e71849').removeClass('show')
         $('#openAllSkipped').html("Expand All Skipped Tests");
         break;
 }
@@ -2700,93 +2492,9 @@ let failedItemContent
 let failedItemHeading
 switch (clickCount){
     case 1:
-            failedItemHeading = $('#fails-45d863c3-620b-4651-bb42-4bb933716648');
-            failedItemContent = $("#fails-collapse-45d863c3-620b-4651-bb42-4bb933716648");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
-            failedItemHeading = $('#fails-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7');
-            failedItemContent = $("#fails-collapse-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
-            failedItemHeading = $('#fails-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d');
-            failedItemContent = $("#fails-collapse-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
-            failedItemHeading = $('#fails-cd3df4c0-89f4-481d-ba54-0b644da08422');
-            failedItemContent = $("#fails-collapse-cd3df4c0-89f4-481d-ba54-0b644da08422");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
-            failedItemHeading = $('#fails-d3218f66-63bf-4add-9c9e-56105be4f90f');
-            failedItemContent = $("#fails-collapse-d3218f66-63bf-4add-9c9e-56105be4f90f");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
-            failedItemHeading = $('#fails-0f052159-ae8f-4fd9-b563-62af92d6cb81');
-            failedItemContent = $("#fails-collapse-0f052159-ae8f-4fd9-b563-62af92d6cb81");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
-            failedItemHeading = $('#fails-4f65c8be-7e93-47f4-8082-acd762d6d09d');
-            failedItemContent = $("#fails-collapse-4f65c8be-7e93-47f4-8082-acd762d6d09d");
-            failedItemHeading.removeClass('collapsed')
-            failedItemContent.removeClass('collapsed')
-            failedItemHeading.addClass('show')
-            failedItemContent.addClass('show')
         $('#openAllFailed').html("Collapse All Failed Tests");
         break;
     case 2:
-            failedItemHeading = $('#fails-45d863c3-620b-4651-bb42-4bb933716648');
-            failedItemContent = $("#fails-collapse-45d863c3-620b-4651-bb42-4bb933716648");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
-            failedItemHeading = $('#fails-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7');
-            failedItemContent = $("#fails-collapse-4f7f54bd-48f7-49f9-bc38-5250e8a9b3b7");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
-            failedItemHeading = $('#fails-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d');
-            failedItemContent = $("#fails-collapse-c8d73ef7-6486-4ac9-a7e3-87e8a8bc684d");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
-            failedItemHeading = $('#fails-cd3df4c0-89f4-481d-ba54-0b644da08422');
-            failedItemContent = $("#fails-collapse-cd3df4c0-89f4-481d-ba54-0b644da08422");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
-            failedItemHeading = $('#fails-d3218f66-63bf-4add-9c9e-56105be4f90f');
-            failedItemContent = $("#fails-collapse-d3218f66-63bf-4add-9c9e-56105be4f90f");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
-            failedItemHeading = $('#fails-0f052159-ae8f-4fd9-b563-62af92d6cb81');
-            failedItemContent = $("#fails-collapse-0f052159-ae8f-4fd9-b563-62af92d6cb81");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
-            failedItemHeading = $('#fails-4f65c8be-7e93-47f4-8082-acd762d6d09d');
-            failedItemContent = $("#fails-collapse-4f65c8be-7e93-47f4-8082-acd762d6d09d");
-            failedItemHeading.removeClass('show')
-            failedItemContent.removeClass('show')
-            failedItemHeading.addClass('collapsed')
-            failedItemContent.addClass('collapsed')
         $('#openAllFailed').html("Expand All Failed Tests");
         break;
 }
@@ -2911,8 +2619,6 @@ function scrollFunction() {
     document.getElementById("openAllRequests").style.display = "none";
 
 
-    document.getElementById("showOnlyFailures").style.display = "none";
-    document.getElementById("openAllFailed").style.display = "none";
   } else {
     document.getElementById("topOfRequestsScreen").style.display = "none";
     document.getElementById("topOfFailuresScreen").style.display = "none";
@@ -2920,8 +2626,6 @@ function scrollFunction() {
     document.getElementById("openAll").style.display = "block";
     document.getElementById("openAllRequests").style.display = "block";
 
-    document.getElementById("showOnlyFailures").style.display = "block";
-    document.getElementById("openAllFailed").style.display = "block";
   }
 }
 
@@ -2984,11 +2688,6 @@ window.onload = function () {
   document.getElementById('iteration-0').click();
   document.getElementById('iterationSelected').innerHTML = `Iteration ${document.getElementById('iteration-0').innerHTML} selected`
 
-    $("#iteration-0").removeClass('itPassed').addClass('itFailed')
-    $("#iteration-0").removeClass('itPassed').addClass('itFailed')
-    $("#iteration-0").removeClass('itPassed').addClass('itFailed')
-    $("#iteration-0").removeClass('itPassed').addClass('itFailed')
-    $("#iteration-0").removeClass('itPassed').addClass('itFailed')
 }
 </script>
 
