@@ -1,10 +1,10 @@
 {
   "_": {
-    "postman_id": "c8c9d51c-1a8e-4a02-83d2-b996e8f6292d"
+    "postman_id": "a5aa1576-1c32-4030-8431-0d2f0aad1f9f"
   },
   "item": [
     {
-      "id": "fd894558-38f5-47e8-bffe-34e4bcbc6de5",
+      "id": "1716e8ab-f933-41c5-be2b-15bbb3269f4c",
       "name": "NestJs",
       "description": {
         "content": "",
@@ -14,25 +14,25 @@
       "event": []
     },
     {
-      "id": "d19f48ef-f071-40e9-96d9-91a1e23bd4fd",
-      "name": "Users",
+      "id": "5e91b495-413d-408a-be56-df8abd7b5217",
+      "name": "SystemParameters",
       "description": {
         "content": "",
         "type": "text/plain"
       },
       "item": [
         {
-          "id": "f6ffb347-2ffc-42ed-a378-31799f1246d2",
-          "name": "Users Controller create",
+          "id": "090d976b-93ab-4ba3-a2c8-2e2257b5358b",
+          "name": "System Parameters Controller create",
           "request": {
-            "name": "Users Controller create",
+            "name": "System Parameters Controller create",
             "description": {
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "api",
-                "users"
+                "system-parameters"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -53,99 +53,14 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"et consequat ex\",\n  \"email\": \"CxRXnPhH0W@AFHNtCDzCmmekpOILkUs.uyfc\",\n  \"passwordHash\": \"sit incididunt minim laborum\",\n  \"groupId\": -37446593.049828805,\n  \"status\": \"sunt labore commodo\"\n}",
+              "raw": "{\n  \"paramKey\": \"dolor Excepteur quis\",\n  \"paramValue\": \"magna esse\",\n  \"valueType\": \"in sit do L\",\n  \"description\": \"dolor deserunt\"\n}",
               "options": {
                 "raw": {
                   "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
-          },
-          "response": [
-            {
-              "_": {
-                "postman_previewlanguage": "json"
-              },
-              "id": "06fe21c8-1279-4f79-afbf-5f8c47c0f7a8",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "users"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"username\": \"et consequat ex\",\n  \"email\": \"CxRXnPhH0W@AFHNtCDzCmmekpOILkUs.uyfc\",\n  \"passwordHash\": \"sit incididunt minim laborum\",\n  \"groupId\": -37446593.049828805,\n  \"status\": \"sunt labore commodo\"\n}",
-                  "options": {
-                    "raw": {
-                      "headerFamily": "json",
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"userId\": \"dolore irure eu in\",\n  \"username\": \"qui proident anim ea eiusmod\",\n  \"email\": \"cillum su\",\n  \"passwordHash\": \"of\",\n  \"groupId\": 11718159.949770123,\n  \"isActive\": false,\n  \"status\": \"amet dolor fugiat ex\",\n  \"isLoggedIn\": false,\n  \"sessionKey\": \"in labore\",\n  \"loginAttempts\": 38631859.52138394,\n  \"lockUntil\": \"1993-11-25T02:05:45.627Z\",\n  \"lastLogin\": \"2022-08-18T10:33:18.353Z\",\n  \"createdAt\": \"1964-01-03T17:32:51.363Z\",\n  \"createdBy\": \"voluptate d\",\n  \"updatedAt\": \"2024-09-21T08:38:31.847Z\",\n  \"updatedBy\": \"eu esse\"\n}",
-              "cookie": []
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "732bd657-d584-454e-a6a9-3bec8d3c63f4",
-          "name": "Users Controller find All",
-          "request": {
-            "name": "Users Controller find All",
-            "description": {
-              "type": "text/plain"
             },
-            "url": {
-              "path": [
-                "api",
-                "users"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "body": {},
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -162,12 +77,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "6bb03526-7c1f-4503-86e3-84aedcb3e10a",
+              "id": "5fc1ef0c-19cc-4b32-b9f1-88ba4ffe1e16",
               "originalRequest": {
                 "url": {
                   "path": [
                     "api",
-                    "users"
+                    "system-parameters"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -176,6 +91,10 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
@@ -189,18 +108,27 @@
                     "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paramKey\": \"dolor Excepteur quis\",\n  \"paramValue\": \"magna esse\",\n  \"valueType\": \"in sit do L\",\n  \"description\": \"dolor deserunt\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
               },
-              "status": "OK",
-              "code": 200,
+              "status": "Created",
+              "code": 201,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"userId\": \"ad\",\n    \"username\": \"consectetur in magna e\",\n    \"email\": \"occaecat eiusmod\",\n    \"groupId\": -130256.2698533386,\n    \"isActive\": false,\n    \"status\": \"irure nisi in\",\n    \"isLoggedIn\": true,\n    \"lastLogin\": \"2007-04-30T13:39:31.454Z\",\n    \"createdAt\": \"2013-03-23T15:37:53.891Z\",\n    \"createdBy\": \"officia nulla\",\n    \"updatedAt\": \"2015-06-01T00:58:10.104Z\",\n    \"updatedBy\": \"sed dolor velit irure exercitation\"\n  },\n  {\n    \"userId\": \"cillum\",\n    \"username\": \"consectetur cillum mo\",\n    \"email\": \"dolore labore aute\",\n    \"groupId\": 69604852.68407711,\n    \"isActive\": true,\n    \"status\": \"amet\",\n    \"isLoggedIn\": true,\n    \"lastLogin\": \"1960-02-23T10:45:38.935Z\",\n    \"createdAt\": \"1974-11-12T03:11:54.783Z\",\n    \"createdBy\": \"est eiusmod\",\n    \"updatedAt\": \"1948-10-18T18:49:25.569Z\",\n    \"updatedBy\": \"ad id sunt commodo\"\n  }\n]",
+              "body": "{\n  \"paramId\": 15662971.010380343,\n  \"paramKey\": \"ut dolore ex occaecat\",\n  \"paramValue\": \"consectetur\",\n  \"valueType\": \"laborum eiusmod officia\",\n  \"description\": \"quis\",\n  \"updatedAt\": \"1988-11-16T18:32:57.990Z\"\n}",
               "cookie": []
             }
           ],
@@ -210,35 +138,23 @@
           }
         },
         {
-          "id": "d2937634-3fec-4e50-a94c-b01e31a3f329",
-          "name": "Users Controller find One",
+          "id": "a7431058-afc2-403f-a2de-4380ed0a7de0",
+          "name": "System Parameters Controller find All",
           "request": {
-            "name": "Users Controller find One",
+            "name": "System Parameters Controller find All",
             "description": {
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "api",
-                "users",
-                ":id"
+                "system-parameters"
               ],
               "host": [
                 "{{baseUrl}}"
               ],
               "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "description": {
-                    "content": "(Required) ",
-                    "type": "text/plain"
-                  },
-                  "type": "any",
-                  "value": "enim ullamco anim irure",
-                  "key": "id"
-                }
-              ]
+              "variable": []
             },
             "header": [
               {
@@ -254,13 +170,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "e2e43bc9-324e-4499-b079-c0ec1c2ecdb7",
+              "id": "107b9cac-4a86-475e-9a17-045e5cf7bb4f",
               "originalRequest": {
                 "url": {
                   "path": [
                     "api",
-                    "users",
-                    ":id"
+                    "system-parameters"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -285,7 +200,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"userId\": \"cupidatat anim nulla enim\",\n  \"username\": \"id\",\n  \"email\": \"consectetur minim\",\n  \"groupId\": -92007416.15460207,\n  \"isActive\": false,\n  \"status\": \"veniam exercitation dese\",\n  \"isLoggedIn\": false,\n  \"lastLogin\": \"2020-11-21T17:01:24.064Z\",\n  \"createdAt\": \"1985-03-04T03:40:29.168Z\",\n  \"createdBy\": \"exercitation\",\n  \"updatedAt\": \"1997-12-03T22:26:45.949Z\",\n  \"updatedBy\": \"adipisicing aute voluptate incididunt\"\n}",
+              "body": "[\n  {\n    \"paramId\": -6020036.327964291,\n    \"paramKey\": \"do non\",\n    \"paramValue\": \"Ut sit Lorem\",\n    \"valueType\": \"of\",\n    \"description\": \"consectetur et magna Duis\",\n    \"updatedAt\": \"1979-11-04T07:08:07.203Z\"\n  },\n  {\n    \"paramId\": -31287376.760111615,\n    \"paramKey\": \"ex incididunt nisi laborum Lorem\",\n    \"paramValue\": \"laboris cupidatat dolore dolor\",\n    \"valueType\": \"ullamco do\",\n    \"description\": \"anim exercitation\",\n    \"updatedAt\": \"1955-11-23T13:57:24.000Z\"\n  }\n]",
               "cookie": []
             }
           ],
@@ -295,17 +210,86 @@
           }
         },
         {
-          "id": "e1dff10c-106e-492f-bc29-e4854328d77b",
-          "name": "Users Controller update",
+          "id": "63bbfd7c-b39f-4988-b594-3b33badbefd7",
+          "name": "System Parameters Controller get Value",
           "request": {
-            "name": "Users Controller update",
+            "name": "System Parameters Controller get Value",
             "description": {
               "type": "text/plain"
             },
             "url": {
               "path": [
                 "api",
-                "users",
+                "system-parameters",
+                ":key",
+                "value"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "dolore",
+                  "key": "key"
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {}
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "text"
+              },
+              "id": "e578653d-acb0-47a6-a3f7-f1593395efc2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "system-parameters",
+                    ":key",
+                    "value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7390630-85fe-460c-8d87-efbdac0d214c",
+          "name": "System Parameters Controller update",
+          "request": {
+            "name": "System Parameters Controller update",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "system-parameters",
                 ":id"
               ],
               "host": [
@@ -320,7 +304,7 @@
                     "type": "text/plain"
                   },
                   "type": "any",
-                  "value": "enim ullamco anim irure",
+                  "value": "12021871.1904172",
                   "key": "id"
                 }
               ]
@@ -338,13 +322,23 @@
             "method": "PATCH",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"isActive\": true,\n  \"isLoggedIn\": true\n}",
+              "raw": "{}",
               "options": {
                 "raw": {
                   "headerFamily": "json",
                   "language": "json"
                 }
               }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
             }
           },
           "response": [
@@ -352,12 +346,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "22e8522e-be33-4a6a-84e4-4d01a2cc8f49",
+              "id": "efbd85f3-0ee9-4df2-aba9-9878d5967668",
               "originalRequest": {
                 "url": {
                   "path": [
                     "api",
-                    "users",
+                    "system-parameters",
                     ":id"
                   ],
                   "host": [
@@ -374,12 +368,20 @@
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
                 "method": "PATCH",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"isActive\": true,\n  \"isLoggedIn\": true\n}",
+                  "raw": "{}",
                   "options": {
                     "raw": {
                       "headerFamily": "json",
@@ -396,94 +398,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"userId\": \"dolore irure eu in\",\n  \"username\": \"qui proident anim ea eiusmod\",\n  \"email\": \"cillum su\",\n  \"passwordHash\": \"of\",\n  \"groupId\": 11718159.949770123,\n  \"isActive\": false,\n  \"status\": \"amet dolor fugiat ex\",\n  \"isLoggedIn\": false,\n  \"sessionKey\": \"in labore\",\n  \"loginAttempts\": 38631859.52138394,\n  \"lockUntil\": \"1993-11-25T02:05:45.627Z\",\n  \"lastLogin\": \"2022-08-18T10:33:18.353Z\",\n  \"createdAt\": \"1964-01-03T17:32:51.363Z\",\n  \"createdBy\": \"voluptate d\",\n  \"updatedAt\": \"2024-09-21T08:38:31.847Z\",\n  \"updatedBy\": \"eu esse\"\n}",
-              "cookie": []
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b3d0b634-039c-4ae8-8d99-3bdbd1371305",
-          "name": "Users Controller remove",
-          "request": {
-            "name": "Users Controller remove",
-            "description": {
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "users",
-                ":id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "description": {
-                    "content": "(Required) ",
-                    "type": "text/plain"
-                  },
-                  "type": "any",
-                  "value": "enim ullamco anim irure",
-                  "key": "id"
-                }
-              ]
-            },
-            "method": "DELETE",
-            "body": {},
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "type": "any",
-                  "value": "{{bearerToken}}",
-                  "key": "token"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "_": {
-                "postman_previewlanguage": "text"
-              },
-              "id": "28476495-dc91-4c81-86b2-4b119d8e5500",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "users",
-                    ":id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [],
+              "body": "{\n  \"paramId\": 15662971.010380343,\n  \"paramKey\": \"ut dolore ex occaecat\",\n  \"paramValue\": \"consectetur\",\n  \"valueType\": \"laborum eiusmod officia\",\n  \"description\": \"quis\",\n  \"updatedAt\": \"1988-11-16T18:32:57.990Z\"\n}",
               "cookie": []
             }
           ],
@@ -496,7 +411,7 @@
       "event": []
     },
     {
-      "id": "e03ad7a6-7581-4425-a256-6cee07c00e72",
+      "id": "788e4c9e-6426-48d7-b6f5-f69623edb4df",
       "name": "UserGroups",
       "description": {
         "content": "",
@@ -504,7 +419,7 @@
       },
       "item": [
         {
-          "id": "d5efea5d-571b-4022-83e7-9762861c7d45",
+          "id": "65e91717-e7b6-4f0e-ba54-f857546634be",
           "name": "User Groups Controller create",
           "request": {
             "name": "User Groups Controller create",
@@ -535,7 +450,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"groupName\": \"ut in\",\n  \"description\": \"offici\",\n  \"permissionIds\": [\n    -32052050.66006571,\n    -33901772.40045862\n  ]\n}",
+              "raw": "{\n  \"groupName\": \"anim dolor\",\n  \"description\": \"enim Duis reprehenderit in\",\n  \"permissionIds\": [\n    -88713656.28795065,\n    -79593960.22061251\n  ]\n}",
               "options": {
                 "raw": {
                   "headerFamily": "json",
@@ -549,7 +464,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "324ce7dd-8542-400c-bde8-5caaefdcb75a",
+              "id": "5d99c708-1807-4c76-be34-b555bb4a556b",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -575,7 +490,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"groupName\": \"ut in\",\n  \"description\": \"offici\",\n  \"permissionIds\": [\n    -32052050.66006571,\n    -33901772.40045862\n  ]\n}",
+                  "raw": "{\n  \"groupName\": \"anim dolor\",\n  \"description\": \"enim Duis reprehenderit in\",\n  \"permissionIds\": [\n    -88713656.28795065,\n    -79593960.22061251\n  ]\n}",
                   "options": {
                     "raw": {
                       "headerFamily": "json",
@@ -592,7 +507,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"groupId\": -3897828.753871739,\n  \"groupName\": \"velit amet commodo\",\n  \"description\": \"in in dolor id est\",\n  \"createdAt\": \"2008-12-04T05:49:45.245Z\"\n}",
+              "body": "{\n  \"groupId\": -19169698.182003707,\n  \"groupName\": \"deserun\",\n  \"description\": \"incididunt exercitation consequat ut\",\n  \"createdAt\": \"2013-04-16T11:45:02.695Z\"\n}",
               "cookie": []
             }
           ],
@@ -602,7 +517,7 @@
           }
         },
         {
-          "id": "e0e2e947-3dfb-4b71-9867-64be7359ff72",
+          "id": "d0ad270e-f70f-412a-aa78-4e1b418a02ff",
           "name": "User Groups Controller find All",
           "request": {
             "name": "User Groups Controller find All",
@@ -634,7 +549,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "6f201218-dc8b-4cff-b439-65cdbd5ea461",
+              "id": "8c5ccc6e-2b10-476b-ab09-e5e4b76ea451",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -664,7 +579,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"groupId\": -90721839.29818402,\n    \"groupName\": \"et commodo\",\n    \"description\": \"amet sunt velit elit in\",\n    \"createdAt\": \"1985-03-02T01:15:06.541Z\",\n    \"permissions\": [\n      {\n        \"permissionKey\": \"nostrud ut cillum anim\",\n        \"permissionName\": \"commodo\"\n      },\n      {\n        \"permissionKey\": \"in sed\",\n        \"permissionName\": \"velit nostrud adipisicing\"\n      }\n    ]\n  },\n  {\n    \"groupId\": -78748619.90030912,\n    \"groupName\": \"in esse\",\n    \"description\": \"ullamco voluptate aliquip laboris\",\n    \"createdAt\": \"2000-03-08T02:22:59.840Z\",\n    \"permissions\": [\n      {\n        \"permissionKey\": \"cillum\",\n        \"permissionName\": \"sin\"\n      },\n      {\n        \"permissionKey\": \"fugiat qui\",\n        \"permissionName\": \"occaecat mollit\"\n      }\n    ]\n  }\n]",
+              "body": "[\n  {\n    \"groupId\": 87378163.46095589,\n    \"groupName\": \"et nulla occaecat commodo\",\n    \"description\": \"deserunt officia ex\",\n    \"createdAt\": \"1946-12-28T17:43:15.215Z\",\n    \"permissions\": [\n      {\n        \"permissionKey\": \"est irure ea occaecat incididun\",\n        \"permissionName\": \"dolor fugiat sit eiusmod\"\n      },\n      {\n        \"permissionKey\": \"consectetur velit incididunt nostrud\",\n        \"permissionName\": \"ipsum\"\n      }\n    ]\n  },\n  {\n    \"groupId\": 4638710.705327392,\n    \"groupName\": \"dolore sunt\",\n    \"description\": \"labore proident\",\n    \"createdAt\": \"1994-05-23T03:07:48.586Z\",\n    \"permissions\": [\n      {\n        \"permissionKey\": \"sed dolor consectetur\",\n        \"permissionName\": \"nisi in Ut sit eiusmod\"\n      },\n      {\n        \"permissionKey\": \"voluptate exercitation cupidatat\",\n        \"permissionName\": \"anim irure\"\n      }\n    ]\n  }\n]",
               "cookie": []
             }
           ],
@@ -674,7 +589,7 @@
           }
         },
         {
-          "id": "ec0b3d70-8aca-4f69-a415-df12154e58e4",
+          "id": "32198774-a9d8-49b2-a9f5-f4e9aaf65061",
           "name": "User Groups Controller find One",
           "request": {
             "name": "User Groups Controller find One",
@@ -699,7 +614,7 @@
                     "type": "text/plain"
                   },
                   "type": "any",
-                  "value": "58781951.851045996",
+                  "value": "12021871.1904172",
                   "key": "id"
                 }
               ]
@@ -718,7 +633,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "8060c145-396f-46ec-bcd0-a07f207480d1",
+              "id": "e46fc0e1-8e9b-4b7a-98d6-dd479220385c",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -749,7 +664,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"groupId\": 7878036.003566086,\n  \"groupName\": \"eu\",\n  \"description\": \"anim adipisicing cup\",\n  \"createdAt\": \"1952-06-11T04:15:53.430Z\",\n  \"permissions\": [\n    {\n      \"permissionKey\": \"Lorem\",\n      \"permissionName\": \"officia velit\"\n    },\n    {\n      \"permissionKey\": \"sint\",\n      \"permissionName\": \"quis laboris\"\n    }\n  ]\n}",
+              "body": "{\n  \"groupId\": 44682542.80042955,\n  \"groupName\": \"aliquip anim\",\n  \"description\": \"in\",\n  \"createdAt\": \"1988-03-17T23:41:15.813Z\",\n  \"permissions\": [\n    {\n      \"permissionKey\": \"officia veniam \",\n      \"permissionName\": \"adipisicing incididunt laborum\"\n    },\n    {\n      \"permissionKey\": \"Lorem eiusmod in Ut\",\n      \"permissionName\": \"amet mini\"\n    }\n  ]\n}",
               "cookie": []
             }
           ],
@@ -759,7 +674,7 @@
           }
         },
         {
-          "id": "4a8814aa-57bb-495d-a95d-fb106bd6396f",
+          "id": "0121f738-986b-45bd-9afb-d9b460620865",
           "name": "User Groups Controller update",
           "request": {
             "name": "User Groups Controller update",
@@ -784,7 +699,7 @@
                     "type": "text/plain"
                   },
                   "type": "any",
-                  "value": "58781951.851045996",
+                  "value": "12021871.1904172",
                   "key": "id"
                 }
               ]
@@ -816,7 +731,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "9024c1af-5131-4c2f-aa7a-8aeb9a799c4c",
+              "id": "1399cbc9-e50c-4a97-a0a9-70ed6bf81ba8",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -860,7 +775,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"groupId\": -3897828.753871739,\n  \"groupName\": \"velit amet commodo\",\n  \"description\": \"in in dolor id est\",\n  \"createdAt\": \"2008-12-04T05:49:45.245Z\"\n}",
+              "body": "{\n  \"groupId\": -19169698.182003707,\n  \"groupName\": \"deserun\",\n  \"description\": \"incididunt exercitation consequat ut\",\n  \"createdAt\": \"2013-04-16T11:45:02.695Z\"\n}",
               "cookie": []
             }
           ],
@@ -870,7 +785,7 @@
           }
         },
         {
-          "id": "dcb3bb8c-d7b2-43be-be9c-a4ae49fcdede",
+          "id": "f2515e9c-9ecb-4989-bc80-172b852584bc",
           "name": "User Groups Controller remove",
           "request": {
             "name": "User Groups Controller remove",
@@ -895,7 +810,7 @@
                     "type": "text/plain"
                   },
                   "type": "any",
-                  "value": "58781951.851045996",
+                  "value": "12021871.1904172",
                   "key": "id"
                 }
               ]
@@ -914,7 +829,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "03fbb6ae-4ada-4c03-a66c-4d1675530222",
+              "id": "56a1ebdb-a02f-4943-a5e2-e07da0c0f1e5",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -945,7 +860,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"groupId\": -3897828.753871739,\n  \"groupName\": \"velit amet commodo\",\n  \"description\": \"in in dolor id est\",\n  \"createdAt\": \"2008-12-04T05:49:45.245Z\"\n}",
+              "body": "{\n  \"groupId\": -19169698.182003707,\n  \"groupName\": \"deserun\",\n  \"description\": \"incididunt exercitation consequat ut\",\n  \"createdAt\": \"2013-04-16T11:45:02.695Z\"\n}",
               "cookie": []
             }
           ],
@@ -958,7 +873,543 @@
       "event": []
     },
     {
-      "id": "62fde1d6-7ebf-49e2-9b3a-8eb080ce035d",
+      "id": "d6a859ad-25b0-4c2b-a345-e7ef4b62340e",
+      "name": "Users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82efabf0-4e6f-4def-bb1e-2ab996420c35",
+          "name": "Users Controller create",
+          "request": {
+            "name": "Users Controller create",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"temp99\",\n  \"email\": \"temp99@example.com\",\n  \"passwordHash\": \"SecretPassword123\",\n  \"status\": \"ACTIVE\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "75f72037-f56d-44db-af24-202d6530354d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"temp99\",\n  \"email\": \"temp99@example.com\",\n  \"passwordHash\": \"SecretPassword123\",\n  \"status\": \"ACTIVE\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": \"deserunt mollit \",\n  \"username\": \"dolore ut eu\",\n  \"email\": \"aliqua ex nulla\",\n  \"passwordHash\": \"minim\",\n  \"isActive\": true,\n  \"status\": \"in nostrud occaecat\",\n  \"isLoggedIn\": true,\n  \"sessionKey\": \"deserunt magna eiusmod sint\",\n  \"loginAttempts\": 37885887.88626388,\n  \"lockUntil\": \"2009-03-14T14:47:50.257Z\",\n  \"lastLogin\": \"2003-01-21T19:13:13.007Z\",\n  \"createdAt\": \"1972-09-29T10:26:46.351Z\",\n  \"createdBy\": \"ea elit labo\",\n  \"updatedAt\": \"1983-02-27T08:05:59.268Z\",\n  \"updatedBy\": \"nostrud sint sit proident veniam\"\n}",
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f61dfb5a-b6e5-4b26-b3a0-ddd7cf16abd5",
+          "name": "Users Controller find All",
+          "request": {
+            "name": "Users Controller find All",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "052bc8cd-33e3-45a1-92c4-aff5c2d99cc4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"userId\": \"sunt Ut in ut\",\n    \"username\": \"ex occaecat adipisicing\",\n    \"email\": \"velit est commodo anim quis\",\n    \"isActive\": false,\n    \"status\": \"amet tempor ea incididunt\",\n    \"isLoggedIn\": true,\n    \"lastLogin\": \"1999-06-01T07:55:06.195Z\",\n    \"createdAt\": \"2003-09-30T08:02:06.104Z\",\n    \"createdBy\": \"velit dolore exercitation pariatur in\",\n    \"updatedAt\": \"2023-05-07T03:58:52.268Z\",\n    \"updatedBy\": \"laborum ex\",\n    \"groups\": [\n      \"amet\",\n      \"veniam f\"\n    ]\n  },\n  {\n    \"userId\": \"consectetur\",\n    \"username\": \"est\",\n    \"email\": \"quis et ea\",\n    \"isActive\": true,\n    \"status\": \"consequat minim reprehenderit\",\n    \"isLoggedIn\": true,\n    \"lastLogin\": \"2017-07-14T23:08:24.363Z\",\n    \"createdAt\": \"2014-03-17T20:54:27.624Z\",\n    \"createdBy\": \"pariatur non dolore aliqua do\",\n    \"updatedAt\": \"1960-01-01T14:13:59.638Z\",\n    \"updatedBy\": \"amet veniam fugiat nisi aute\",\n    \"groups\": [\n      \"mollit dolore enim ullamco\",\n      \"aliqua non aute\"\n    ]\n  }\n]",
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68bfc91d-2d63-4e77-8897-8c3a6fa459b0",
+          "name": "Users Controller find One",
+          "request": {
+            "name": "Users Controller find One",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "dolore",
+                  "key": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "417e62a3-2796-41b4-8580-7caacc3472fc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": \"Ut eu ipsum et\",\n  \"username\": \"dolor\",\n  \"email\": \"aliquip in occaecat Lorem\",\n  \"isActive\": false,\n  \"status\": \"voluptate reprehenderit irure\",\n  \"isLoggedIn\": false,\n  \"lastLogin\": \"2000-01-03T09:07:19.960Z\",\n  \"createdAt\": \"2016-05-12T23:22:35.523Z\",\n  \"createdBy\": \"reprehenderit consequat\",\n  \"updatedAt\": \"2003-11-14T04:51:36.571Z\",\n  \"updatedBy\": \"velit ad sint nulla\",\n  \"groups\": [\n    \"est\",\n    \"labore consectetur dolor officia\"\n  ]\n}",
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfaade2e-a5e3-4ab0-951a-8f5c386890af",
+          "name": "Users Controller update",
+          "request": {
+            "name": "Users Controller update",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "dolore",
+                  "key": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": true,\n  \"isLoggedIn\": false\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "1c9efa04-3180-4f50-ba6c-099ecc8d791a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActive\": true,\n  \"isLoggedIn\": false\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": \"deserunt mollit \",\n  \"username\": \"dolore ut eu\",\n  \"email\": \"aliqua ex nulla\",\n  \"passwordHash\": \"minim\",\n  \"isActive\": true,\n  \"status\": \"in nostrud occaecat\",\n  \"isLoggedIn\": true,\n  \"sessionKey\": \"deserunt magna eiusmod sint\",\n  \"loginAttempts\": 37885887.88626388,\n  \"lockUntil\": \"2009-03-14T14:47:50.257Z\",\n  \"lastLogin\": \"2003-01-21T19:13:13.007Z\",\n  \"createdAt\": \"1972-09-29T10:26:46.351Z\",\n  \"createdBy\": \"ea elit labo\",\n  \"updatedAt\": \"1983-02-27T08:05:59.268Z\",\n  \"updatedBy\": \"nostrud sint sit proident veniam\"\n}",
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77db85c6-bd07-455c-85a8-6ab93cd538c1",
+          "name": "Users Controller remove",
+          "request": {
+            "name": "Users Controller remove",
+            "description": {
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "dolore",
+                  "key": "id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "body": {},
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "text"
+              },
+              "id": "a89ec79b-c94a-447d-8fdf-d43babe7e7e6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a780d0e5-3bce-4ee0-af7e-9e0a284b85f9",
       "name": "Authentication",
       "description": {
         "content": "",
@@ -966,7 +1417,7 @@
       },
       "item": [
         {
-          "id": "18a5cc44-e7fc-4cfb-b90a-526b7f21f614",
+          "id": "65c4e93a-d25d-451f-83b7-baa0d14c9611",
           "name": "Auth Controller login",
           "request": {
             "name": "Auth Controller login",
@@ -1008,7 +1459,7 @@
               "_": {
                 "postman_previewlanguage": "text"
               },
-              "id": "b05fffd4-cb5f-4a1c-a6a1-7a01572ff53f",
+              "id": "39001394-5639-47d2-823f-f1adfec59bd3",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -1052,7 +1503,7 @@
           }
         },
         {
-          "id": "b7b2427c-7759-459b-9a09-556f0ac60a4f",
+          "id": "c1c3263f-2ae8-444e-9314-ae1bf2af9042",
           "name": "Auth Controller refresh",
           "request": {
             "name": "Auth Controller refresh",
@@ -1080,13 +1531,23 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"refreshToken\": \"in do fugiat\"\n}",
+              "raw": "{\n  \"refreshToken\": \"dolore non\"\n}",
               "options": {
                 "raw": {
                   "headerFamily": "json",
                   "language": "json"
                 }
               }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "any",
+                  "value": "{{bearerToken}}",
+                  "key": "token"
+                }
+              ]
             }
           },
           "response": [
@@ -1094,7 +1555,7 @@
               "_": {
                 "postman_previewlanguage": "text"
               },
-              "id": "cc0af692-eb46-4e7b-a0dd-1882a08e374a",
+              "id": "e7ea6c58-38a9-40c6-8a98-bf845033d232",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -1112,12 +1573,20 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"refreshToken\": \"in do fugiat\"\n}",
+                  "raw": "{\n  \"refreshToken\": \"dolore non\"\n}",
                   "options": {
                     "raw": {
                       "headerFamily": "json",
@@ -1138,7 +1607,7 @@
           }
         },
         {
-          "id": "3516eea9-d838-42df-a34e-d4f1904064ad",
+          "id": "8e7ff91a-ce54-4817-851d-9f27884ccb43",
           "name": "Auth Controller logout",
           "request": {
             "name": "Auth Controller logout",
@@ -1175,7 +1644,7 @@
               "_": {
                 "postman_previewlanguage": "text"
               },
-              "id": "9e371e40-76bb-42b9-8604-ef9034025bf1",
+              "id": "e90a233e-93f0-4d6e-af19-d1c65a5bffd2",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -1214,7 +1683,7 @@
           }
         },
         {
-          "id": "987d359a-a7e1-457b-95ad-27844bbacd46",
+          "id": "5ad0858b-a697-4de7-85fe-aeeb6b97cc35",
           "name": "Auth Controller logout All",
           "request": {
             "name": "Auth Controller logout All",
@@ -1251,7 +1720,7 @@
               "_": {
                 "postman_previewlanguage": "text"
               },
-              "id": "aeb0b437-2173-4165-aa53-16f2b64331d7",
+              "id": "3b770add-8bf8-47d7-9e42-d4b7a38013bf",
               "originalRequest": {
                 "url": {
                   "path": [
@@ -1302,7 +1771,7 @@
     }
   ],
   "info": {
-    "_postman_id": "c8c9d51c-1a8e-4a02-83d2-b996e8f6292d",
+    "_postman_id": "a5aa1576-1c32-4030-8431-0d2f0aad1f9f",
     "name": "Market Signal API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {

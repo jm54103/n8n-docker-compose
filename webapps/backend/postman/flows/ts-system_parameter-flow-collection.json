@@ -1,0 +1,164 @@
+{
+  "info": {
+    "name": "Market Signal API - Fix Null Flow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "pm.test('Login Success', () => pm.response.to.have.status(201));",
+              "pm.environment.set('accessToken', jsonData.accessToken);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"username\":\"tester01\",\"password\":\"SecretPassword123\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "2. Create Parameter",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.test('Create Success', () => pm.expect(jsonData.paramId).to.not.be.null);",
+              "    // บันทึกค่าลง Environment",
+              "    pm.environment.set('target_id', jsonData.paramId);",
+              "    pm.environment.set('target_key', jsonData.paramKey);",
+              "} else {",
+              "    console.log('Create Failed Body:', pm.response.text());",
+              "    postman.setNextRequest(null); // หยุดรันถ้า Create ไม่ผ่าน",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"paramKey\": \"{{paramKey}}\",\n    \"paramValue\": \"12\",\n    \"valueType\": \"STRING\",\n    \"description\": \"Tesing System Parameter\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/system-parameters",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "system-parameters"]
+        }
+      }
+    },
+    {
+      "name": "3. Get Value (Verify Create)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "pm.test('Verify Create', () => pm.expect(jsonData.value.toString()).to.eql('12'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/system-parameters/{{target_key}}/value",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "system-parameters", "{{target_key}}", "value"]
+        }
+      }
+    },
+    {
+      "name": "4. Patch (Update Value)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Update Success', () => pm.response.to.have.status(200));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"paramValue\": \"21\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/system-parameters/{{target_id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "system-parameters", "{{target_id}}"]
+        }
+      }
+    },
+    {
+      "name": "5. Get Value (Verify Update)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "pm.test('Verify Update', () => pm.expect(jsonData.value.toString()).to.eql('21'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/system-parameters/{{target_key}}/value",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "system-parameters", "{{target_key}}", "value"]
+        }
+      }
+    },
+    {
+      "name": "6. Logout",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        }
+      }
+    }
+  ]
+}

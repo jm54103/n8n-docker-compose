@@ -5,6 +5,7 @@ dist/
 tmp/
 out/
 .next/
+newman/
 
 gitea/
 /gitea

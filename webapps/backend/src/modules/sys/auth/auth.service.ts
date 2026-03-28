@@ -36,8 +36,7 @@ export class AuthService {
     private readonly redis: Redis, // Inject Redis เข้ามาใช้งาน    
     private readonly configService: ConfigService, // Inject ConfigService เข้ามา    
     private readonly jwtService: JwtService,
-    private readonly auth_logger: AuthLogger,
-    private readonly userGroupsService: UserGroupsService,
+    private readonly auth_logger: AuthLogger,   
     private readonly usersService: UsersService,
   ) {}
 

@@ -14,7 +14,6 @@ import { ConfigService } from '@nestjs/config/dist/config.service';
 import { AuthLogger } from './auth.logger';
 import 'winston-daily-rotate-file';
 import { UsersModule } from '../users/users.module';
-import { UserGroupsModule } from '../user-groups/user-groups.module';
 import { SystemPermission } from '../system-permissions/entities/system-permission.entity';
 import { UserGroup } from '../user-groups/entities/user-group.entity';
 
@@ -23,7 +22,6 @@ import { UserGroup } from '../user-groups/entities/user-group.entity';
   providers: [AuthService, AuthLogger, JwtStrategy],
   imports: [   
     UsersModule,
-    UserGroupsModule, 
     TypeOrmModule.forFeature([User,UserGroup,UserSession,SystemParameter,SystemPermission]),            
     PassportModule,    
     RedisModule, // <--- ต้องใส่ตัวนี้ (เพื่อให้ Inject @InjectRedis() ได้)

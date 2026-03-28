@@ -187,13 +187,13 @@ import { PermissionsGuard } from './modules/sys/auth/infrastructure/guard/permis
     }),
     /* Modules */
     //MarketSignalsModule,
-    //CandleSticksModule,
-    //SystemParametersModule,
+    //CandleSticksModule,    
     //SystemPermissionsModule,
-    UsersModule,
+    SystemParametersModule,   
     UserGroupsModule,
-    RedisModule,
+    UsersModule,    
     AuthModule,
+    RedisModule,
   ],
   providers: [
     {
