@@ -1,0 +1,27 @@
+{
+  "id": "env1",
+  "name": "Auth Environment",
+  "values": [
+    {      
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "enabled": true
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "target_id",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "paramKey",
+      "value": "TEST_SYS_PARAM_{{$randomInt}}",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
