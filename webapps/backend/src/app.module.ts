@@ -32,8 +32,8 @@ import { UserSession } from './modules/sys/auth/entities/user-session.entity';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด้วย
-import { JwtAuthGuard } from './modules/sys/auth/infrastructure/guard/jwt-auth.guard';
-import { PermissionsGuard } from './modules/sys/auth/infrastructure/guard/permissions.guard';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
+import { PermissionsGuard } from './common/guards/permissions.guard';
 /*--Logger--*/
 
 @Module({

@@ -9,7 +9,7 @@ import { Repository } from "typeorm";
 import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
 import { AuthLogger } from './auth.logger';
-import { UserGroupsService } from '../user-groups/user-groups.service';
+import { SystemParametersService } from '../system-parameters/system-parameters.service';
 import { UsersService } from '../users/users.service';
 
 
@@ -38,39 +38,9 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly auth_logger: AuthLogger,   
     private readonly usersService: UsersService,
+    private readonly systemParametersService: SystemParametersService,
   ) {}
 
-
-
-  private async getSystemParameter(key: string): Promise<number> {
-    const redisKey = `config:param:${key}`;
-
-    try {
-      // 1. ตรวจสอบค่าใน Redis
-      const cachedValue = await this.redis.get(redisKey);
-      
-      if (cachedValue !== null) {
-        return Number(cachedValue);
-      }
-
-      // 2. ถ้าไม่มีใน Redis ให้ดึงจาก Database
-      const param = await this.paramRepo.findOne({ where: { paramKey: key } });
-      if (!param) return null;
-
-      const value = param.getTypedValue() as number;
-
-      // 3. บันทึกลง Redis พร้อมตั้งเวลาหมดอายุ (TTL) เช่น 1 ชั่วโมง (3600 วินาที)
-      // ใช้ 'EX' สำหรับ set expiration
-      await this.redis.set(redisKey, value.toString(), 'EX', 3600);
-
-      return value;
-    } catch (error) {
-      // Fallback: ถ้า Redis ล่ม ให้ดึงจาก DB ตรงๆ เพื่อไม่ให้ระบบ Login พัง
-      console.error('🔥 Redis Error:', error);
-      const param = await this.paramRepo.findOne({ where: { paramKey: key } });
-      return param ? (param.getTypedValue() as number) : null;
-    }
-  }
 
   private async getConfig(key: string): Promise<string> {
     return this.configService.get<string>(key);
@@ -143,8 +113,8 @@ export class AuthService {
 
     } else {
       // --- กรณีรหัสผ่านผิด ---
-      const MAX_LOGIN_ATTEMPTS = await this.getSystemParameter('MAX_LOGIN_ATTEMPTS');     
-      const LOCKOUT_DURATION_MINUTES = await this.getSystemParameter('LOCKOUT_DURATION_MINUTES');
+      const MAX_LOGIN_ATTEMPTS = await this.systemParametersService.getValue('MAX_LOGIN_ATTEMPTS');     
+      const LOCKOUT_DURATION_MINUTES = await this.systemParametersService.getValue('LOCKOUT_DURATION_MINUTES');
           
       user.loginAttempts += 1;
 

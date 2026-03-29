@@ -3,9 +3,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './dto'; 
 /*--Guard--*/
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt-auth.guard';
-import { Permissions } from '../auth/infrastructure/guard/permissions.decorator'; 
-import { PermissionsGuard } from '../auth/infrastructure/guard/permissions.guard';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
+import { Permissions } from '../../../common/decorators/permissions.decorator'; 
+import { PermissionsGuard } from '../../../common/guards/permissions.guard';
 
 
 @Controller('users')

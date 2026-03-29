@@ -3,13 +3,14 @@ import { ApiTags,  ApiBearerAuth,  ApiBody, } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { JwtAuthGuard } from './infrastructure/guard/jwt-auth.guard';
 import { RefreshDto } from './dto/refresh.dto';
 import { JwtPayload } from './infrastructure/jwt/jwt.payload';
-import { Public } from './infrastructure/guard/public.decorator';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
+import { Public } from '../../../common/decorators/public.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')
+@UseGuards(JwtAuthGuard)
 export class AuthController {
   
   constructor(private readonly authService: AuthService) {}

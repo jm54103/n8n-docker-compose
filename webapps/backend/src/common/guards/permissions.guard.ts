@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import Redis from 'ioredis';
-import { PERMISSIONS_KEY } from './permissions.decorator';
+import { PERMISSIONS_KEY } from '../decorators/permissions.decorator';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {

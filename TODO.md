@@ -1,3 +1,13 @@
+อธิบายภาพรวมการพัฒนาระบบแบบ Open Source 
+- Database (Postgres):
+- Cached (Redis):
+- Backend (NestJS + TypeORM + Zod): 
+- Messaging (Queue,Topic,Websocket):
+- Contract: แปลง OpenAPI:
+- Frontend (Next.js + RJSF): 
+- Testing (Postman,Portman,Newman): 
+
+
 นี่คือภาพรวมการสถาปัตยกรรมระบบแบบ Modern Open Source Stack ที่เน้นความแม่นยำของข้อมูล (Type-Safety) และการทำงานแบบ Schema-Driven ครับ
 
 🏗️ Overview: Schema-Driven Architecture

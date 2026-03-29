@@ -3,10 +3,10 @@ import { SystemParametersService } from './system-parameters.service';
 import { CreateSystemParameterDto, UpdateSystemParameterDto } from './dto';
 /*--Guard--*/
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/infrastructure/guard/jwt-auth.guard';
-import { Permissions } from '../auth/infrastructure/guard/permissions.decorator'; 
-import { PermissionsGuard } from '../auth/infrastructure/guard/permissions.guard';
-import { Public } from '../auth/infrastructure/guard/public.decorator';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
+import { Permissions } from '../../../common/decorators/permissions.decorator'; 
+import { PermissionsGuard } from '../../../common/guards/permissions.guard';
+import { Public } from '../../../common/decorators/public.decorator';
 
 @Controller('system-parameters')
 export class SystemParametersController {
