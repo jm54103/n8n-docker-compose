@@ -1,18 +1,20 @@
+ใช้ TypeORM จัดการ Audit Trail
+
 [BACKEND]
-- System Parameter (Audit Trail) 
-- System Permission (Audit Trail)
-- Master Referrence Data 
+    - System Parameter (Audit Trail) 
+    - System Permission (Audit Trail)
+    - Master Referrence Data 
 
 [FRONTEND]
-- Dynamic form schema
-- Static form 
-    - GRID
-    - FORM
-    - SUBFORM
+    - Static form 
+        - GRID
+        - FORM
+        - SUBFORM
+    - Dynamic form schema
 
 [SECERITY]
-- LDAP
-- OAUTH
+    - LDAP
+    - OAUTH
 
 ขั้นถัดไปที่แนะนำ:
 🔐 Key Rotation (JWT versioning)
