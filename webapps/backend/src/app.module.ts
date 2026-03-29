@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core'; 
-import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './modules/sys/auth/infrastructure/jwt/jwt.strategy';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'; 
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 
 /*-- Redis  --*/
 import { RedisModule } from '@nestjs-modules/ioredis';
@@ -31,13 +34,22 @@ import { UserSession } from './modules/sys/auth/entities/user-session.entity';
 /*--Logger--*/
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
-import 'winston-daily-rotate-file'; // ต้อง import ตัวนี้ด้วย
+import 'winston-daily-rotate-file'; 
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { PermissionsGuard } from './common/guards/permissions.guard';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 /*--Logger--*/
 
 @Module({
-  imports: [
+  imports: [   
+      JwtModule.registerAsync({
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: async (configService: ConfigService) => ({
+          secret: configService.get<string>('JWT_SECRET'), // ดึงค่าผ่าน ConfigService
+          signOptions: { expiresIn: '15m' },
+         }),
+      }),
       WinstonModule.forRoot({
       transports: [
         // 1. แสดงผลบน Console
@@ -196,13 +208,9 @@ import { PermissionsGuard } from './common/guards/permissions.guard';
     RedisModule,
   ],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard, // รันก่อนเพื่อเอา User ใส่ Request
-    },
-    {
-      provide: APP_GUARD,
-      useClass: PermissionsGuard, // รันทีหลังเพื่อเช็กสิทธิ์
+    //{ provide: APP_INTERCEPTOR,useClass: LoggingInterceptor,}, // HTTP-ACCESS-LOG
+    { provide: APP_GUARD,useClass: JwtAuthGuard,}, //ตรวจสอบ User Jwt Payload ลำดับแรก
+    { provide: APP_GUARD,useClass: PermissionsGuard, // ตรวจสอบสิทธิ์การใช้งาน
     },
   ],
 })

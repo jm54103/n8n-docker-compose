@@ -11,7 +11,8 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class AdvancedLoggingInterceptor implements NestInterceptor {
+export class LoggingInterceptor implements NestInterceptor {
+  constructor(private readonly jwtService: JwtService) {} // Inject ตรงนี้ได้เลย
   
   private readonly logger = new Logger('HTTP_ACCESS');    
 
@@ -21,19 +22,30 @@ export class AdvancedLoggingInterceptor implements NestInterceptor {
     const request = ctx.getRequest();
     const authHeader = request.headers.authorization;
     const { method, url, ip, body, headers } = request;
-    const startTime = Date.now();
+    const startTime = Date.now(); 
 
     let userId = 'Guest';    
 
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      try {
+        const payload = this.jwtService.decode(token);
+        userId = payload.sub
+        console.log('User ID from Token:', userId);
+      } catch (e) {
+        // จัดการ error กรณี token ผิดพลาด
+        userId = 'Guest';
+      }
+    }
+    
     return next.handle().pipe(
       tap((data) => {
         const response = ctx.getResponse();
-        const duration = Date.now() - startTime;
-        const user = request.user; 
-
+        const duration = Date.now() - startTime;      
         // บันทึก Log ขา Success
         this.logger.log({
-          message: `ACCESS_LOG_SUCCESS`,                   
+          message: `ACCESS_LOG_SUCCESS`,  
+          user: `${userId}`,                
           method,
           url,
           statusCode: response.statusCode,
@@ -46,10 +58,10 @@ export class AdvancedLoggingInterceptor implements NestInterceptor {
       catchError((error) => {
         const duration = Date.now() - startTime;
         const statusCode = error.status || 500;
-
         // บันทึก Log ขา Error
         this.logger.error({
           message: `ACCESS_LOG_ERROR`,
+          user: `${userId}`,     
           method,
           url,
           statusCode,

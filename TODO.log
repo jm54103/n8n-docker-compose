@@ -14,16 +14,9 @@
     ❌- Security Breach
 ✅OK 🔐 RBAC Guard (PermissionGuard) 
 
-
 ✅OK User Access Log (auth.logger.ts)
+✅OK User Activity Log logging.interceptor.ts http-access-yyyy-MM-dd.log
 ✅OK HTTP_ACCESS_LOG logging.interceptor.ts
 
-1. Access Log (ทำได้ดีเยี่ยม)
-นิยาม: ใคร เข้ามาที่ URL ไหน เมื่อไหร่ ผลเป็นอย่างไร (HTTP Status)
 
-2. Activity Log (ทำได้ในระดับพื้นฐาน)
-นิยาม: ผู้ใช้คนนี้ "ทำอะไร" เช่น "User A แก้ไขข้อมูลโปรไฟล์"
-
-3. Audit Trail (ทำได้เพียง "ร่องรอย" แต่ไม่สมบูรณ์)
-นิยาม: การบันทึกประวัติการเปลี่ยนแปลงข้อมูลอย่างละเอียด เพื่อใช้ในการตรวจสอบย้อนกลับ (Compliance/Security)
 

@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
 import { join } from 'path';
 import * as express from 'express';
 import * as fs from 'fs';
-import { AdvancedLoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
 
@@ -24,13 +24,12 @@ async function bootstrap() {
   });
   
   // 1.ใช้ Winston เป็น Logger หลักของระบบ
-  app.useGlobalInterceptors(new AdvancedLoggingInterceptor());
+  //app.useGlobalInterceptors(new AdvancedLoggingInterceptor());
   //app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   // --- ตั้งค่า prefix ให้กับ API ทั้งหมด ---
   app.setGlobalPrefix('api'); 
-  // --------------------
-   
+     
 
   // 2. ตั้งค่า Swagger  
   const config = new DocumentBuilder()

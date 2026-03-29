@@ -1,16 +1,14 @@
 [BACKEND]
-
-- User Activity Log
-- System Parameter (Audit Trail)
+- System Parameter (Audit Trail) 
 - System Permission (Audit Trail)
 - Master Referrence Data 
 
 [FRONTEND]
--Static form 
+- Dynamic form schema
+- Static form 
     - GRID
     - FORM
     - SUBFORM
--Dynamic form schema
 
 [SECERITY]
 - LDAP
