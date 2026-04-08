@@ -5,7 +5,6 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-
 /*-- Redis  --*/
 import { RedisModule } from '@nestjs-modules/ioredis';
 
@@ -18,8 +17,9 @@ import { CandleStick } from './modules/app/stocks/candle-sticks/entities/candle-
 /* ===== System ===== */
 import { SystemParametersModule } from './modules/sys/system-parameters/system-parameters.module';
 import { SystemParameter } from './modules/sys/system-parameters/entities/system-parameter.entity';
-import { SystemPermissionsModule } from './modules/sys/system-permissions/system-permissions.module';
 import { SystemPermission } from './modules/sys/system-permissions/entities/system-permission.entity';
+import { AuditLog } from './modules/sys/audit/entities/audit-log.entity';
+import { SystemParameterSubscriber } from './modules/sys/audit/subscriber/system-parameter.subscriber';
 
 /* ===== Users ===== */
 import { UsersModule } from './modules/sys/users/users.module';
@@ -194,7 +194,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
         User,
         UserGroup,
         UserSession,
+        AuditLog,
       ],
+      subscribers: [SystemParameterSubscriber],
       synchronize: true, // production = false
     }),
     /* Modules */

@@ -10,6 +10,8 @@ import { UserActivityLog } from "./modules/sys/user-activity-logs/entities/user-
 import { SystemParameter } from "./modules/sys/system-parameters/entities/system-parameter.entity";
 import { SystemPermission } from "./modules/sys/system-permissions/entities/system-permission.entity";
 import { UserToGroup } from "./modules/sys/users/entities/user-to-groups.entity";
+import { AuditLog } from "./modules/sys/audit/entities/audit-log.entity";
+import { SystemParameterSubscriber } from "./modules/sys/audit/subscriber/system-parameter.subscriber";
 
 export const AppDataSource = new DataSource({
     type: "postgres", // หรือ mysql, mariadb, sqlite ตามที่ใช้จริง
@@ -20,7 +22,11 @@ export const AppDataSource = new DataSource({
     database: "auth",
     synchronize: true, // false สำหรับ production
     logging: true,
-    entities: [User,UserToGroup,UserGroup,UserGroupPermission,UserSession,UserAccessLog,UserActivityLog,SystemParameter,SystemPermission], // หรือใช้ path ["src/entity/*.ts"]
-    migrations: ["src/migrations/*.ts"],
-    subscribers: [],
+    entities: [User,UserToGroup,UserGroup,UserGroupPermission,UserSession,UserAccessLog,UserActivityLog,SystemParameter,SystemPermission,AuditLog],     
+    subscribers: [SystemParameterSubscriber], 
+    migrations: ["src/migrations/*.ts"],    
 })
+
+AppDataSource.initialize().then(() => {
+    console.log("Entities loaded:", AppDataSource.entityMetadatas.map(m => m.name));
+});
