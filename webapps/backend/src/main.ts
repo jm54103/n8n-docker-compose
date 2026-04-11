@@ -9,6 +9,7 @@ import { join } from 'path';
 import * as express from 'express';
 import * as fs from 'fs';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { authMiddleware } from './common/middleware/auth.middleware';
 
 async function bootstrap() {
 
@@ -86,6 +87,8 @@ async function bootstrap() {
   app.getHttpAdapter().get('/', (req, res) => {
     res.sendFile(join(frontendPath, 'index.html'));
   });
+
+  app.use(authMiddleware); // เรียกทุก Path ทุก Method
 
   await app.listen(PORT);
   console.debug(`🚀 API is running on: http://localhost:${PORT}/api`);
