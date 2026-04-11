@@ -1,7 +1,5 @@
-ใช้ TypeORM จัดการ Audit Trail
 
 [BACKEND]
-    - System Parameter (Audit Trail) 
     - System Permission (Audit Trail)
     - Master Referrence Data 
 

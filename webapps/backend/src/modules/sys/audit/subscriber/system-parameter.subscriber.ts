@@ -1,4 +1,4 @@
-import { EntitySubscriberInterface, EventSubscriber, UpdateEvent } from "typeorm";
+import { EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
 import { SystemParameter } from "../../system-parameters/entities/system-parameter.entity";
 import { AuditLog } from "../entities/audit-log.entity";
 import { userContext } from "../../../../common/context/context.storage";
@@ -10,34 +10,74 @@ export class SystemParameterSubscriber implements EntitySubscriberInterface<Syst
     return SystemParameter;
   }
 
-  async afterUpdate(event: UpdateEvent<SystemParameter>) {
-    const { entity, databaseEntity, manager } = event;
-    
-    // ดึงเฉพาะ Field ที่มีการเปลี่ยนแปลงจริง ๆ
-    const updatedColumns = event.updatedColumns.map(col => col.propertyName);
-    
-    if (updatedColumns.length > 0) {
-      const oldValues: any = {};
-      const newValues: any = {};
+  /**
+   * บันทึก Log เมื่อมีการเพิ่มข้อมูลใหม่
+   */  
 
-      updatedColumns.forEach(key => {
-        oldValues[key] = (databaseEntity as any)[key];
-        newValues[key] = (entity as any)[key];
-      });
+  // --- ส่วนของ afterInsert ---
+  async afterInsert(event: InsertEvent<SystemParameter>) {
+    const { entity, manager } = event;
+    const context = userContext.getStore();
 
-      // ดึง User จาก Context (ที่ถูกเซ็ตไว้ใน Middleware)
-      const context = userContext.getStore();
-
+    try {
       const log = manager.create(AuditLog, {
         entityName: 'SystemParameter',
-        entityId: entity.paramId || databaseEntity.paramId,
-        action: 'UPDATE',
-        oldData: oldValues,
-        newData: newValues,
+        // แก้จาก String() เป็น Number() หรือใช้ + นำหน้าเพื่อแปลงเป็น number
+        entityId: Number(entity.paramId), 
+        action: 'INSERT',
+        oldData: null,
+        newData: entity,
         changedBy: context?.userId || 'SYSTEM',
       });
 
       await manager.save(log);
+    } catch (error) {
+      console.error('AuditLog Insert Error:', error);
+    }
+  }
+
+  /**
+   * บันทึก Log เมื่อมีการแก้ไขข้อมูล
+   */
+  async afterUpdate(event: UpdateEvent<SystemParameter>) {
+    const { entity, databaseEntity, manager, updatedColumns } = event;
+
+    if (!updatedColumns || updatedColumns.length === 0) return;
+
+    const oldValues: Record<string, any> = {};
+    const newValues: Record<string, any> = {};
+    let hasChanges = false;
+
+    updatedColumns.forEach(column => {
+      const propertyName = column.propertyName;
+      const oldValue = (databaseEntity as any)[propertyName];
+      const newValue = (entity as any)[propertyName];
+
+      // บันทึกเฉพาะที่มีการเปลี่ยนแปลงจริง
+      if (newValue !== undefined && oldValue !== newValue) {
+        oldValues[propertyName] = oldValue;
+        newValues[propertyName] = newValue;
+        hasChanges = true;
+      }
+    });
+
+    if (hasChanges) {
+      const context = userContext.getStore();
+      try {
+        const log = manager.create(AuditLog, {
+          entityName: 'SystemParameter',
+          // แก้ให้เป็น number เช่นกัน
+          entityId: Number(databaseEntity?.paramId || (entity as any)?.paramId),
+          action: 'UPDATE',
+          oldData: oldValues,
+          newData: newValues,
+          changedBy: context?.userId || 'SYSTEM',
+        });
+
+        await manager.save(log);
+      } catch (error) {
+        console.error('AuditLog Update Error:', error);
+      }
     }
   }
 }
