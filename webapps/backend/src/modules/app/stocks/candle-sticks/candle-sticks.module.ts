@@ -5,7 +5,7 @@ import { CandleSticksController } from './candle-sticks.controller';
 import { CandleSticksService } from './candle-sticks.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CandleStick])], // <--- ใส่ตรงนี้
+  imports: [TypeOrmModule.forFeature([CandleStick],"set100Connection")], // <--- ใส่ตรงนี้
   controllers: [CandleSticksController],
   providers: [CandleSticksService],
   exports: [CandleSticksService], // เผื่อ Module อื่นอยากดึงข้อมูล Signal ไปใช้

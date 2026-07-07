@@ -7,7 +7,7 @@ import { UserGroupPermission } from './entities/user-group-permission.entity';
 import { SystemPermission } from '../system-permissions/entities/system-permission.entity';
 
 @Module({
-  imports: [UserGroupsModule,TypeOrmModule.forFeature([UserGroup, UserGroupPermission, SystemPermission])],
+  imports: [UserGroupsModule,TypeOrmModule.forFeature([UserGroup, UserGroupPermission, SystemPermission],"authConnection")],
   controllers: [UserGroupsController],
   providers: [UserGroupsService],
   exports: [UserGroupsService], 

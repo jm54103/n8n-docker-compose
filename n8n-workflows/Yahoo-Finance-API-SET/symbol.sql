@@ -42,9 +42,16 @@ VALUES(5004, '^HSCE', 'Hang Seng China Enterprises Index', 'CN', 0, 1);
 
 delete from public.symbol where "Seq"=5011;
 
-*/
 
-update public.symbol set "SETHD"=1 where  "Seq" > 0;
+update public.symbol set "Symbol"='SET.BK' where  "Seq"=9001;
+update public.symbol set "Symbol"='SET50.BK' where  "Seq"=9002;
+
+update public.symbol set "MarketIndex"=0 where  "Seq">=9000;
+*/
+update public.symbol set "MarketIndex"=1 where  "Seq">=9000;
+
+
+
 
 
 

@@ -8,7 +8,7 @@ import { ResponseUserDto } from './dto/response-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
+    @InjectRepository(User,"authConnection")
     private readonly userRepository: Repository<User>,
   ) {}
 

@@ -8,8 +8,8 @@ import { AppModule } from './app.module';
 import { join } from 'path';
 import * as express from 'express';
 import * as fs from 'fs';
-import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { authMiddleware } from './common/middleware/auth.middleware';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
 
@@ -57,7 +57,6 @@ async function bootstrap() {
   // เขียนไฟล์ swagger.json ลงเครื่องเพื่อใช้กับ Generator
   fs.writeFileSync('./swagger.json', JSON.stringify(document));
 
-
   const frontendPath = join(__dirname, '..', 'public'); 
   // Serve static assets
   app.use(express.static(frontendPath,
@@ -94,6 +93,7 @@ async function bootstrap() {
   console.debug(`🚀 API is running on: http://localhost:${PORT}/api`);
   console.debug(`🔗📝 Swagger Docs: http://localhost:${PORT}/swagger`);
   console.debug(`🔒 Login: http://localhost:${PORT}/admin/login`);
+  console.debug(`📊 Chart: http://localhost:${PORT}/chart/`);
 
 
 }

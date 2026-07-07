@@ -32,7 +32,7 @@ import { SystemParametersModule } from '../system-parameters/system-parameters.m
   imports: [   
     UsersModule,
     SystemParametersModule,
-    TypeOrmModule.forFeature([User,UserGroup,UserSession,SystemParameter,SystemPermission]),            
+    TypeOrmModule.forFeature([User,UserGroup,UserSession,SystemParameter,SystemPermission],"authConnection"),            
     PassportModule,    
     RedisModule, // <--- ต้องใส่ตัวนี้ (เพื่อให้ Inject @InjectRedis() ได้)
     ConfigModule, // <--- ต้องใส่ตัวนี้ (เพื่อให้ Inject ConfigService ได้)

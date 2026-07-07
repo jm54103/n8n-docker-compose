@@ -7,7 +7,7 @@ import { SystemParameter } from './entities/system-parameter.entity';
 @Module({
   imports: [
     // ลงทะเบียน Entity เพื่อให้ TypeORM สร้าง Repository ให้ใช้งาน
-    TypeOrmModule.forFeature([SystemParameter]),
+    TypeOrmModule.forFeature([SystemParameter],"authConnection"),
   ],
   controllers: [SystemParametersController],
   providers: [SystemParametersService],

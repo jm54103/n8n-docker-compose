@@ -179,16 +179,15 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
       },
     }),
     TypeOrmModule.forRoot({
+      name: 'authConnection', // <--- กำหนดชื่อตรงนี้
       type: 'postgres',
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT) || 5432,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      database: process.env.DB_NAME_AUTH,
       autoLoadEntities: true,
-      entities: [
-        MarketSignal,
-        CandleStick,
+      entities: [        
         SystemParameter,
         SystemPermission,
         User,
@@ -199,9 +198,25 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
       subscribers: [SystemParameterSubscriber],
       synchronize: true, // production = false
     }),
+    // Connection ตัวที่ 2: ฐานข้อมูลสำรอง หรือ Analytics (ต้องระบุ name)
+    TypeOrmModule.forRoot({
+      name: 'set100Connection', // <--- กำหนดชื่อตรงนี้
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME_SET100,
+      autoLoadEntities: true,
+      entities: [MarketSignal,CandleStick],
+      subscribers: [SystemParameterSubscriber],
+      synchronize: true, // production = false
+    }),
+
+
     /* Modules */
-    //MarketSignalsModule,
-    //CandleSticksModule,    
+    MarketSignalsModule,
+    CandleSticksModule,    
     //SystemPermissionsModule,
     SystemParametersModule,   
     UserGroupsModule,

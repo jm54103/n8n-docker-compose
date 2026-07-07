@@ -9,10 +9,10 @@ import { ResponseUserGroupDto } from './dto/response-user-group.dto';
 @Injectable()
 export class UserGroupsService {
   constructor(
-    @InjectRepository(UserGroup)
+    @InjectRepository(UserGroup,"authConnection")
     private readonly groupRepo: Repository<UserGroup>,
     
-    @InjectRepository(UserGroupPermission)
+    @InjectRepository(UserGroupPermission,"authConnection")
     private readonly permissionRepo: Repository<UserGroupPermission>,
   ) {}
 

@@ -5,7 +5,7 @@ import { MarketSignalsController } from "./market-signals.controller";
 import { MarketSignalsService } from "./market-signals.service";
 
 @Module({ 
-  imports: [TypeOrmModule.forFeature([MarketSignal])],
+  imports: [TypeOrmModule.forFeature([MarketSignal],"set100Connection")],
   controllers: [MarketSignalsController],
   providers: [MarketSignalsService],
   exports: [MarketSignalsService], // เผื่อ Module อื่นอยากดึงข้อมูล Signal ไปใช้

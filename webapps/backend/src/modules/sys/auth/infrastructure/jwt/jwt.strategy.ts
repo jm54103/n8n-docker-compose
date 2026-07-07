@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectRedis() 
     private readonly redis: Redis, // ฉีด Redis เข้ามาใช้งาน    
-    @InjectRepository(UserSession)
+    @InjectRepository(UserSession,"authConnection")
     private readonly sessionRepo: Repository<UserSession>,
     private readonly configService: ConfigService, // Inject ConfigService เข้ามา
   ) {

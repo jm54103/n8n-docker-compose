@@ -15,7 +15,7 @@ export class SystemParametersService {
   private readonly TTL = 3600; // 1 ชั่วโมง
 
   constructor(
-    @InjectRepository(SystemParameter)
+    @InjectRepository(SystemParameter,"authConnection")
     private readonly paramRepo: Repository<SystemParameter>,
     @InjectRedis() private readonly redis: Redis,
   ) {}

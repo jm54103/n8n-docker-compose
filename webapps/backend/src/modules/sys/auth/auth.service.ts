@@ -26,11 +26,11 @@ export class AuthService {
   constructor(
     @Inject(WINSTON_MODULE_NEST_PROVIDER) 
     private readonly logger: LoggerService,
-    @InjectRepository(User)
+    @InjectRepository(User,"authConnection")
     private readonly userRepo: Repository<User>,
-    @InjectRepository(SystemParameter)
+    @InjectRepository(SystemParameter,"authConnection")
     private readonly paramRepo: Repository<SystemParameter>,
-    @InjectRepository(SystemPermission)
+    @InjectRepository(SystemPermission,"authConnection")
     private readonly systemPermissionRepo: Repository<SystemPermission>,
     @InjectRedis() 
     private readonly redis: Redis, // Inject Redis เข้ามาใช้งาน    

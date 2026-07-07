@@ -6,7 +6,7 @@ import { CandleStick } from './entities/candle-stick.entity';
 @Injectable()
 export class CandleSticksService {
   constructor(
-    @InjectRepository(CandleStick)
+    @InjectRepository(CandleStick,"set100Connection")
     private readonly candleRepository: Repository<CandleStick>,
   ) {}
 

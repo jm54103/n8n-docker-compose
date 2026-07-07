@@ -6,7 +6,7 @@ import { MarketSignal } from './entities/market-signal.entity';
 @Injectable()
 export class MarketSignalsService {
   constructor(
-    @InjectRepository(MarketSignal)
+    @InjectRepository(MarketSignal, "set100Connection")
     private repo: Repository<MarketSignal>,
   ) {}
 

@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User],"authConnection")],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService], // Export เพื่อให้ Module อื่นเรียกใช้ได้
