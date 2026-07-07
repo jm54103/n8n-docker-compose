@@ -11,6 +11,7 @@ import { SystemParameter } from "./modules/sys/system-parameters/entities/system
 import { SystemPermission } from "./modules/sys/system-permissions/entities/system-permission.entity";
 import { UserToGroup } from "./modules/sys/users/entities/user-to-groups.entity";
 import { AuditLog } from "./modules/sys/audit/entities/audit-log.entity";
+/*--trigger--*/
 import { SystemParameterSubscriber } from "./modules/sys/audit/subscriber/system-parameter.subscriber";
 
 export const AppDataSource = new DataSource({

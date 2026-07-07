@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "deploy:fe": "powershell -Command \"Remove-Item -Path './../backend/public/*' -Recurse -Force -ErrorAction SilentlyContinue; Copy-Item -Path './dist/*' -Destination './../backend/public/' -Recurse -Force\"",   
+  "scripts": {           
+    "deploy": "tsc -b && vite build && powershell -Command \"Remove-Item -Recurse -Force ../../backend/public/chart/*; Copy-Item -Path ./dist/* -Destination ../../backend/public/chart/ -Recurse -Force\"",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

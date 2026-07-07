@@ -30,19 +30,19 @@ export class CandleStick {
   @PrimaryColumn({ type: 'date', transformer: new DateToNumberTransformer()})
   x: Date; // วันที่ (Date)
 
-  @Column({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() })
+  @Column({ type: 'float8', transformer: new ColumnNumericTransformer() })   
   o: number; // Open
-
-  @Column({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() })
+  
+  @Column({ type: 'float8', transformer: new ColumnNumericTransformer() })   
   h: number; // High
 
-  @Column({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() })
+  @Column({ type: 'float8', transformer: new ColumnNumericTransformer() })     
   l: number; // Low
 
-  @Column({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() })
+  @Column({ type: 'float8', transformer: new ColumnNumericTransformer() })   
   c: number; // Close
-
-  @Column({ type: 'numeric', precision: 18, scale: 8, transformer: new ColumnNumericTransformer() })
+    
+  @Column({ type: 'float8', transformer: new ColumnNumericTransformer() })   
   v: number; // volume
 }
 

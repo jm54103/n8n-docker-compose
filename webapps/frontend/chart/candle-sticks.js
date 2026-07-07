@@ -89,11 +89,12 @@ for (let i = 0; i < 60; i++) {
     v: 5000 + Math.random() * 4000
   });
 }
-
-const host = window.location;
-
+const symbol = "^SET";
+const hostname = window.location.hostname;
+const port = window.location.port;
 // กำหนด URL ของ API
-const apiUrl = `${host}candle-sticks/PTT/range?start=2025-06-01&end=2026-02-23`;
+const apiUrl = `http://${hostname}:${port}/api/candle-sticks/${symbol}/range?start=2025-06-01&end=2026-02-23`;
+console.log('URL ของ API:', apiUrl);
 
 async function getCandleSticks() {
     try {
@@ -108,7 +109,7 @@ async function getCandleSticks() {
         const data = await response.json();
 
         // แสดงผลข้อมูลใน Console
-        console.log('ข้อมูลหุ้น PTT:', data);
+        console.log(`ข้อมูลหุ้น ${symbol}:`, data);
         
         // ตรงนี้คุณสามารถนำ data ไปวาดกราฟหรือแสดงผลบนหน้าเว็บได้เลย
         return data;

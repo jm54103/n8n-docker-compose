@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Param, Query, ParseIntPipe } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { CandleSticksService } from './candle-sticks.service';
 import { CandleStick } from './entities/candle-stick.entity';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/common/guards/permissions.guard';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @ApiTags('CandleSticks') // กำหนดกลุ่มใน Swagger
 @Controller('candle-sticks')
@@ -9,6 +12,9 @@ export class CandleSticksController {
   constructor(private readonly candleSticksService: CandleSticksService) {}
 
   @Get(':symbol')
+  @Public() 
+  //@ApiBearerAuth('accessToken')
+  //@UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'ดึงข้อมูลแท่งเทียนทั้งหมดตาม Symbol' })
   @ApiResponse({ status: 200, description: 'คืนค่ารายการแท่งเทียน', type: [CandleStick] })
   async findAll(@Param('symbol') symbol: string) {
@@ -16,6 +22,9 @@ export class CandleSticksController {
   }
 
   @Get(':symbol/range')
+  @Public() 
+  //@ApiBearerAuth('accessToken')
+  //@UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'ดึงข้อมูลแท่งเทียนตามช่วงวันที่' })  
   @ApiQuery({ name: 'start', example: '2026-01-01' })
   @ApiQuery({ name: 'end', example: '2026-02-23' })
@@ -38,6 +47,8 @@ export class CandleSticksController {
   }
 
   @Post()
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'บันทึกข้อมูลแท่งเทียนใหม่' })
   @ApiResponse({ status: 201, description: 'บันทึกสำเร็จ' })
   async create(@Body() candleData: Partial<CandleStick>) {
