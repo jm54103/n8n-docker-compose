@@ -1,0 +1,13 @@
+
+
+/*--Check Logs--*/
+docker compose logs -f nodeapp
+docker logs n8n-browserless-1
+
+
+docker run --rm -v ${pwd}:/local openapitools/openapi-generator-cli generate `
+  -i http://localhost:5000/api-json `
+  -g typescript-axios `
+  -o /local/my-api-client
+  
+  
