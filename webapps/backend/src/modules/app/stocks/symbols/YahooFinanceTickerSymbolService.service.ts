@@ -1,26 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { YahooFinanceTickerSymbol } from './entities/yahoo_finance_ticker_symbols';
+import { YahooFinanceTickerSymbols } from './entities/yahoo_finance_ticker_symbols';
 
 @Injectable()
-export class YahooFinanceTickerSymbolService {
+export class YahooFinanceTickerSymbolsService {
   constructor(
-    @InjectRepository(YahooFinanceTickerSymbol, "set100Connection")
-    private readonly symbolRepository: Repository<YahooFinanceTickerSymbol>,
+    @InjectRepository(YahooFinanceTickerSymbols,"set100Connection")
+    private readonly symbolRepository: Repository<YahooFinanceTickerSymbols>,
   ) {}
 
   /**
    * ดึงข้อมูลทั้งหมดในตาราง
    */
-  async findAll(): Promise<YahooFinanceTickerSymbol[]> {
+  async findAll(): Promise<YahooFinanceTickerSymbols[]> {
     return await this.symbolRepository.find();
   }
 
   /**
    * ค้นหาข้อมูลด้วย Composite Primary Keys (Ticker, Name, Country)
    */
-  async findOne(ticker: string, name: string, country: string): Promise<YahooFinanceTickerSymbol> {
+  async findOne(ticker: string, name: string, country: string): Promise<YahooFinanceTickerSymbols> {
     const symbol = await this.symbolRepository.findOne({
       where: { ticker, name, country },
     });
@@ -35,7 +35,7 @@ export class YahooFinanceTickerSymbolService {
   /**
    * ค้นหาข้อมูลตาม Ticker อย่างเดียว (อาจได้ผลลัพธ์มากกว่า 1 รายการ)
    */
-  async findByTicker(ticker: string): Promise<YahooFinanceTickerSymbol[]> {
+  async findByTicker(ticker: string): Promise<YahooFinanceTickerSymbols[]> {
     return await this.symbolRepository.find({
       where: { ticker },
     });
@@ -44,7 +44,7 @@ export class YahooFinanceTickerSymbolService {
   /**
    * สร้างหรือบันทึกข้อมูลใหม่
    */
-  async create(data: Partial<YahooFinanceTickerSymbol>): Promise<YahooFinanceTickerSymbol> {
+  async create(data: Partial<YahooFinanceTickerSymbols>): Promise<YahooFinanceTickerSymbols> {
     const newSymbol = this.symbolRepository.create(data);
     return await this.symbolRepository.save(newSymbol);
   }
@@ -56,8 +56,8 @@ export class YahooFinanceTickerSymbolService {
     ticker: string,
     name: string,
     country: string,
-    updateData: Partial<Omit<YahooFinanceTickerSymbol, 'ticker' | 'name' | 'country'>>,
-  ): Promise<YahooFinanceTickerSymbol> {
+    updateData: Partial<Omit<YahooFinanceTickerSymbols, 'ticker' | 'name' | 'country'>>,
+  ): Promise<YahooFinanceTickerSymbols> {
     const symbol = await this.findOne(ticker, name, country);
     
     // อัปเดตค่าใหม่เข้าไปใน entity ตัวเดิม

@@ -13,7 +13,7 @@ import { MarketSignalsModule } from './modules/app/stocks/market-signals/market-
 import { MarketSignal } from './modules/app/stocks/market-signals/entities/market-signal.entity';
 import { CandleSticksModule } from './modules/app/stocks/candle-sticks/candle-sticks.module';
 import { CandleStick } from './modules/app/stocks/candle-sticks/entities/candle-stick.entity';
-import { YahooFinanceTickerSymbol } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols';
+import { YahooFinanceTickerSymbols } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols';
 
 /* ===== System ===== */
 import { SystemParametersModule } from './modules/sys/system-parameters/system-parameters.module';
@@ -39,7 +39,11 @@ import 'winston-daily-rotate-file';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { PermissionsGuard } from './common/guards/permissions.guard';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
-import { YahooFinanceTickerSymbolModule } from './modules/app/stocks/symbols/symbol.module';
+import { YahooFinanceTickerSymbolModule } from './modules/app/stocks/symbols/yahoo_finance_ticker_symbols.module';
+import { YahooFinanceTickerSymbolController } from './modules/app/stocks/symbols/yahool_finance_ticker_symbols.controller';
+import { YahooFinanceTickerSymbolsCountryService } from './modules/app/stocks/symbols/YahooFinanceTickerSymbolCountry.service';
+import { YahooFinanceTickerSymbolsCountry } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols_country.entity';
+import { YahooFinanceTickerSymbolsExchange } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols_exchange.entity';
 /*--Logger--*/
 
 @Module({
@@ -210,7 +214,12 @@ import { YahooFinanceTickerSymbolModule } from './modules/app/stocks/symbols/sym
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME_SET100,
       autoLoadEntities: true,
-      entities: [MarketSignal,CandleStick,YahooFinanceTickerSymbol],
+      entities: [MarketSignal,CandleStick,
+        YahooFinanceTickerSymbols,
+        YahooFinanceTickerSymbolsCountry,
+        YahooFinanceTickerSymbolsExchange,
+        
+       ],
       subscribers: [SystemParameterSubscriber],
       synchronize: true, // production = false
     }),

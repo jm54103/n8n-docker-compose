@@ -1,12 +1,18 @@
 import { Controller, Get, Post, Body, Patch, Delete, Query } from '@nestjs/common';
-import { YahooFinanceTickerSymbolService } from './symbol.service';
-import { YahooFinanceTickerSymbol } from './entities/yahoo_finance_ticker_symbols';
 import { Public } from 'src/common/decorators/public.decorator';
+import { YahooFinanceTickerSymbolsService } from './YahooFinanceTickerSymbolService.service';
+import { YahooFinanceTickerSymbolsExchangeService } from './YahooFinanceTickerSymbolExchange.service';
+import { YahooFinanceTickerSymbolsCountryService } from './YahooFinanceTickerSymbolCountry.service';
+import { YahooFinanceTickerSymbols } from './entities/yahoo_finance_ticker_symbols';
+import { YahooFinanceTickerSymbolsCountry } from './entities/yahoo_finance_ticker_symbols_country.entity';
+import { YahooFinanceTickerSymbolsExchange } from './entities/yahoo_finance_ticker_symbols_exchange.entity';
 
 @Controller('symbols')
 export class YahooFinanceTickerSymbolController {
   constructor(
-    private readonly symbolService: YahooFinanceTickerSymbolService,
+    private readonly symbolService: YahooFinanceTickerSymbolsService,
+    private readonly symbolExchangeService: YahooFinanceTickerSymbolsExchangeService,
+    private readonly symbolCountryService: YahooFinanceTickerSymbolsCountryService,
   ) {}
 
   /**
@@ -14,7 +20,7 @@ export class YahooFinanceTickerSymbolController {
    * สร้างข้อมูลใหม่
    */
   @Post()
-  async create(@Body() createData: Partial<YahooFinanceTickerSymbol>): Promise<YahooFinanceTickerSymbol> {
+  async create(@Body() createData: Partial<YahooFinanceTickerSymbols>): Promise<YahooFinanceTickerSymbols> {
     return await this.symbolService.create(createData);
   }
 
@@ -22,10 +28,23 @@ export class YahooFinanceTickerSymbolController {
    * GET /symbols
    * ดึงข้อมูลทั้งหมด
    */
-  @Get()
-  @Public() 
-  async findAll(): Promise<YahooFinanceTickerSymbol[]> {
+  @Get()  
+  async findAll(): Promise<YahooFinanceTickerSymbols[]> {
     return await this.symbolService.findAll();
+  }
+
+  
+  @Get('country')
+  @Public() 
+  async findAllCountry(): Promise<YahooFinanceTickerSymbolsCountry[]> {
+    return await this.symbolCountryService.findAll();
+  }
+
+   
+  @Get('exchange')
+  @Public() 
+  async findAllExchange(): Promise<YahooFinanceTickerSymbolsExchange[]> {
+    return await this.symbolExchangeService.findAll();
   }
 
   /**
@@ -34,7 +53,7 @@ export class YahooFinanceTickerSymbolController {
    */
   @Get('search')
   @Public()
-  async findByTicker(@Query('ticker') ticker: string): Promise<YahooFinanceTickerSymbol[]> {
+  async findByTicker(@Query('ticker') ticker: string): Promise<YahooFinanceTickerSymbols[]> {
     return await this.symbolService.findByTicker(ticker);
   }
 
@@ -48,7 +67,7 @@ export class YahooFinanceTickerSymbolController {
     @Query('ticker') ticker: string,
     @Query('name') name: string,
     @Query('country') country: string,
-  ): Promise<YahooFinanceTickerSymbol> {
+  ): Promise<YahooFinanceTickerSymbols> {
     return await this.symbolService.findOne(ticker, name, country);
   }
 
@@ -61,8 +80,8 @@ export class YahooFinanceTickerSymbolController {
     @Query('ticker') ticker: string,
     @Query('name') name: string,
     @Query('country') country: string,
-    @Body() updateData: Partial<YahooFinanceTickerSymbol>,
-  ): Promise<YahooFinanceTickerSymbol> {
+    @Body() updateData: Partial<YahooFinanceTickerSymbols>,
+  ): Promise<YahooFinanceTickerSymbols> {
     return await this.symbolService.update(ticker, name, country, updateData);
   }
 

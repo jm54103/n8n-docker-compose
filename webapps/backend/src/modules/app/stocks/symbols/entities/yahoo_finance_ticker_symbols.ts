@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn, Index } from 'typeorm';
 
 @Entity({ name: 'yahoo_finance_ticker_symbols', schema: 'public' })
 @Index('yahoo_finance_ticker_symbols_ticker_idx', ['ticker', 'name', 'country'], { unique: true })
-export class YahooFinanceTickerSymbol {
+export class YahooFinanceTickerSymbols {
 
   @PrimaryColumn({ type: 'varchar', length: 50, name: 'Ticker' })
   ticker: string;
