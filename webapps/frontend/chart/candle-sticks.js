@@ -89,12 +89,37 @@ for (let i = 0; i < 60; i++) {
     v: 5000 + Math.random() * 4000
   });
 }
-const symbol = "^SET";
+
 const hostname = window.location.hostname;
 const port = window.location.port;
-// กำหนด URL ของ API
-const apiUrl = `http://${hostname}:${port}/api/candle-sticks/${symbol}/range?start=2025-06-01&end=2026-02-23`;
+
+
+
+// 1. รับค่า symbol จาก URL Query Parameter (เช่น ?symbol=^SET)
+const urlParams = new URLSearchParams(window.location.search);
+// ถ้าใน URL ไม่มี ?symbol=... จะให้ Default เป็น "^SET"
+const symbol = urlParams.get('symbol') || "^SET"; 
+
+// 2. คำนวณช่วงเวลาแบบ Dynamic (อิงตามเวลาปัจจุบันของระบบ)
+const today = new Date();
+
+// หา Date ของเมื่อวาน (End Date: ย้อนหลัง 1 วัน)
+const endDateObj = new Date(today);
+endDateObj.setDate(today.getDate() - 1);
+const end = endDateObj.toISOString().split('T')[0]; // แปลงเป็นฟอร์แมต YYYY-MM-DD
+
+// หา Date ของปีที่แล้ว (Start Date: ย้อนหลัง 1 ปี)
+const startDateObj = new Date(today);
+startDateObj.setFullYear(today.getFullYear() - 1);
+const start = startDateObj.toISOString().split('T')[0]; // แปลงเป็นฟอร์แมต YYYY-MM-DD
+
+// 3. สร้าง API URL (ใช้ Relative Path เพื่อความปลอดภัยเรื่อง Host/Port/Protocol)
+const apiUrl = `http://${hostname}:${port}/api/candle-sticks/${encodeURIComponent(symbol)}/range?start=${start}&end=${end}`;
+
+console.log('Symbol ที่ได้รับ:', symbol);
+console.log('ช่วงเวลา:', `${start} ถึง ${end}`);
 console.log('URL ของ API:', apiUrl);
+
 
 async function getCandleSticks() {
     try {

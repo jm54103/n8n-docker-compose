@@ -12,14 +12,50 @@
     <script type="module" src="/src/main.tsx"></script>
     -->    
 
-  <h2 style="color: azure;">CANDLE STICKS</h2>  
-    <script type="module" src="./candle-sticks.js"></script>     
+    <!-- ส่วนแสดงหัวข้อ -->
+    <div class="dashboard-header">
+        <h2 style="color: azure; margin-bottom: 5px;">CANDLE STICKS</h2>
+        <!-- จุดที่จะแสดง Symbol -->
+        <h3 id="display-symbol" style="color: #a1a1aa; margin: 0;">Loading Symbol...</h3> 
+    </div>
+
+    <!-- ส่วนแสดงรายละเอียดช่วงเวลา -->
+    <div class="info-box" style="color: #a1a1aa; margin: 0;">
+        <p>ช่วงเวลาข้อมูล (1 ปี ย้อนหลัง): <span id="display-range" >-</span></p>
+    </div>
+
+    <script>
+        // 1. ดึงค่า symbol จาก URL Query Parameter (?symbol=...)
+        const urlParams = new URLSearchParams(window.location.search);
+        const symbol = urlParams.get('symbol') || "^SET"; // ถ้าไม่มีให้ใช้ ^SET เป็นค่าเริ่มต้น
+
+        // 2. คำนวณช่วงเวลา (Start ย้อนหลัง 1 ปี / End ย้อนหลัง 1 วัน)
+        const today = new Date();
+        
+        const endDateObj = new Date(today);
+        endDateObj.setDate(today.getDate() - 1);
+        const end = endDateObj.toISOString().split('T')[0];
+
+        const startDateObj = new Date(today);
+        startDateObj.setFullYear(today.getFullYear() - 1);
+        const start = startDateObj.toISOString().split('T')[0];
+
+        // 3. นำค่าไปแสดงบนหน้าเว็บ (DOM Manipulation)
+        document.getElementById('display-symbol').innerText = `หุ้น/ดัชนี: ${symbol}`;
+        document.getElementById('display-range').innerText = `${start} ถึง ${end}`;
+
+        // 4. สร้าง URL สำหรับเรียก API (เพื่อนำไปใช้ Fetch ข้อมูลต่อ)
+        const apiUrl = `/api/candle-sticks/${encodeURIComponent(symbol)}/range?start=${start}&end=${end}`;
+        console.log('API Target URL:', apiUrl);
+    </script>
+
+  <script type="module" src="./candle-sticks.js"></script>     
   <p>
   <div id="app" style="width:800px;height:600px;align-items: center;">
     <div class="chart-container">
       <canvas id="chart"></canvas>
     </div>
-  </div>
+  </div>  
 </body>
 </html>
 <style>
