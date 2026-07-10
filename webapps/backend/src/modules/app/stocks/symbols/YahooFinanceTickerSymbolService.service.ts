@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { YahooFinanceTickerSymbols } from './entities/yahoo_finance_ticker_symbols';
 
 @Injectable()
@@ -31,6 +31,23 @@ export class YahooFinanceTickerSymbolsService {
 
     return symbol;
   }
+
+    /**
+   * ค้นหาข้อมูลด้วย Exchange และ Country
+   */
+  async findByExchanges(exchange: string[]): Promise<YahooFinanceTickerSymbols[]> {
+    const tickers = await this.symbolRepository.find({
+      where: { exchange: In(exchange) },
+    });
+
+    if (!tickers) {
+      throw new NotFoundException(`Symbol with Exchange: ${exchange} not found`);
+    }
+
+    return tickers;
+  }
+
+
 
   /**
    * ค้นหาข้อมูลตาม Ticker อย่างเดียว (อาจได้ผลลัพธ์มากกว่า 1 รายการ)

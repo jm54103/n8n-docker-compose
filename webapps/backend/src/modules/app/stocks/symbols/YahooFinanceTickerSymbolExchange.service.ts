@@ -22,17 +22,5 @@ export class YahooFinanceTickerSymbolsExchangeService {
    });
  }
 
-  /**
-   * ค้นหาข้อมูลด้วย Composite Primary Keys (Exchange,Country)
-   */
-  async findOne(exchange: string, country: string): Promise<YahooFinanceTickerSymbolsExchange> {
-    const item = await this.symbolExchangeRepository.findOne({
-      where: { exchange, country },
-    });
-    if (!item) {
-      throw new NotFoundException(`Symbol with Exchange: ${exchange} and Country: ${country} not found`);
-    }
-    return item;
-  }  
- 
+  
 }

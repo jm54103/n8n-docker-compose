@@ -33,6 +33,14 @@ export class YahooFinanceTickerSymbolController {
     return await this.symbolService.findAll();
   }
 
+  @Get('findByExchangeCountry')
+  @Public() 
+  async findByExchangeCountry(
+    @Query('exchanges') exchanges: string[]  
+  ): Promise<YahooFinanceTickerSymbolsCountry[]> {
+    return await this.symbolService.findByExchanges(exchanges) 
+  }
+
   
   @Get('country')
   @Public() 
