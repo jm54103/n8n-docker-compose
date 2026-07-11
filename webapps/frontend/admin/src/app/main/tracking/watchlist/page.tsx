@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { ChevronDown, X, RefreshCw, BarChart2, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { get } from "http";
 
 interface ExchangeData {
   exchange: string;
@@ -19,6 +20,22 @@ interface SymbolItem {
 // กำหนด Type สำหรับระบุการเรียงลำดับข้อมูล
 type SortKey = "ticker" | "name" | "exchange" | "categoryName" | "country";
 type SortOrder = "asc" | "desc" | null;
+
+// ==========================================
+// 🌐 ตั้งค่าตัวแปรระดับ Global สำหรับหน้านี้
+// ==========================================
+const API_PORT = "5000";
+
+// ใช้ฟังก์ชันดึงค่า Host/Port เพื่อป้องกัน Error "window is not defined" ฝั่ง Server (SSR)
+const getClientHost = () => {
+  return typeof window !== "undefined" ? window.location.hostname : "localhost";
+};
+
+const getClientPort = () => {
+  return API_PORT;
+  //return typeof window !== "undefined" ? (window.location.port || "3000") : "3000";
+};
+// ==========================================
 
 export default function WatchListPage() {
   // --- States สำหรับระบบตัวกรอง (Dropdowns) ---
@@ -53,7 +70,10 @@ export default function WatchListPage() {
     const fetchDropdownData = async () => {
       try {
         setIsDropdownLoading(true);
-        const response = await fetch("http://localhost:5000/api/symbols/exchange");
+        // เรียกใช้ฟังก์ชันและตัวแปรที่ประกาศไว้ด้านนอก
+        const host = getClientHost();
+        const port = getClientPort();
+        const response = await fetch(`http://${host}:${port}/api/symbols/exchange`);
         if (!response.ok) throw new Error("ไม่สามารถโหลดข้อมูลตัวเลือกได้");
         
         const data: ExchangeData[] = await response.json();
@@ -102,10 +122,13 @@ export default function WatchListPage() {
         setIsTableLoading(true);
         const params = new URLSearchParams();
         selectedExchanges.forEach((ex) => params.append("exchanges", ex));
-
-        const response = await fetch(
-          `http://localhost:5000/api/symbols/findByExchangeCountry?${params.toString()}`
-        );
+                // เรียกใช้ฟังก์ชันและตัวแปรที่ประกาศไว้ด้านนอก
+        const host = getClientHost();
+        const port = getClientPort();
+        const url = `http://${host}:${port}/api/symbols/findByExchangeCountry?exchanges=XXX&${params.toString()}`;
+        const response = await fetch(url);
+        console.log("Fetching symbols from URL:", url); // เพิ่มการ log URL ที่เรียก
+        console.log
         if (!response.ok) throw new Error("ไม่สามารถโหลดข้อมูลในตารางได้");
         
         const data: SymbolItem[] = await response.json();
@@ -241,8 +264,8 @@ export default function WatchListPage() {
                 ) : (
                   selectedExchanges.map((e) => (
                     <span key={e} className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-medium px-2 py-1 rounded">
-                      {e}
-                      <X className="h-3 w-3 cursor-pointer" onClick={(e) => { e.stopPropagation(); handleSelectExchange(e); }} />
+                      {e}                      
+                      <X className="h-3 w-3 cursor-pointer" onClick={(ev) => { ev.stopPropagation(); handleSelectExchange(e); }} />
                     </span>
                   ))
                 )}
@@ -293,7 +316,7 @@ export default function WatchListPage() {
             <table className="min-w-full divide-y divide-gray-200 text-sm text-left animate-pulse">
               <thead className="bg-gray-100 text-xs text-gray-400 font-semibold uppercase">
                 <tr>
-                  {["Ticker", "Name", "Exchange", "Category", "Country"].map((h) => <th key={h} className="px-6 py-3">{h}</th>)}
+                  {["Ticker", "Name", "Exchange", "Category", "Country", "Chart"].map((h) => <th key={h} className="px-6 py-3">{h}</th>)}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
@@ -304,6 +327,7 @@ export default function WatchListPage() {
                     <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-12"></div></td>
                     <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-16"></div></td>
                     <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-24"></div></td>
+                    <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-8"></div></td>
                   </tr>
                 ))}
               </tbody>
@@ -316,51 +340,65 @@ export default function WatchListPage() {
               <thead className="bg-gray-100 text-xs text-gray-700 uppercase font-semibold select-none">
                 <tr>
                   {[
-                    { id: "ticker", label: "Ticker" },
-                    { id: "name", label: "Name" },
-                    { id: "exchange", label: "Exchange" },
-                    { id: "categoryName", label: "Category" },
-                    { id: "country", label: "Country" }
+                    { id: "ticker", label: "Ticker", sortable: true },
+                    { id: "name", label: "Name", sortable: true },
+                    { id: "exchange", label: "Exchange", sortable: true },
+                    { id: "categoryName", label: "Category", sortable: true },
+                    { id: "country", label: "Country", sortable: true },
+                    { id: "chart", label: "Chart", sortable: false }
                   ].map((col) => (
                     <th
                       key={col.id}
-                      onClick={() => handleSort(col.id as SortKey)}
-                      className="px-6 py-3 cursor-pointer hover:bg-gray-200 transition-colors group"
+                      onClick={() => col.sortable && handleSort(col.id as SortKey)}
+                      className={`px-6 py-3 transition-colors group ${col.sortable ? "cursor-pointer hover:bg-gray-200" : ""}`}
                     >
                       <div className="flex items-center space-x-1">
                         <span>{col.label}</span>
-                        <ArrowUpDown className={`h-3 w-3 text-gray-400 group-hover:text-gray-600 ${sortKey === col.id && sortOrder ? "text-indigo-600 font-bold" : ""}`} />
+                        {col.sortable && (
+                          <ArrowUpDown className={`h-3 w-3 text-gray-400 group-hover:text-gray-600 ${sortKey === col.id && sortOrder ? "text-indigo-600 font-bold" : ""}`} />
+                        )}
                       </div>
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white text-gray-900">
-                {paginatedSymbols.map((item) => (
-                  <tr key={item.ticker} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 font-mono font-bold text-indigo-600">{item.ticker}</td>
-                    <td className="px-6 py-4 max-w-xs truncate font-medium">{item.name}</td>
-                    <td className="px-6 py-4">
-                      <span className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded border border-gray-200 font-medium">{item.exchange}</span>
-                    </td>
-                    <td className="px-6 py-4 text-gray-500">{item.categoryName || "-"}</td>
-                    <td className="px-6 py-4 text-gray-600">{item.country}</td>
-                  </tr>
-                ))}
+                {paginatedSymbols.map((item) => {
+                  // ตั้งค่า Host และ Port ที่นี่ตามความเหมาะสม
+                  const host = getClientHost();
+                  const port = getClientPort();
+                  const chartUrl = `http://${host}:${port}/chart/?symbol=${item.ticker}`;
+
+                  return (
+                    <tr key={item.ticker} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 font-mono font-bold text-indigo-600">{item.ticker}</td>
+                      <td className="px-6 py-4 max-w-xs truncate font-medium">{item.name}</td>
+                      <td className="px-6 py-4">
+                        <span className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded border border-gray-200 font-medium">{item.exchange}</span>
+                      </td>
+                      <td className="px-6 py-4 text-gray-500">{item.categoryName || "-"}</td>
+                      <td className="px-6 py-4 text-gray-600">{item.country}</td>
+                      {/* ไอคอน Chart สำหรับคลิกเปิดเบราว์เซอร์หน้าต่างใหม่ */}
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => window.open(chartUrl, "_blank", "noopener,noreferrer")}
+                          className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                          title={`ดูข้อมูลกราฟของ ${item.ticker}`}
+                        >
+                          <BarChart2 className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}
         </div>
 
         {/* ================= แถบควบคุมการเปลี่ยนหน้าตาราง (Pagination Controls) ================= */}
-        {symbols.length > 0 && !isTableLoading && (
-          <div className="p-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-600">
-            <div>
-              แสดงรายการที่ <span className="font-semibold">{startIndex + 1}</span> ถึง{" "}
-              <span className="font-semibold">{Math.min(endIndex, totalItems)}</span> จากทั้งหมด{" "}
-              <span className="font-semibold">{totalItems}</span> รายการ
-            </div>
-
+        {symbols.length > 0 && !isTableLoading && (                 
+          <div className="p-5 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-600">                  
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
@@ -390,10 +428,18 @@ export default function WatchListPage() {
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>
-          </div>
-        )}
-
+          </div>          
+        )} 
+        {symbols.length > 0 && !isTableLoading && (      
+        <div className="p-5 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-600">
+          <div className="flex items-center space-x-2">             
+            แสดงรายการที่&nbsp;<span className="font-semibold">{startIndex + 1}</span>ถึง &nbsp;
+            <span className="font-semibold">{Math.min(endIndex, totalItems)}</span>&nbsp;จากทั้งหมด&nbsp;
+            <span className="font-semibold">{totalItems}</span>&nbsp;รายการ
+          </div>  
+        </div>  
+        )} 
       </div>
-    </div>
+    </div>    
   );
 }
