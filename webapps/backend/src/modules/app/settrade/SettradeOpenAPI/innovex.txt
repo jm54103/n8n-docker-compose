@@ -1,0 +1,3 @@
+https://trade.innovestx.co.th/api-portal/set
+
+เข้าสู่ระบบเพื่อยืนยันตัวตนกับ settrade รอผลทางอีเมล

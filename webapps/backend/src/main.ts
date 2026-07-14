@@ -68,7 +68,11 @@ async function bootstrap() {
 
   // ตั้งค่า CORS ให้อนุญาตเฉพาะจากแหล่งที่มาที่กำหนด (เช่น Frontend ของคุณ)
   app.enableCors({
-    origin: 'http://localhost:3000', // อนุญาต (Frontend ของคุณ)
+    origin: [
+          'http://localhost:3000',
+          'http://localhost:5000',
+          'http://localhost:8080'
+          ], // 👈 ใส่เป็น Array ของ URL ที่ต้องการอนุญาต
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

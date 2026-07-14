@@ -7,13 +7,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 /*-- Redis  --*/
 import { RedisModule } from '@nestjs-modules/ioredis';
+/* ===== settrade ===== */
+import { SettradeModule } from './modules/app/settrade/symbols/settrade.module';  
 
-/* ===== Stocks ===== */
-import { MarketSignalsModule } from './modules/app/stocks/market-signals/market-signals.module';
-import { MarketSignal } from './modules/app/stocks/market-signals/entities/market-signal.entity';
-import { CandleSticksModule } from './modules/app/stocks/candle-sticks/candle-sticks.module';
-import { CandleStick } from './modules/app/stocks/candle-sticks/entities/candle-stick.entity';
-import { YahooFinanceTickerSymbols } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols';
+/* ===== Yahoo Finance API ===== */
+import { MarketSignalsModule } from './modules/app/yfinance/market-signals/market-signals.module';
+import { MarketSignal } from './modules/app/yfinance/market-signals/entities/market-signal.entity';
+import { CandleSticksModule } from './modules/app/yfinance/candle-sticks/candle-sticks.module';
+import { CandleStick } from './modules/app/yfinance/candle-sticks/entities/candle-stick.entity';
+import { YahooFinanceTickerSymbols } from './modules/app/yfinance/symbols/entities/yahoo_finance_ticker_symbols';
 
 /* ===== System ===== */
 import { SystemParametersModule } from './modules/sys/system-parameters/system-parameters.module';
@@ -39,11 +41,11 @@ import 'winston-daily-rotate-file';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { PermissionsGuard } from './common/guards/permissions.guard';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
-import { YahooFinanceTickerSymbolModule } from './modules/app/stocks/symbols/yahoo_finance_ticker_symbols.module';
-import { YahooFinanceTickerSymbolController } from './modules/app/stocks/symbols/yahool_finance_ticker_symbols.controller';
-import { YahooFinanceTickerSymbolsCountryService } from './modules/app/stocks/symbols/YahooFinanceTickerSymbolCountry.service';
-import { YahooFinanceTickerSymbolsCountry } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols_country.entity';
-import { YahooFinanceTickerSymbolsExchange } from './modules/app/stocks/symbols/entities/yahoo_finance_ticker_symbols_exchange.entity';
+import { YahooFinanceTickerSymbolModule } from './modules/app/yfinance/symbols/yahoo_finance_ticker_symbols.module';
+import { YahooFinanceTickerSymbolController } from './modules/app/yfinance/symbols/yahool_finance_ticker_symbols.controller';
+import { YahooFinanceTickerSymbolsCountryService } from './modules/app/yfinance/symbols/YahooFinanceTickerSymbolCountry.service';
+import { YahooFinanceTickerSymbolsCountry } from './modules/app/yfinance/symbols/entities/yahoo_finance_ticker_symbols_country.entity';
+import { YahooFinanceTickerSymbolsExchange } from './modules/app/yfinance/symbols/entities/yahoo_finance_ticker_symbols_exchange.entity';
 /*--Logger--*/
 
 @Module({
@@ -226,6 +228,7 @@ import { YahooFinanceTickerSymbolsExchange } from './modules/app/stocks/symbols/
 
 
     /* Modules */
+    SettradeModule,
     MarketSignalsModule,
     CandleSticksModule,  
     YahooFinanceTickerSymbolModule,  
