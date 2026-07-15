@@ -1,5 +1,9 @@
 1:"$Sreact.fragment"
-2:I[20795,["/admin/_next/static/chunks/f9f6a44ffc15e306.js","/admin/_next/static/chunks/7f9d798296908574.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"buildId":"ZEM3DTee7d6cbQeWOnQfH","rsc":["$","$1","c",{"children":[["$","div",null,{"children":[["$","h1",null,{"className":"text-2xl font-bold mb-4","children":"SignalsPage"}],["$","p",null,{"children":"เนื้อหาของหน้าสัญญาณตลาดจะแสดงตรงนี้..."}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
-4:null
+2:I[22891,["/admin/_next/static/chunks/f9f6a44ffc15e306.js","/admin/_next/static/chunks/7f9d798296908574.js"],"ClientPageRoot"]
+3:I[63209,["/admin/_next/static/chunks/ed275dfdec4fda50.js","/admin/_next/static/chunks/f42d37fb5f4b0152.js","/admin/_next/static/chunks/5f16149b7a6d5438.js"],"default"]
+6:I[20795,["/admin/_next/static/chunks/f9f6a44ffc15e306.js","/admin/_next/static/chunks/7f9d798296908574.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+0:{"buildId":"Ce0EmR89BGIFbPFolR_dh","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/admin/_next/static/chunks/5f16149b7a6d5438.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+4:{}
+5:{}
+8:null
