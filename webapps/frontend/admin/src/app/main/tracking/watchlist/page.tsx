@@ -367,7 +367,9 @@ export default function WatchListPage() {
                   // ตั้งค่า Host และ Port ที่นี่ตามความเหมาะสม
                   const host = getClientHost();
                   const port = getClientPort();
-                  const chartUrl = `http://${host}:${port}/chart/?symbol=${item.ticker}`;
+                  
+                  //const chartUrl = `http://${host}:${port}/chart/?symbol=${item.ticker}`;
+                  const chartUrl = `https://finance.yahoo.com/quote/${item.ticker}/`;
 
                   return (
                     <tr key={item.ticker} className="hover:bg-gray-50 transition-colors">

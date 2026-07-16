@@ -7,8 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 /*-- Redis  --*/
 import { RedisModule } from '@nestjs-modules/ioredis';
-/* ===== settrade ===== */
-import { SettradeModule } from './modules/app/settrade/symbols/settrade.module';  
+
 
 /* ===== Yahoo Finance API ===== */
 import { MarketSignalsModule } from './modules/app/yfinance/market-signals/market-signals.module';
@@ -228,7 +227,6 @@ import { YahooFinanceTickerSymbolsExchange } from './modules/app/yfinance/symbol
 
 
     /* Modules */
-    SettradeModule,
     MarketSignalsModule,
     CandleSticksModule,  
     YahooFinanceTickerSymbolModule,  

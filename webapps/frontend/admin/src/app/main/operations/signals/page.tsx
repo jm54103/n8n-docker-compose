@@ -1,5 +1,6 @@
 "use client";
 
+import { BarChart2 } from 'lucide-react';
 import React, { useState, useEffect, useMemo } from 'react';
 
 // ==========================================
@@ -45,7 +46,7 @@ export default function SignalsPage() {
   const [sortField, setSortField] = useState<SortField | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   useEffect(() => {
     const loadMarketSignals = async () => {
@@ -181,7 +182,7 @@ export default function SignalsPage() {
             <div className="relative w-full max-w-md">
               <input
                 type="text"
-                placeholder="🔍 ค้นหาตาม Symbol... (เช่น ^BANK)"
+                placeholder="🔍 ค้นหาตาม Symbol... (เช่น PTT)"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -238,6 +239,7 @@ export default function SignalsPage() {
                       <th onClick={() => handleSort('symbol')} className="cursor-pointer px-6 py-4 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
                         Symbol {renderSortIndicator('symbol')}
                       </th>
+                      {/* <th className="px-2 py-4 text-center">&nbsp;</th> */}
                       <th onClick={() => handleSort('last_close')} className="cursor-pointer px-6 py-4 text-right transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
                         Last Close {renderSortIndicator('last_close')}
                       </th>
@@ -253,24 +255,44 @@ export default function SignalsPage() {
                       {/* ส่วนคอลัมน์ที่ไม่จำเป็นต้องกดเรียงลำดับ */}
                       <th className="px-6 py-4 text-center">EMA (50/200)</th>
                       <th className="px-6 py-4 text-center">Cross Status</th>
-                      <th onClick={() => handleSort('updated_at')} className="cursor-pointer px-6 py-4 text-right transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
+                      <th onClick={() => handleSort('updated_at')} className="cursor-pointer px-4 py-4 text-right transition-colors hover:bg-slate-100 dark:hover:bg-slate-800">
                         Updated At {renderSortIndicator('updated_at')}
-                      </th>
+                      </th>                     
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                     {currentData.length === 0 ? (
                       <tr>
-                        <td colSpan={8} className="py-12 text-center text-slate-400">
+                        <td colSpan={9} className="py-12 text-center text-slate-400">
                           ไม่พบข้อมูลที่ตรงกับคำค้นหา
                         </td>
                       </tr>
                     ) : (
                       currentData.map((item) => (
                         <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
-                          <td className="whitespace-nowrap px-6 py-4 font-bold text-slate-950 dark:text-white">
-                            {item.symbol}
+                          <td className="whitespace-nowrap px-6 py-4 font-bold text-slate-950 dark:text-white">                            
+                            <button                               
+                                onClick={() => window.open(`http://${getClientHost()}:${getClientPort()}/chart/?symbol=${item.symbol}.BK`, "_blank", "noopener,noreferrer")}
+                                className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                                title={`ดูข้อมูลกราฟของ ${item.symbol}`}
+                              >
+                                <BarChart2 className="h-4 w-4" />
+                              </button>
+                              {item.symbol}
                           </td>
+                          {/*
+                          <td className="whitespace-nowrap px-2 py-4 text-center">                           
+                            <td className="px-2 py-4">
+                              <button                               
+                                onClick={() => window.open(`http://${getClientHost()}:${getClientPort()}/chart/?symbol=${item.symbol}.BK`, "_blank", "noopener,noreferrer")}
+                                className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                                title={`ดูข้อมูลกราฟของ ${item.symbol}`}
+                              >
+                                <BarChart2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </td>
+                          */}
                           <td className="whitespace-nowrap px-6 py-4 text-right font-mono">
                             {item.last_close?.toFixed(2)}
                           </td>
@@ -298,9 +320,9 @@ export default function SignalsPage() {
                             {item.death_cross && <span className="text-xs bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-400 px-2 py-0.5 rounded-full">Death</span>}
                             {!item.golden_cross && !item.death_cross && "—"}
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-right text-xs text-slate-500">
+                          <td className="whitespace-nowrap px-4 py-4 text-right text-xs text-slate-500">
                             {item.updated_at ? new Date(item.updated_at).toLocaleString('th-TH') : "—"}
-                          </td>
+                          </td>                                                   
                         </tr>
                       ))
                     )}
