@@ -45,6 +45,7 @@ import { YahooFinanceTickerSymbolController } from './modules/app/yfinance/symbo
 import { YahooFinanceTickerSymbolsCountryService } from './modules/app/yfinance/symbols/YahooFinanceTickerSymbolCountry.service';
 import { YahooFinanceTickerSymbolsCountry } from './modules/app/yfinance/symbols/entities/yahoo_finance_ticker_symbols_country.entity';
 import { YahooFinanceTickerSymbolsExchange } from './modules/app/yfinance/symbols/entities/yahoo_finance_ticker_symbols_exchange.entity';
+import { N8nModule } from './modules/sys/n8n/n8n.module';
 /*--Logger--*/
 
 @Module({
@@ -225,8 +226,8 @@ import { YahooFinanceTickerSymbolsExchange } from './modules/app/yfinance/symbol
       synchronize: true, // production = false
     }),
 
-
     /* Modules */
+    N8nModule,
     MarketSignalsModule,
     CandleSticksModule,  
     YahooFinanceTickerSymbolModule,  

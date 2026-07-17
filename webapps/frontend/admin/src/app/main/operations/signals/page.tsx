@@ -8,6 +8,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 // ==========================================
 const API_PORT = "5000";
 
+
 const getClientHost = () => {
   return typeof window !== "undefined" ? window.location.hostname : "localhost";
 };
@@ -15,6 +16,40 @@ const getClientHost = () => {
 const getClientPort = () => {
   return API_PORT;
 };
+
+const getChartUrl = (symbol: string) => {
+  var ticker = '';
+  switch (symbol) {  
+    case '^BANK.BK':
+      break;  
+    case '^SET.BK':
+      ticker = `${symbol}`;
+      break;
+    case '^SET50.BK':
+      ticker = `${symbol}`;
+      break;
+    case '^SETHD.BK':
+      ticker = `${symbol}`;
+      break;
+    case '^RUT':
+      ticker = `${symbol}`;
+      break;
+    case '^IXIC':
+      ticker = `${symbol}`;
+      break;
+    case '^DJI':
+      ticker = `${symbol}`;
+      break;
+    case '^GSPC':
+      ticker = `${symbol}`;
+      break;
+    default:
+      ticker = `${symbol}.BK`;
+      break;
+  }
+  return`http://${getClientHost()}:${getClientPort()}/chart/?symbol=${ticker}`;
+};
+
 
 interface SignalData {
   id: number;
@@ -164,7 +199,7 @@ export default function SignalsPage() {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-
+  
   return (
     <div className="min-h-screen bg-slate-50 p-6 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
       <div className="mx-auto max-w-7xl">
@@ -272,27 +307,14 @@ export default function SignalsPage() {
                         <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
                           <td className="whitespace-nowrap px-6 py-4 font-bold text-slate-950 dark:text-white">                            
                             <button                               
-                                onClick={() => window.open(`http://${getClientHost()}:${getClientPort()}/chart/?symbol=${item.symbol}.BK`, "_blank", "noopener,noreferrer")}
+                                onClick={() => window.open(getChartUrl(item.symbol), "_blank", "noopener,noreferrer")}
                                 className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
                                 title={`ดูข้อมูลกราฟของ ${item.symbol}`}
                               >
                                 <BarChart2 className="h-4 w-4" />
                               </button>
                               {item.symbol}
-                          </td>
-                          {/*
-                          <td className="whitespace-nowrap px-2 py-4 text-center">                           
-                            <td className="px-2 py-4">
-                              <button                               
-                                onClick={() => window.open(`http://${getClientHost()}:${getClientPort()}/chart/?symbol=${item.symbol}.BK`, "_blank", "noopener,noreferrer")}
-                                className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
-                                title={`ดูข้อมูลกราฟของ ${item.symbol}`}
-                              >
-                                <BarChart2 className="h-4 w-4" />
-                              </button>
-                            </td>
-                          </td>
-                          */}
+                          </td>                         
                           <td className="whitespace-nowrap px-6 py-4 text-right font-mono">
                             {item.last_close?.toFixed(2)}
                           </td>

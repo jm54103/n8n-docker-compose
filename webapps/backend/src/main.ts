@@ -26,7 +26,7 @@ async function bootstrap() {
   
   // 1.ใช้ Winston เป็น Logger หลักของระบบ
   //app.useGlobalInterceptors(new AdvancedLoggingInterceptor());
-  //app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   // --- ตั้งค่า prefix ให้กับ API ทั้งหมด ---
   app.setGlobalPrefix('api'); 
