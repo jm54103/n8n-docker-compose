@@ -74,6 +74,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
 
   const [isLoggingOut, setIsLoggingOut] = useState(false); 
   const [userPayload, setUserPayload] = useState<any>(null);
+  const [decodedToken, setDecodedToken] = useState<any>(null);
   
   useEffect(() => {        
     const token = localStorage.getItem("accessToken");    
@@ -88,7 +89,8 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             .join('')
         );    
         setUserPayload(JSON.parse(jsonPayload));      
-        const decodedToken = getSafeDecodedToken(); 
+        let decodedToken = getSafeDecodedToken(); 
+        setDecodedToken(decodedToken);
         if (decodedToken) {
           console.log(`JWT Payload:`);         
           console.log(`sub: ${decodedToken.sub}`); 
@@ -129,28 +131,41 @@ export default function MainLayout({ children }: { children: ReactNode }) {
 
           <div className="font-bold text-xl text-blue-600">APPLICATION NAME</div>
         </div>
-        
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-medium text-slate-600 hidden sm:flex items-center gap-2">
-            ผู้ใช้งาน: 
-            {userPayload ? (
-              //decodedToken = this.getSafeDecodedToken()
-              <b className="text-blue-700">{userPayload.sub || userPayload.username}</b>
-            ) : (
-              "ไม่มีข้อมูลผู้ใช้"
-            )}
-          </span>        
-          
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-red-500 hover:text-red-600 hover:bg-red-50"
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-          >
-            {isLoggingOut ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <LogOut className="h-4 w-4 mr-2" />}
-            <span className="hidden sm:inline">ออกจากระบบ</span>
-          </Button>
+        <div className="flex items-center gap-4">              
+          <table >
+            <tr>
+              <td >
+                <div className="flex justify-start items-center gap-2">
+                 <span className="text-sm font-medium text-slate-600 hidden sm:flex items-center gap-2 px-3 py-1 rounded-lg">
+                  ผู้ใช้งาน: 
+                  {userPayload ? (                                             
+                      <b className="text-blue-700">{userPayload.sub || userPayload.username}</b>                         
+                  ) : (
+                  "ไม่มีข้อมูลผู้ใช้"
+                  )}                              
+                </span>   
+                </div>
+              </td>         
+              <td>
+                <div className="flex justify-start items-center gap-2">
+                    {decodedToken ? (
+                      <span className="text-sm font-medium  gap-2 px-3 py-1  ">login at {decodedToken.loginTime}</span>
+                     ) : null}
+
+                     <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="cursor-pointer rounded bg-gray-600 px-4 py-2 text-white hover:bg-red-700 hover:text-white transition-colors duration-200"
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                >
+                {isLoggingOut ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <LogOut className="h-4 w-4 mr-2" />}
+                <span className="hidden sm:inline">ออกจากระบบ</span>
+                </Button>
+                </div>                                
+              </td>
+            </tr>
+          </table>          
         </div>
       </header>
 

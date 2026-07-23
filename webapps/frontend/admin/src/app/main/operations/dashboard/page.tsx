@@ -5,8 +5,6 @@ export default function DashboardPage() {
       <li>Auth
         <ul>
           <li>1.1.ใช้ useSession() เพื่อดึงข้อมูล session ของผู้ใช้</li>
-          <li>1.2.แสดงชื่อผู้ใช้ในส่วน header</li>
-          <li>1.3.สร้างปุ่ม Logout ที่เรียก signOut() จาก NextAuth เมื่อคลิก</li>
         </ul>  
       </li>           
       {/* ข้อมูลที่นี่จะไปโผล่ในส่วน {children} ของ MainLayout */}
