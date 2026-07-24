@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { UserGroupsService } from './user-groups.service';
 import { CreateUserGroupDto, UpdateUserGroupDto } from './dto';
+import { Public } from '../../../common/decorators/public.decorator';
 
+@Public()
 @Controller('user-groups')
 export class UserGroupsController {
   constructor(private readonly groupService: UserGroupsService) {}
@@ -12,13 +14,15 @@ export class UserGroupsController {
   }
 
   @Get()
+  @Public()
   findAll() {
-    return this.groupService.findAll_dto();
+    return this.groupService.findAll();
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.groupService.findOne_dto(id);
+    return this.groupService.findOne(id);
   }
 
   @Patch(':id')

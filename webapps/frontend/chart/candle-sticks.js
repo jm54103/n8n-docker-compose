@@ -98,7 +98,7 @@ const port = window.location.port;
 // 1. รับค่า symbol จาก URL Query Parameter (เช่น ?symbol=^SET)
 const urlParams = new URLSearchParams(window.location.search);
 // ถ้าใน URL ไม่มี ?symbol=... จะให้ Default เป็น "^SET"
-const symbol = urlParams.get('symbol') || "^SET"; 
+const symbol = urlParams.get('symbol') || "^SET";
 
 // 2. คำนวณช่วงเวลาแบบ Dynamic (อิงตามเวลาปัจจุบันของระบบ)
 const today = new Date();
@@ -122,31 +122,77 @@ console.log('URL ของ API:', apiUrl);
 
 
 async function getCandleSticks() {
-    try {
-        const response = await fetch(apiUrl);
+  try {
+    const response = await fetch(apiUrl);
 
-        // ตรวจสอบว่า Response สำเร็จหรือไม่ (status 200-299)
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // แปลงข้อมูลที่ได้เป็น JSON
-        const data = await response.json();
-
-        // แสดงผลข้อมูลใน Console
-        console.log(`ข้อมูลหุ้น ${symbol}:`, data);
-        
-        // ตรงนี้คุณสามารถนำ data ไปวาดกราฟหรือแสดงผลบนหน้าเว็บได้เลย
-        return data;
-
-    } catch (error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    // ตรวจสอบว่า Response สำเร็จหรือไม่ (status 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    // แปลงข้อมูลที่ได้เป็น JSON
+    const data = await response.json();
+
+    // แสดงผลข้อมูลใน Console
+    console.log(`ข้อมูลหุ้น ${symbol}:`, data);
+
+    // ตรงนี้คุณสามารถนำ data ไปวาดกราฟหรือแสดงผลบนหน้าเว็บได้เลย
+    return data;
+
+  } catch (error) {
+    console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+  }
+}
+
+/**
+ * คำนวณค่า EMA จากข้อมูล Candle Stick
+ * @param {Array} candles - Array ของข้อมูล candle stick [{x, o, h, l, c, v}, ...]
+ * @param {number} period - จำนวนช่วงเวลาที่ต้องการคำนวณ (เช่น 50)
+ * @returns {Array} Array ของวัตถุพร้อมวาดกราฟ [{x: timestamp, y: emaValue}, ...]
+ */
+function computeEMA(candles, period) {
+  if (!candles || candles.length < period) {
+    return []; // ข้อมูลไม่เพียงพอสำหรับคำนวณ EMA period นี้
+  }
+
+  const k = 2 / (period + 1);
+  const emaData = [];
+
+  // 1. คำนวณค่า SMA เป็นจุดเริ่มต้นของ EMA
+  let sum = 0;
+  for (let i = 0; i < period; i++) {
+    sum += candles[i].c; // ใช้ราคาปิด (c)
+  }
+  let prevEMA = sum / period;
+
+  // ใส่ค่า EMA วันแรกที่คำนวณได้ลงใน Array
+  emaData.push({
+    x: candles[period - 1].x,
+    y: Number(prevEMA.toFixed(2)) // ปัดเศษ 2 ตำแหน่ง
+  });
+
+  // 2. คำนวณค่า EMA สำหรับวันต่อๆ มา
+  for (let i = period; i < candles.length; i++) {
+    const currentClose = candles[i].c;
+    const currentEMA = (currentClose * k) + (prevEMA * (1 - k));
+
+    emaData.push({
+      x: candles[i].x,
+      y: Number(currentEMA.toFixed(2))
+    });
+
+    prevEMA = currentEMA; // อัปเดต EMA ล่าสุดเพื่อใช้ในรอบถัดไป
+  }
+
+  return emaData;
 }
 
 // เรียกใช้งานฟังก์ชัน
 const candle_sticks = await getCandleSticks();
 const rsiData = computeRSI(candle_sticks, 14);
+const ema50Data = computeEMA(candle_sticks, 50);
+const ema100Data = computeEMA(candle_sticks, 100);
+const ema200Data = computeEMA(candle_sticks, 200);
 const volumeData = candle_sticks.map(d => ({
   x: d.x,
   y: d.v,
@@ -189,6 +235,26 @@ new Chart(ctx, {
         data: rsiData,
         yAxisID: "rsi",
         borderColor: "#FFD600",
+        borderWidth: 1,
+        pointRadius: 0,
+        parsing: false
+      },
+      {
+        type: "line",
+        label: "EMA 50",
+        data: ema50Data,
+        yAxisID: "price",
+        borderColor: "#4ab5dfff",
+        borderWidth: 1,
+        pointRadius: 0,
+        parsing: false
+      },
+      {
+        type: "line",
+        label: "EMA 100",
+        data: ema100Data,
+        yAxisID: "price",
+        borderColor: "#b86e28ff",
         borderWidth: 1,
         pointRadius: 0,
         parsing: false

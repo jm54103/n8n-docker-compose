@@ -1,87 +1,91 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-    <script type="module" crossorigin src="./assets/index-D6NwT6qS.js"></script>
-  </head>
-  <body>
-    <!--
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>frontend</title>
+  <script type="module" crossorigin src="./assets/index-iazSOfV1.js"></script>
+</head>
+
+<body>
+  <!--
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    -->    
+    -->
 
-    <!-- ส่วนแสดงหัวข้อ -->
-    <div class="dashboard-header">
-        <h2 style="color: azure; margin-bottom: 5px;">CANDLE STICKS</h2>
-        <!-- จุดที่จะแสดง Symbol -->
-        <h3 id="display-symbol" style="color: #a1a1aa; margin: 0;">Loading Symbol...</h3> 
-    </div>
+  <!-- ส่วนแสดงหัวข้อ -->
+  <div class="dashboard-header">
+    <h2 style="color: azure; margin-bottom: 5px;">CANDLE STICKS</h2>
+    <!-- จุดที่จะแสดง Symbol -->
+    <h3 id="display-symbol" style="color: #a1a1aa; margin: 0;">Loading Symbol...</h3>
+  </div>
 
-    <!-- ส่วนแสดงรายละเอียดช่วงเวลา -->
-    <div class="info-box" style="color: #a1a1aa; margin: 0;">
-        <p>ช่วงเวลาข้อมูล (1 ปี ย้อนหลัง): <span id="display-range" >-</span></p>
-    </div>
+  <!-- ส่วนแสดงรายละเอียดช่วงเวลา -->
+  <div class="info-box" style="color: #a1a1aa; margin: 0;">
+    <p>ช่วงเวลาข้อมูล (1 ปี ย้อนหลัง): <span id="display-range">-</span></p>
+  </div>
 
-    <script>
-        // 1. ดึงค่า symbol จาก URL Query Parameter (?symbol=...)
-        const urlParams = new URLSearchParams(window.location.search);
-        const symbol = urlParams.get('symbol') || "^SET"; // ถ้าไม่มีให้ใช้ ^SET เป็นค่าเริ่มต้น
+  <script>
+    // 1. ดึงค่า symbol จาก URL Query Parameter (?symbol=...)
+    const urlParams = new URLSearchParams(window.location.search);
+    const symbol = urlParams.get('symbol') || "^SET"; // ถ้าไม่มีให้ใช้ ^SET เป็นค่าเริ่มต้น
 
-        // 2. คำนวณช่วงเวลา (Start ย้อนหลัง 1 ปี / End ย้อนหลัง 1 วัน)
-        const today = new Date();
-        
-        const endDateObj = new Date(today);
-        endDateObj.setDate(today.getDate() - 1);
-        const end = endDateObj.toISOString().split('T')[0];
+    // 2. คำนวณช่วงเวลา (Start ย้อนหลัง 1 ปี / End ย้อนหลัง 1 วัน)
+    const today = new Date();
 
-        const startDateObj = new Date(today);
-        startDateObj.setFullYear(today.getFullYear() - 1);
-        const start = startDateObj.toISOString().split('T')[0];
+    const endDateObj = new Date(today);
+    endDateObj.setDate(today.getDate() - 1);
+    const end = endDateObj.toISOString().split('T')[0];
 
-        // 3. นำค่าไปแสดงบนหน้าเว็บ (DOM Manipulation)
-        document.getElementById('display-symbol').innerText = `หุ้น/ดัชนี: ${symbol}`;
-        document.getElementById('display-range').innerText = `${start} ถึง ${end}`;
+    const startDateObj = new Date(today);
+    startDateObj.setFullYear(today.getFullYear() - 1);
+    const start = startDateObj.toISOString().split('T')[0];
 
-        // 4. สร้าง URL สำหรับเรียก API (เพื่อนำไปใช้ Fetch ข้อมูลต่อ)
-        const apiUrl = `/api/candle-sticks/${encodeURIComponent(symbol)}/range?start=${start}&end=${end}`;
-        console.log('API Target URL:', apiUrl);
-    </script>
-     
+    // 3. นำค่าไปแสดงบนหน้าเว็บ (DOM Manipulation)
+    document.getElementById('display-symbol').innerText = `หุ้น/ดัชนี: ${symbol}`;
+    document.getElementById('display-range').innerText = `${start} ถึง ${end}`;
+
+    // 4. สร้าง URL สำหรับเรียก API (เพื่อนำไปใช้ Fetch ข้อมูลต่อ)
+    const apiUrl = `/api/candle-sticks/${encodeURIComponent(symbol)}/range?start=${start}&end=${end}`;
+    console.log('API Target URL:', apiUrl);
+  </script>
+
   <p>
-  <div id="app" style="width:800px;height:600px;align-items: center;">
+  <div id="app" style="width:80vw;height:60vh;align-items: center;">
     <div class="chart-container">
       <canvas id="chart"></canvas>
     </div>
-  </div>  
+  </div>
 </body>
+
 </html>
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #0f172a;
-  overflow: hidden;
-  font-family: system-ui, sans-serif;
-}
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #0f172a;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+  }
 
-#app {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+  #app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-.chart-container {
-  position: relative;
-  flex: 1;
-}
+  .chart-container {
+    position: relative;
+    flex: 1;
+  }
 
-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
 </style>
