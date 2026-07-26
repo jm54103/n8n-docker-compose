@@ -7,13 +7,15 @@ import {
 } from "chartjs-chart-financial";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-luxon";
+import 'chartjs-adapter-date-fns';
+
 
 Chart.register(
   CandlestickController,
   CandlestickElement,
   OhlcController,
   OhlcElement,
-  zoomPlugin
+  zoomPlugin,  
 );
 
 /* ================= RSI (Wilder) ================= */
@@ -192,7 +194,7 @@ const candle_sticks = await getCandleSticks();
 const rsiData = computeRSI(candle_sticks, 14);
 const ema50Data = computeEMA(candle_sticks, 50);
 const ema100Data = computeEMA(candle_sticks, 100);
-const ema200Data = computeEMA(candle_sticks, 200);
+//const ema200Data = computeEMA(candle_sticks, 200);
 const volumeData = candle_sticks.map(d => ({
   x: d.x,
   y: d.v,
@@ -206,9 +208,21 @@ const volumeData = candle_sticks.map(d => ({
 const ctx = document.getElementById("chart");
 
 console.log(candle_sticks.length);
-console.log(candle_sticks[0]);
+//console.log(candle_sticks[0]);
 
-new Chart(ctx, {
+// ตรวจสอบให้แน่ใจว่าตัวแปร myChart คือตัวแปรที่คุณใช้ new Chart(...)
+// const myChart = new Chart(ctx, config); 
+
+// จับคู่ ID ของ Checkbox กับ Index ของ Datasets ที่คุณเรียงไว้
+const toggleConfigs = [
+  { id: 'cb-price', index: 0 },   // Price (candlestick)
+  { id: 'cb-volume', index: 1 },  // Volume (bar)
+  { id: 'cb-rsi', index: 2 },     // RSI (line)
+  { id: 'cb-ema50', index: 3 },   // EMA 50 (line)
+  { id: 'cb-ema100', index: 4 }   // EMA 100 (line)
+];
+
+const myChart = new Chart(ctx, {
   data: {
     datasets: [
       {
@@ -283,10 +297,65 @@ new Chart(ctx, {
     },
     scales: {
       x: {
-        type: "time",
-        ticks: { color: "#aaa" },
-        grid: { color: "rgba(255,255,255,0.05)" }
+        type: 'time', // ต้องใช้ time scale (อย่าลืมติดตั้ง/import Date Adapter)
+        time: {
+          unit: 'month', // กำหนดระยะห่าง (Tick) ให้แบ่งตามเดือน
+          unit: 'month', 
+          tooltipFormat: 'MMM yyyy', // 👈 เพิ่มบรรทัดนี้ เพื่อซ่อนวัน/เวลา ใน Tooltip ตอนเอาเมาส์ชี้
+          displayFormats: {
+              month: 'MMM yyyy' // รูปแบบปกติ เช่น Jan 2023
+          }
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 12, // พยายามกระจายให้แสดงผลได้ 12 เดือน (1 ปี)
+          color: (context) => {
+            // เปลี่ยนสีตัวหนังสือเมื่อถึงเดือนสิ้นปี (เดือนธันวาคม)
+            if (context.tick && context.tick.value) {
+              const date = new Date(context.tick.value);
+              if (date.getMonth() === 11) { // 11 = ธันวาคม (0-based index)
+                return '#FFD600'; // สีเหลืองทองให้โดดเด่น
+              }
+            }
+            return '#a1a1aa'; // สีปกติสำหรับเดือนอื่นๆ
+          },
+          // แก้ไขฟังก์ชัน callback ตรงนี้
+          callback: function(value, index, ticks) {
+             // เรียกใช้ getLabelForValue ผ่าน this ได้เลย
+             const defaultLabel = this.getLabelForValue(value);
+             
+             if (ticks[index] && ticks[index].value) {
+               const date = new Date(ticks[index].value);
+               if (date.getMonth() === 11) {
+                 return `สิ้นปี ${date.getFullYear()}`; 
+               }
+             }
+             return defaultLabel;
+          }          
+        },
+        grid: {
+          // เน้นเส้นตาราง (Grid line) ให้ชัดเจนขึ้นเมื่อถึงสิ้นปี
+          color: (context) => {
+            if (context.tick && context.tick.value) {
+              const date = new Date(context.tick.value);
+              if (date.getMonth() === 11) { // เดือนธันวาคม
+                return 'rgba(255, 214, 0, 0.4)'; // เส้นสีเหลืองโปร่งแสง
+              }
+            }
+            return 'rgba(255, 255, 255, 0.1)'; // สีเส้นปกติ
+          },
+          lineWidth: (context) => {
+             if (context.tick && context.tick.value) {
+              const date = new Date(context.tick.value);
+              if (date.getMonth() === 11) { 
+                return 2; // เพิ่มความหนาของเส้นสิ้นปี
+              }
+            }
+            return 1;
+          }
+        }
       },
+
 
       /* -------- PRICE PANEL (top 60%) -------- */
       price: {
@@ -316,3 +385,30 @@ new Chart(ctx, {
     }
   }
 });
+
+// เพิ่ม Event Listener ให้กับ Checkbox แต่ละตัว
+toggleConfigs.forEach(config => {
+  const checkbox = document.getElementById(config.id);
+  if (checkbox) {
+    checkbox.addEventListener('change', function(e) {
+      const isChecked = e.target.checked;
+      
+      // ใช้คำสั่งของ Chart.js เพื่อกำหนดสถานะการมองเห็น
+      myChart.setDatasetVisibility(config.index, isChecked);
+      
+      // อัปเดตกราฟเพื่อแสดงผลการเปลี่ยนแปลง
+      myChart.update();
+    });
+  }
+});
+const checkbox_rsi = document.getElementById('cb-rsi');
+const checkbox_ema50 = document.getElementById('cb-ema50');
+const checkbox_ema100 = document.getElementById('cb-ema100');
+
+checkbox_rsi.checked=false;
+checkbox_ema50.checked=true;
+checkbox_ema100.checked=false;
+
+myChart.setDatasetVisibility(2, false);
+myChart.setDatasetVisibility(3, true);
+myChart.setDatasetVisibility(4, false);
