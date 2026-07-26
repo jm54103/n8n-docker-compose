@@ -9,22 +9,22 @@ import { ResponseUserGroupDto } from './dto/response-user-group.dto';
 @Injectable()
 export class UserGroupsService {
   constructor(
-    @InjectRepository(UserGroup,"authConnection")
+    @InjectRepository(UserGroup, "authConnection")
     private readonly groupRepo: Repository<UserGroup>,
-    
-    @InjectRepository(UserGroupPermission,"authConnection")
+
+    @InjectRepository(UserGroupPermission, "authConnection")
     private readonly permissionRepo: Repository<UserGroupPermission>,
-  ) {}
+  ) { }
 
   async create(dto: CreateUserGroupDto) {
     const group = this.groupRepo.create(dto);
-    
+
     if (dto.permissionIds) {
       group.userGroupPermissions = await this.permissionRepo.findBy({
         permissionId: In(dto.permissionIds),
       });
     }
-    
+
     return await this.groupRepo.save(group);
   }
 
@@ -34,14 +34,14 @@ export class UserGroupsService {
   }
 
   async findAll() {
-    return await this.groupRepo.find({ relations: ['permissions'] });
+    return await this.groupRepo.find();
   }
 
-  async findOne_dto(id: number){    
-      const userGroup = await this.findOne(id);
-      return this.toResponseDto(userGroup);
+  async findOne_dto(id: number) {
+    const userGroup = await this.findOne(id);
+    return this.toResponseDto(userGroup);
   }
-  
+
   async findOne(id: number) {
     try {
       const userGroup = await this.groupRepo.findOne({
@@ -50,7 +50,7 @@ export class UserGroupsService {
           'userGroupPermissions',
           'userGroupPermissions.systemPermission',
         ],
-      });      
+      });
       return userGroup;
     } catch (dbErr) {
       console.error('DB Error in Service:', dbErr);
@@ -74,7 +74,7 @@ export class UserGroupsService {
 
   async update(id: number, dto: UpdateUserGroupDto) {
     const group = await this.findOne(id);
-    
+
     if (dto.permissionIds) {
       group.userGroupPermissions = await this.permissionRepo.findBy({
         permissionId: In(dto.permissionIds),

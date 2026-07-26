@@ -6,7 +6,7 @@ import { Public } from '../../../common/decorators/public.decorator';
 @Public()
 @Controller('user-groups')
 export class UserGroupsController {
-  constructor(private readonly groupService: UserGroupsService) {}
+  constructor(private readonly groupService: UserGroupsService) { }
 
   @Post()
   create(@Body() createDto: CreateUserGroupDto) {
@@ -18,7 +18,7 @@ export class UserGroupsController {
   findAll() {
     return this.groupService.findAll();
   }
-
+  /*
   @Get(':id')
   @Public()
   findOne(@Param('id', ParseIntPipe) id: number) {
@@ -34,4 +34,5 @@ export class UserGroupsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.groupService.remove(id);
   }
+  */
 }

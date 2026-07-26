@@ -5,23 +5,23 @@ import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { 
-  Users, 
-  UserPlus, 
-  Search, 
-  RefreshCw, 
-  Edit3, 
-  Trash2, 
-  X, 
-  AlertCircle, 
-  CheckCircle2, 
-  ShieldCheck, 
-  Mail, 
-  Lock, 
-  User as UserIcon, 
-  Clock, 
-  Wifi, 
-  Eye, 
+import {
+  Users,
+  UserPlus,
+  Search,
+  RefreshCw,
+  Edit3,
+  Trash2,
+  X,
+  AlertCircle,
+  CheckCircle2,
+  ShieldCheck,
+  Mail,
+  Lock,
+  User as UserIcon,
+  Clock,
+  Wifi,
+  Eye,
   EyeOff,
   ChevronLeft,
   ChevronRight,
@@ -30,6 +30,7 @@ import {
   UsersRound,
   Filter
 } from "lucide-react";
+import { group } from "console";
 
 export interface UserGroup {
   groupId: number;
@@ -56,14 +57,14 @@ export default function UserManagementPage() {
   const [users, setUsers] = useState<UserItem[]>([]);
   const [userGroups, setUserGroups] = useState<UserGroup[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  
+
   // Filters
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("ALL");
   const [filterGroup, setFilterGroup] = useState<string>("ALL");
 
   // Pagination
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   // Modal State
@@ -96,6 +97,7 @@ export default function UserManagementPage() {
 
   const fetchUsers = async () => {
     setLoading(true);
+    console.log("Fetching users...");
     try {
       const [resUsers, resGroups] = await Promise.allSettled([
         api.get<UserItem[]>("/users"),
@@ -110,6 +112,7 @@ export default function UserManagementPage() {
       }
 
       if (resGroups.status === "fulfilled") {
+        console.log("User groups:", resGroups.value.data);
         setUserGroups(resGroups.value.data || []);
       } else {
         console.error("Failed to fetch user groups:", resGroups.reason);
@@ -223,9 +226,11 @@ export default function UserManagementPage() {
 
       const matchStatus = filterStatus === "ALL" || user.status === filterStatus;
 
+      //console.log("user.groups", user.groups)
+
       const matchGroup =
         filterGroup === "ALL" ||
-        (user.groups && user.groups.some((g) => g.groupId.toString() === filterGroup));
+        (user.groups && user.groups.some((g) => g === filterGroup));
 
       return matchSearch && matchStatus && matchGroup;
     });
@@ -249,11 +254,10 @@ export default function UserManagementPage() {
       {/* Toast Notification */}
       {notification && (
         <div
-          className={`fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all duration-300 transform translate-y-0 ${
-            notification.type === "success"
-              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-              : "bg-rose-50 text-rose-800 border-rose-200"
-          }`}
+          className={`fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all duration-300 transform translate-y-0 ${notification.type === "success"
+            ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+            : "bg-rose-50 text-rose-800 border-rose-200"
+            }`}
         >
           {notification.type === "success" ? (
             <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
@@ -331,7 +335,7 @@ export default function UserManagementPage() {
                 >
                   <option value="ALL">👥 กลุ่มผู้ใช้ทั้งหมด (All Groups)</option>
                   {userGroups.map((g) => (
-                    <option key={g.groupId} value={g.groupId.toString()}>
+                    <option key={g.groupId} value={g.groupName}>
                       {g.groupName}
                     </option>
                   ))}
@@ -449,36 +453,28 @@ export default function UserManagementPage() {
 
                       {/* User Groups Badges */}
                       <td className="py-3.5 px-4 text-xs">
-                        {user.groups && user.groups.length > 0 ? (
-                          <div className="flex flex-wrap gap-1">
-                            {user.groups.map((group) => (
-                              <span
-                                key={group.groupId}
-                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-semibold"
-                              >
-                                <UsersRound className="h-3 w-3" />
-                                {group.groupName}
-                              </span>
-                            ))}
-                          </div>
-                        ) : (
-                          <span className="text-slate-300 italic text-xs">- ไม่มีกลุ่ม -</span>
-                        )}
+                        {user.groups && user.groups.length > 0 ?
+                          (
+                            <span className="text-slate-300 text-xs">{user.groups.join(', ')}</span>
+                          )
+                          :
+                          (
+                            <span className="text-slate-300 italic text-xs">- ไม่มีกลุ่ม -</span>
+                          )
+                        }
                       </td>
 
                       {/* Status Badge */}
                       <td className="py-3.5 px-4 text-center">
                         <span
-                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
-                            user.status === "ACTIVE"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                              : "bg-rose-50 text-rose-700 border-rose-200"
-                          }`}
+                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${user.status === "ACTIVE"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : "bg-rose-50 text-rose-700 border-rose-200"
+                            }`}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-full ${
-                              user.status === "ACTIVE" ? "bg-emerald-500" : "bg-rose-500"
-                            }`}
+                            className={`h-1.5 w-1.5 rounded-full ${user.status === "ACTIVE" ? "bg-emerald-500" : "bg-rose-500"
+                              }`}
                           />
                           {user.status === "ACTIVE" ? "ACTIVE" : "DISABLED"}
                         </span>
@@ -670,9 +666,8 @@ export default function UserManagementPage() {
                     placeholder="เช่น john_doe"
                     value={formData.username}
                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                    className={`pl-9 text-xs h-10 ${
-                      editingUser ? "bg-slate-100 text-slate-500 border-slate-200" : "bg-white border-slate-300 focus:ring-blue-500"
-                    }`}
+                    className={`pl-9 text-xs h-10 ${editingUser ? "bg-slate-100 text-slate-500 border-slate-200" : "bg-white border-slate-300 focus:ring-blue-500"
+                      }`}
                   />
                 </div>
               </div>
@@ -728,22 +723,20 @@ export default function UserManagementPage() {
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, status: "ACTIVE" })}
-                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
-                      formData.status === "ACTIVE"
-                        ? "border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                    }`}
+                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${formData.status === "ACTIVE"
+                      ? "border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm"
+                      : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                      }`}
                   >
                     ACTIVE (ใช้งานได้)
                   </button>
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, status: "DISABLED" })}
-                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
-                      formData.status === "DISABLED"
-                        ? "border-rose-500 bg-rose-50 text-rose-700 shadow-sm"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                    }`}
+                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${formData.status === "DISABLED"
+                      ? "border-rose-500 bg-rose-50 text-rose-700 shadow-sm"
+                      : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                      }`}
                   >
                     DISABLED (ระงับ)
                   </button>
