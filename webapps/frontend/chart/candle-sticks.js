@@ -15,7 +15,7 @@ Chart.register(
   CandlestickElement,
   OhlcController,
   OhlcElement,
-  zoomPlugin,  
+  zoomPlugin,
 );
 
 /* ================= RSI (Wilder) ================= */
@@ -234,7 +234,7 @@ const myChart = new Chart(ctx, {
           up: "#00C853",
           down: "#D50000",
           unchanged: "#999"
-        }
+        },
       },
       {
         type: "bar",
@@ -279,109 +279,196 @@ const myChart = new Chart(ctx, {
     responsive: true,
     maintainAspectRatio: false,
     parsing: false,
+
     interaction: {
       mode: "index",
       intersect: false
     },
+
     plugins: {
-      legend: { display: false },
-      tooltip: { mode: "index", intersect: false },
+      legend: {
+        display: false
+      },
+
+      tooltip: {
+        mode: "index",
+        intersect: false,
+
+        callbacks: {
+          title(items) {
+            const date = new Date(items[0].parsed.x);
+
+            return date.toLocaleDateString("en-US", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric"
+            });
+          },
+
+          label(context) {
+
+            // Candlestick (OHLC)
+            if (context.dataset.type === "candlestick") {
+              const d = context.raw;
+
+              return [
+                `Open : ${d.o.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`,
+                `High : ${d.h.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`,
+                `Low  : ${d.l.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`,
+                `Close: ${d.c.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`
+              ];
+            }
+
+            const label = context.dataset.label ?? "";
+            const value = context.parsed.y;
+
+            // Volume
+            if (context.dataset.yAxisID === "volume") {
+              return `${label}: ${Number(value).toLocaleString("en-US")}`;
+            }
+
+            // Price / EMA / RSI
+            return `${label}: ${Number(value).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })}`;
+          }
+        }
+      },
+
       zoom: {
-        pan: { enabled: true, mode: "x" },
+        pan: {
+          enabled: true,
+          mode: "x"
+        },
         zoom: {
-          wheel: { enabled: true },
-          pinch: { enabled: true },
+          wheel: {
+            enabled: true
+          },
+          pinch: {
+            enabled: true
+          },
           mode: "x"
         }
       }
     },
+
     scales: {
       x: {
-        type: 'time', // ต้องใช้ time scale (อย่าลืมติดตั้ง/import Date Adapter)
+        type: "time",
+
         time: {
-          unit: 'month', // กำหนดระยะห่าง (Tick) ให้แบ่งตามเดือน
-          unit: 'month', 
-          tooltipFormat: 'MMM yyyy', // 👈 เพิ่มบรรทัดนี้ เพื่อซ่อนวัน/เวลา ใน Tooltip ตอนเอาเมาส์ชี้
+          unit: "month",
           displayFormats: {
-              month: 'MMM yyyy' // รูปแบบปกติ เช่น Jan 2023
+            month: "MMM yyyy"
           }
         },
+
         ticks: {
           autoSkip: true,
-          maxTicksLimit: 12, // พยายามกระจายให้แสดงผลได้ 12 เดือน (1 ปี)
+          maxTicksLimit: 12,
+
           color: (context) => {
-            // เปลี่ยนสีตัวหนังสือเมื่อถึงเดือนสิ้นปี (เดือนธันวาคม)
-            if (context.tick && context.tick.value) {
-              const date = new Date(context.tick.value);
-              if (date.getMonth() === 11) { // 11 = ธันวาคม (0-based index)
-                return '#FFD600'; // สีเหลืองทองให้โดดเด่น
-              }
-            }
-            return '#a1a1aa'; // สีปกติสำหรับเดือนอื่นๆ
+            if (!context.tick) return "#a1a1aa";
+
+            const date = new Date(context.tick.value);
+
+            return date.getMonth() === 11
+              ? "#FFD600"
+              : "#a1a1aa";
           },
-          // แก้ไขฟังก์ชัน callback ตรงนี้
-          callback: function(value, index, ticks) {
-             // เรียกใช้ getLabelForValue ผ่าน this ได้เลย
-             const defaultLabel = this.getLabelForValue(value);
-             
-             if (ticks[index] && ticks[index].value) {
-               const date = new Date(ticks[index].value);
-               if (date.getMonth() === 11) {
-                 return `สิ้นปี ${date.getFullYear()}`; 
-               }
-             }
-             return defaultLabel;
-          }          
+
+          callback(value, index, ticks) {
+            const date = new Date(ticks[index].value);
+
+            if (date.getMonth() === 11) {
+              return `สิ้นปี ${date.getFullYear()}`;
+            }
+
+            return date.toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric"
+            });
+          }
         },
+
         grid: {
-          // เน้นเส้นตาราง (Grid line) ให้ชัดเจนขึ้นเมื่อถึงสิ้นปี
           color: (context) => {
-            if (context.tick && context.tick.value) {
-              const date = new Date(context.tick.value);
-              if (date.getMonth() === 11) { // เดือนธันวาคม
-                return 'rgba(255, 214, 0, 0.4)'; // เส้นสีเหลืองโปร่งแสง
-              }
+            if (!context.tick) {
+              return "rgba(255,255,255,0.1)";
             }
-            return 'rgba(255, 255, 255, 0.1)'; // สีเส้นปกติ
+
+            const date = new Date(context.tick.value);
+
+            return date.getMonth() === 11
+              ? "rgba(255,214,0,0.4)"
+              : "rgba(255,255,255,0.1)";
           },
+
           lineWidth: (context) => {
-             if (context.tick && context.tick.value) {
-              const date = new Date(context.tick.value);
-              if (date.getMonth() === 11) { 
-                return 2; // เพิ่มความหนาของเส้นสิ้นปี
-              }
-            }
-            return 1;
+            if (!context.tick) return 1;
+
+            const date = new Date(context.tick.value);
+
+            return date.getMonth() === 11 ? 2 : 1;
           }
         }
       },
 
-
-      /* -------- PRICE PANEL (top 60%) -------- */
       price: {
         position: "left",
         weight: 3,
-        ticks: { color: "#aaa" },
-        grid: { color: "rgba(255,255,255,0.05)" }
+        ticks: {
+          color: "#aaa",
+          callback(value) {
+            return Number(value).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            });
+          }
+        },
+        grid: {
+          color: "rgba(255,255,255,0.05)"
+        }
       },
 
-      /* -------- VOLUME PANEL (middle 20%) -------- */
       volume: {
         position: "left",
         weight: 1,
-        grid: { drawOnChartArea: false },
-        ticks: { display: false }
+        ticks: {
+          display: false
+        },
+        grid: {
+          drawOnChartArea: false
+        }
       },
-
-      /* -------- RSI PANEL (bottom 20%) -------- */
       rsi: {
         position: "left",
         min: 0,
         max: 100,
         weight: 1,
-        ticks: { color: "#aaa" },
-        grid: { color: "rgba(255,255,255,0.05)" }
-      }
+        ticks: {
+          color: "#aaa",
+          callback(value) {
+            return Number(value).toFixed(2);
+          }
+        },
+        grid: {
+          color: "rgba(255,255,255,0.05)"
+        }
+      },
     }
   }
 });
@@ -390,12 +477,12 @@ const myChart = new Chart(ctx, {
 toggleConfigs.forEach(config => {
   const checkbox = document.getElementById(config.id);
   if (checkbox) {
-    checkbox.addEventListener('change', function(e) {
+    checkbox.addEventListener('change', function (e) {
       const isChecked = e.target.checked;
-      
+
       // ใช้คำสั่งของ Chart.js เพื่อกำหนดสถานะการมองเห็น
       myChart.setDatasetVisibility(config.index, isChecked);
-      
+
       // อัปเดตกราฟเพื่อแสดงผลการเปลี่ยนแปลง
       myChart.update();
     });
@@ -405,9 +492,9 @@ const checkbox_rsi = document.getElementById('cb-rsi');
 const checkbox_ema50 = document.getElementById('cb-ema50');
 const checkbox_ema100 = document.getElementById('cb-ema100');
 
-checkbox_rsi.checked=false;
-checkbox_ema50.checked=true;
-checkbox_ema100.checked=false;
+checkbox_rsi.checked = false;
+checkbox_ema50.checked = true;
+checkbox_ema100.checked = false;
 
 myChart.setDatasetVisibility(2, false);
 myChart.setDatasetVisibility(3, true);
