@@ -5,19 +5,19 @@ import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { 
-  Sliders, 
-  Plus, 
-  Search, 
-  RefreshCw, 
-  Edit3, 
-  Check, 
-  X, 
-  AlertCircle, 
-  CheckCircle2, 
-  Code2, 
-  Hash, 
-  ToggleLeft, 
+import {
+  Sliders,
+  Plus,
+  Search,
+  RefreshCw,
+  Edit3,
+  Check,
+  X,
+  AlertCircle,
+  CheckCircle2,
+  Code2,
+  Hash,
+  ToggleLeft,
   FileText,
   Clock
 } from "lucide-react";
@@ -168,7 +168,7 @@ export default function ParameterSettingsPage() {
     return (
       <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${config.color}`}>
         <Icon className="h-3 w-3" />
-        {config.value}
+        {config.label}
       </span>
     );
   };
@@ -178,11 +178,10 @@ export default function ParameterSettingsPage() {
       {/* Toast Notification */}
       {notification && (
         <div
-          className={`fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all duration-300 transform translate-y-0 ${
-            notification.type === "success"
+          className={`fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium transition-all duration-300 transform translate-y-0 ${notification.type === "success"
               ? "bg-emerald-50 text-emerald-800 border-emerald-200"
               : "bg-rose-50 text-rose-800 border-rose-200"
-          }`}
+            }`}
         >
           {notification.type === "success" ? (
             <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
@@ -433,9 +432,8 @@ export default function ParameterSettingsPage() {
                   placeholder="เช่น JWT_EXPIRES_MINUTES, MAX_LOGIN_ATTEMPTS"
                   value={formData.paramKey}
                   onChange={(e) => setFormData({ ...formData, paramKey: e.target.value.toUpperCase() })}
-                  className={`font-mono text-xs h-10 ${
-                    editingParam ? "bg-slate-100 text-slate-500 border-slate-200" : "bg-white border-slate-300 focus:ring-blue-500"
-                  }`}
+                  className={`font-mono text-xs h-10 ${editingParam ? "bg-slate-100 text-slate-500 border-slate-200" : "bg-white border-slate-300 focus:ring-blue-500"
+                    }`}
                 />
                 <p className="text-[11px] text-slate-400">
                   {editingParam ? "ไม่สามารถแก้ไข Key ได้เมื่อสร้างแล้ว" : "ใช้ตัวพิมพ์ใหญ่ (UPPERCASE) และขีดล่าง (_) ในการตั้งชื่อ"}
@@ -457,11 +455,10 @@ export default function ParameterSettingsPage() {
                         type="button"
                         key={type.value}
                         onClick={() => setFormData({ ...formData, valueType: type.value })}
-                        className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-medium transition-all text-left cursor-pointer ${
-                          isSelected
+                        className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-medium transition-all text-left cursor-pointer ${isSelected
                             ? "border-blue-500 bg-blue-50/70 text-blue-700 font-semibold shadow-sm"
                             : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                        }`}
+                          }`}
                       >
                         <Icon className={`h-4 w-4 shrink-0 ${isSelected ? "text-blue-600" : "text-slate-400"}`} />
                         <span>{type.label}</span>
@@ -492,8 +489,8 @@ export default function ParameterSettingsPage() {
                       formData.valueType === "INT"
                         ? "ใส่ตัวเลข เช่น 15"
                         : formData.valueType === "JSON"
-                        ? '{"key": "value"}'
-                        : "ใส่ค่าข้อความตามต้องการ..."
+                          ? '{"key": "value"}'
+                          : "ใส่ค่าข้อความตามต้องการ..."
                     }
                     value={formData.paramValue}
                     onChange={(e) => setFormData({ ...formData, paramValue: e.target.value })}
