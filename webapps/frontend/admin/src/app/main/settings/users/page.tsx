@@ -230,7 +230,7 @@ export default function UserManagementPage() {
 
       const matchGroup =
         filterGroup === "ALL" ||
-        (user.groups && user.groups.some((g) => g === filterGroup));
+        (user.groups && user.groups.some((g) => g.toString() === filterGroup));
 
       return matchSearch && matchStatus && matchGroup;
     });
